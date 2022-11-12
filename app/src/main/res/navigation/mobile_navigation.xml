@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.ecommerceapp.ui.home.HomeFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_nav_home_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_orders"
+        android:name="com.example.ecommerceapp.ui.orders.OrdersFragment"
+        android:label="@string/menu_orders"
+        tools:layout="@layout/fragment_orders" />
+
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.example.ecommerceapp.ui.profile.ProfileFragment"
+        android:label="@string/menu_profile"
+        tools:layout="@layout/fragment_profile" />
+
+    <activity
+        android:id="@+id/nav_splash"
+        android:name="com.example.ecommerceapp.ui.ActivitySplashScreen"
+        android:label="activity_splash_screen"
+        tools:layout="@layout/activity_splash_screen" />
+
+    <fragment
+        android:id="@+id/nav_helpline"
+        android:name="com.example.ecommerceapp.summary.HelplineFragment"
+        android:label="HelplineFragment"
+        tools:layout="@layout/fragment_helpline"/>
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.example.ecommerceapp.ui.detail.DetailFragment"
+        android:label="DetailFragment">
+
+        <argument
+            android:name="productDetails"
+            app:argType="com.example.ecommerceapp.models.Product" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/nav_account"
+        android:name="com.example.ecommerceapp.ui.account.AccountFragment"
+        android:label="AccountFragment"
+        tools:layout="@layout/fragment_account"/>
+    <fragment
+        android:id="@+id/nav_favorite"
+        android:name="com.example.ecommerceapp.ui.favorites.FavoritesFragment"
+        android:label="fragment_favorites"
+        tools:layout="@layout/fragment_favorites" />
+</navigation>

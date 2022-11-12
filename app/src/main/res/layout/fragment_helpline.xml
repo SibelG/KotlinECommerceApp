@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.HelplineFragment">
+
+        <TextView
+            android:id="@+id/helpline_email_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="50dp"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:text="Email Address"/>
+
+        <TextView
+            android:id="@+id/helpline_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/helpline_email_label"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp"
+            android:textSize="22sp"
+            android:text="@string/email_helpline"/>
+
+        <TextView
+            android:id="@+id/helpline_mobile_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/helpline_email"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="50dp"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:text="Mobile Number"/>
+
+        <TextView
+            android:id="@+id/helpline_mobile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/helpline_mobile_label"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp"
+            android:textSize="22sp"
+            android:text="@string/mobile_helpline"/>
+
+        <TextView
+            android:id="@+id/helpline_slogan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/helpline_mobile"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="350dp"
+            android:textSize="25sp"
+            android:fontFamily="sans-serif-black"
+            android:text="@string/slogan_helpline"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

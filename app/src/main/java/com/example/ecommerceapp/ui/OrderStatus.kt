@@ -1,0 +1,3 @@
+package com.example.ecommerceapp.ui
+
+enum class OrderStatus {PLACED,APPROVED,REJECTED,CANCELLED,PACKED,SHIPPED,DELIVERED,RETURNED,CANCEL_REQUESTED}

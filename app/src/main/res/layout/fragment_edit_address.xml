@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.edit_address.EditAddressFragment">
+
+        <TextView
+            android:id="@+id/username_in_edit_address_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="Name"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:id="@+id/username_in_edit_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/username_in_edit_address_label"
+            app:layout_constraintTop_toBottomOf="@id/username_in_edit_address_label"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck,TouchTargetSizeCheck" />
+
+        <TextView
+            android:id="@+id/mobile_number_in_edit_address_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/username_in_edit_address"
+            app:layout_constraintStart_toStartOf="@id/username_in_edit_address"
+            android:text="Mobile Number"
+            android:layout_marginTop="16dp"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:id="@+id/mobile_number_in_edit_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:inputType="number"
+            android:maxLength="10"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/mobile_number_in_edit_address_label"
+            app:layout_constraintTop_toBottomOf="@id/mobile_number_in_edit_address_label"
+            tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck,TouchTargetSizeCheck" />
+
+        <TextView
+            android:id="@+id/house_number_in_edit_address_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/mobile_number_in_edit_address"
+            app:layout_constraintStart_toStartOf="@id/mobile_number_in_edit_address"
+            android:text="Flat,House no.,Building,company"
+            android:layout_marginTop="16dp"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:id="@+id/house_number_in_edit_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/house_number_in_edit_address_label"
+            app:layout_constraintTop_toBottomOf="@id/house_number_in_edit_address_label"
+            tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+
+        <TextView
+            android:id="@+id/street_name_in_edit_address_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/house_number_in_edit_address"
+            app:layout_constraintStart_toStartOf="@id/house_number_in_edit_address"
+            android:text="Area, Colony, Street, Sector, Village"
+            android:layout_marginTop="16dp"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:id="@+id/street_name_in_edit_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/street_name_in_edit_address_label"
+            app:layout_constraintTop_toBottomOf="@id/street_name_in_edit_address_label"
+            tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck,TouchTargetSizeCheck" />
+
+        <TextView
+            android:id="@+id/pincode_in_edit_address_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/street_name_in_edit_address"
+            app:layout_constraintStart_toStartOf="@id/street_name_in_edit_address"
+            android:text="Pin Code"
+            android:layout_marginTop="16dp"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:id="@+id/pincode_in_edit_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:inputType="number"
+            android:maxLength="6"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/pincode_in_edit_address_label"
+            app:layout_constraintTop_toBottomOf="@id/pincode_in_edit_address_label"
+            tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck,TouchTargetSizeCheck" />
+
+        <TextView
+            android:id="@+id/city_in_edit_address_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/pincode_in_edit_address"
+            app:layout_constraintStart_toStartOf="@id/pincode_in_edit_address"
+            android:text="Town/City"
+            android:layout_marginTop="16dp"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:id="@+id/city_in_edit_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/city_in_edit_address_label"
+            app:layout_constraintTop_toBottomOf="@id/city_in_edit_address_label"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck,TouchTargetSizeCheck" />
+
+        <Button
+            android:id="@+id/edit_address_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/city_in_edit_address"
+            app:layout_constraintStart_toStartOf="@id/city_in_edit_address"
+            app:layout_constraintEnd_toEndOf="@id/city_in_edit_address"
+            android:layout_marginTop="16dp"
+            android:text="Edit Address"
+            android:textAllCaps="false"
+            android:textSize="18sp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

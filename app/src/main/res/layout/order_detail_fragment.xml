@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:context=".ui.orderDetails.OrderDetailFragment">
+
+            <TextView
+                android:id="@+id/order_id_order_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="ORDER ID - 242947296534289375346" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/products_recyclerView_order"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/order_id_order_details"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_product_summary" />
+
+            <TextView
+                android:id="@+id/ordered_on_order"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/order_id_order_details"
+                app:layout_constraintStart_toStartOf="@id/order_id_order_details"
+                app:layout_constraintTop_toBottomOf="@id/products_recyclerView_order"
+                tools:text="Orderd on - 12:33 Pm 23/04/2021" />
+
+            <TextView
+                android:id="@+id/order_status_order"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/order_id_order_details"
+                app:layout_constraintStart_toStartOf="@id/order_id_order_details"
+                app:layout_constraintTop_toBottomOf="@id/ordered_on_order"
+                tools:text="Order Status - Placed" />
+
+            <TextView
+                android:id="@+id/address_label_order"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/shipping_address"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/order_status_order" />
+
+            <TextView
+                android:id="@+id/user_name_address_order"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/address_label_order"
+                app:layout_constraintTop_toBottomOf="@id/address_label_order"
+                tools:text="Gulshan Patidar" />
+
+            <TextView
+                android:id="@+id/house_and_street_address_order"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/user_name_address_order"
+                app:layout_constraintTop_toBottomOf="@id/user_name_address_order"
+                tools:text="House no. 5, ward no. 1,Near Ram Mandir" />
+
+            <TextView
+                android:id="@+id/city_pincode_address_order"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/house_and_street_address_order"
+                app:layout_constraintTop_toBottomOf="@id/house_and_street_address_order"
+                tools:text="Mandsaur, Madhya Pradesh 458778" />
+
+            <TextView
+                android:id="@+id/phone_number_address_order"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/user_name_address_order"
+                app:layout_constraintTop_toBottomOf="@id/city_pincode_address_order"
+                tools:text="7822888840" />
+
+            <TextView
+                android:id="@+id/total_amount_order_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="32dp"
+                android:text="@string/amount_payable"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/phone_number_address_order"/>
+
+            <TextView
+                android:id="@+id/total_amount_order"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="32dp"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/phone_number_address_order"
+                tools:text="1500" />
+
+            <Button
+                android:id="@+id/cancel_order_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/total_amount_order"
+                android:text="Cancel Order"
+                android:enabled="false"
+                android:backgroundTint="@android:color/holo_red_dark"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</layout>
