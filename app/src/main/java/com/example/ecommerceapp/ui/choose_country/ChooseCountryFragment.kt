@@ -1,4 +1,4 @@
-package com.example.ecommerceapp.ui.favorites
+package com.example.ecommerceapp.ui.choose_country
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.example.ecommerceapp.R
 
 
-class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
+class ChooseCountryFragment : Fragment() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +21,8 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_favorites, container, false)
+        return inflater.inflate(R.layout.fragment_choose_country, container, false)
     }
+
 
 }

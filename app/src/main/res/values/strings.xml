@@ -10,8 +10,10 @@
     <string name="backOnline">Back Online</string>
     <string name="connectionLost">Connection Lost!</string>
     <string name="menu_home">Home</string>
+    <string name="menu_credid">Credid Card</string>
     <string name="menu_orders">Your Orders</string>
     <string name="menu_profile">Your Profile</string>
+    <string name="menu_request">Your Product Requests</string>
     <string name="cart">Cart</string>
     <string name="welcome_text">Welcome to the FashionShop</string>
     <string name="enter_phone_number">Enter Phone Number</string>
@@ -27,6 +29,7 @@
     <string name="title_payment_fragment">Choose Payment Method</string>
     <string name="title_summary_fragment">Order Summary</string>
     <string name="title_order_details">Order Details</string>
+    <string name="title_add_credid">Add Credid Card</string>
     <string name="amount_payable">Amount Payable</string>
     <string name="shipping_address">Shipping Address-</string>
     <string name="email_helpline">ctempire5@gmail.com</string>

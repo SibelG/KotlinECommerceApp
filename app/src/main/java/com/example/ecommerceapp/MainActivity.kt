@@ -78,9 +78,11 @@ class MainActivity : AppCompatActivity(), DrawerLocker {
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)*/
-        bottomNavView.setupWithNavController(navController)
+        //bottomNavView.setupWithNavController(navController)
         bottomNavView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-        fragmentManager.beginTransaction().apply {
+        openFragment(homeFragment)
+
+        /*fragmentManager.beginTransaction().apply {
             add(
                 R.id.nav_host_fragment_content_main,
                 profileFragment,
@@ -98,36 +100,30 @@ class MainActivity : AppCompatActivity(), DrawerLocker {
             ).hide(helplineFragment)
 
             add(R.id.nav_host_fragment_content_main, homeFragment, getString(R.string.menu_home))
-        }.commit()
+        }.commit()*/
 
         navView.setNavigationItemSelectedListener { item ->
+            drawerLayout.closeDrawer(GravityCompat.START)
             when (item.itemId) {
+
                 R.id.nav_home -> {
-                    fragmentManager.beginTransaction().hide(activeFragment).show(homeFragment)
+                    openFragment(homeFragment)
+                    /*fragmentManager.beginTransaction().hide(activeFragment).show(homeFragment)
                         .commit()
-                    activeFragment = homeFragment
-                    drawerLayout.closeDrawer(GravityCompat.START)
+                    activeFragment = homeFragment*/
+
                     true
                 }
                 R.id.nav_profile -> {
-                    fragmentManager.beginTransaction().hide(activeFragment).show(profileFragment)
-                        .commit()
-                    activeFragment = profileFragment
-                    drawerLayout.closeDrawer(GravityCompat.START)
+                   openFragment(profileFragment)
                     true
                 }
                 R.id.nav_orders -> {
-                    fragmentManager.beginTransaction().hide(activeFragment).show(ordersFragment)
-                        .commit()
-                    activeFragment = ordersFragment
-                    drawerLayout.closeDrawer(GravityCompat.START)
+                    openFragment(ordersFragment)
                     true
                 }
                 R.id.nav_helpline -> {
-                    fragmentManager.beginTransaction().hide(activeFragment).show(helplineFragment)
-                        .commit()
-                    activeFragment = helplineFragment
-                    drawerLayout.closeDrawer(GravityCompat.START)
+                    openFragment(helplineFragment)
                     true
                 }
                 else -> {
@@ -148,19 +144,29 @@ class MainActivity : AppCompatActivity(), DrawerLocker {
         BottomNavigationView.OnNavigationItemSelectedListener { item ->
             item.setChecked(true)
             when (item.itemId) {
+
                 R.id.homeFragment -> {
-                    findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.nav_home)
+                    openFragment(homeFragment)
+                    return@OnNavigationItemSelectedListener true
                 }
                 R.id.favoriteFragment -> {
-                    findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.nav_favorite)
+                    openFragment(favoritesFragment)
+                    return@OnNavigationItemSelectedListener true
                 }
                 R.id.accountFragment -> {
-                    findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.nav_account)
+                    openFragment(accountFragment)
+                    return@OnNavigationItemSelectedListener true
                 }
             }
             false
         }
 
+    private fun openFragment(fragment: Fragment) {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.nav_host_fragment_content_main, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
 
     private fun observeNetworkConnection() {
         connectionLiveData.observe(this) { isInternetAvailable ->
@@ -209,11 +215,12 @@ class MainActivity : AppCompatActivity(), DrawerLocker {
             R.id.action_cart -> {
 //                Toast.makeText(this,"Ruko zara sabr karo",Toast.LENGTH_LONG).show()
                 val cartFragment = CartFragment()
-                fragmentManager.beginTransaction().add(
+                /*fragmentManager.beginTransaction().add(
                     R.id.nav_host_fragment_content_main,
                     cartFragment,
                     getString(R.string.title_cart_fragment)
-                ).hide(activeFragment).commit()
+                ).hide(activeFragment).commit()*/
+                openFragment(cartFragment)
                 setDrawerLocked(true)
                 true
             }

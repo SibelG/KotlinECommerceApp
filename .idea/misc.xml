@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/drawable-v24/ic_favorite_border.xml" value="0.1805" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/drawable-v24/icon_explore.xml" value="0.1805" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/drawable-v24/icon_user.xml" value="0.1805" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/drawable/ic_add.xml" value="0.179" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/drawable/ic_arrow_back.xml" value="0.1745" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/drawable/ic_baseline_language_24.xml" value="0.1315" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/drawable/ic_baseline_location_on_24.xml" value="0.1755" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/drawable/ic_icons8_google.xml" value="0.113" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/drawable/icon_beats.xml" value="0.1" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/drawable/icon_cart.xml" value="0.113" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/drawable/icon_edit_profile.xml" value="0.179" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/drawable/icon_exit.xml" value="0.179" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/drawable/icon_history.xml" value="0.179" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/drawable/icon_language.xml" value="0.1" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/drawable/icon_location.xml" value="0.136" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/drawable/icon_mastercard.xml" value="0.1315" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/drawable/icon_notifications.xml" value="0.179" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/drawable/icon_payment.xml" value="0.179" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/drawable/icon_search.xml" value="0.1" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/drawable/icon_track_order.xml" value="0.179" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/drawable/icon_wishlist.xml" value="0.152" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/layout/action_cart_layout.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/layout/activity_authentication.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/layout/activity_splash_screen.xml" value="0.1015625" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/layout/address_fragment.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/layout/app_bar_main.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/layout/cart_fragment.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/layout/choose_address_fragment.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/layout/content_main.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/layout/detail_fragment.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/layout/fragment_account.xml" value="0.22916666666666666" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/layout/fragment_add_credid_card.xml" value="0.25" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/layout/fragment_choose_country.xml" value="0.15833333333333333" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/layout/fragment_credid_card.xml" value="0.264" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/layout/fragment_edit_address.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/layout/fragment_helpline.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/layout/fragment_home.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/layout/fragment_orders.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/layout/fragment_profile.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/layout/fragment_settings.xml" value="0.176" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/layout/item_address.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/layout/item_brand.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/layout/item_category.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/layout/item_credit_card.xml" value="0.264" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/layout/item_product.xml" value="0.2" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/layout/item_product_cart.xml" value="0.11302083333333333" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/layout/item_product_summary.xml" value="0.264" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/layout/main_content.xml" value="0.253125" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/layout/nav_header_main.xml" value="0.178125" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/layout/order_detail_fragment.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/layout/payment_fragment.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/layout/signup_fragment.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/layout/summary_fragment.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/menu/activity_main_drawer.xml" value="0.72" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/menu/main.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/menu/menu.xml" value="0.178125" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/menu/nav_menu.xml" value="0.23854166666666668" />
+        <entry key="..\:/Users/sblgn/AndroidStudioProjects/ECommerceApp2/app/src/main/res/xml/activity_splash_screen_scene.xml" value="0.1015625" />
+      </map>
+    </option>
+  </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

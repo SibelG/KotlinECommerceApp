@@ -54,6 +54,7 @@
             <LinearLayout
                 style="@style/AccountItemStyle"
                 android:layout_width="match_parent"
+                android:id="@+id/profileSection"
                 android:layout_height="wrap_content">
 
                 <ImageView
@@ -111,6 +112,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/requestSection"
                 style="@style/AccountItemStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -140,6 +142,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/orderSection"
                 style="@style/AccountItemStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -169,6 +172,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/trackSection"
                 style="@style/AccountItemStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -226,8 +230,40 @@
                     app:srcCompat="@drawable/ic_arrow_back" />
 
             </LinearLayout>
-
             <LinearLayout
+                android:id="@+id/languageSection"
+                style="@style/AccountItemStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="39dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center"
+                    android:background="@color/greenTrans"
+                    android:foregroundGravity="center"
+                    app:srcCompat="@drawable/icon_language" />
+
+                <TextView
+                    style="@style/TextViewRegular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_16"
+                    android:layout_marginEnd="@dimen/dp_16"
+                    android:layout_weight="1"
+                    android:text="Change Country" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="3"
+                    android:rotation="180"
+                    app:srcCompat="@drawable/ic_arrow_back" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/notificationSection"
                 style="@style/AccountItemStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

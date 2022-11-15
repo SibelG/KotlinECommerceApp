@@ -19,13 +19,21 @@
         android:id="@+id/nav_orders"
         android:name="com.example.ecommerceapp.ui.orders.OrdersFragment"
         android:label="@string/menu_orders"
-        tools:layout="@layout/fragment_orders" />
+        tools:layout="@layout/fragment_orders" >
+        <action
+            android:id="@+id/action_nav_orders_to_orderDetailFragment"
+            app:destination="@id/orderDetailFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_profile"
         android:name="com.example.ecommerceapp.ui.profile.ProfileFragment"
         android:label="@string/menu_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_nav_profile_to_addressFragment"
+            app:destination="@id/addressFragment" />
+    </fragment>
 
     <activity
         android:id="@+id/nav_splash"
@@ -41,7 +49,8 @@
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.example.ecommerceapp.ui.detail.DetailFragment"
-        android:label="DetailFragment">
+        android:label="DetailFragment"
+        tools:layout="@layout/detail_fragment">
 
         <argument
             android:name="productDetails"
@@ -52,10 +61,51 @@
         android:id="@+id/nav_account"
         android:name="com.example.ecommerceapp.ui.account.AccountFragment"
         android:label="AccountFragment"
-        tools:layout="@layout/fragment_account"/>
+        tools:layout="@layout/fragment_account">
+        <action
+            android:id="@+id/action_nav_account_to_nav_profile"
+            app:destination="@id/nav_profile" />
+        <action
+            android:id="@+id/action_nav_account_to_nav_orders"
+            app:destination="@id/nav_orders" />
+        <action
+            android:id="@+id/action_nav_account_to_credidCardFragment"
+            app:destination="@id/credidCardFragment" />
+        <action
+            android:id="@+id/action_nav_account_to_authenticationActivity"
+            app:destination="@id/authenticationActivity" />
+        <action
+            android:id="@+id/action_nav_account_to_productRequestFragment"
+            app:destination="@id/productRequestFragment" />
+    </fragment>
     <fragment
         android:id="@+id/nav_favorite"
         android:name="com.example.ecommerceapp.ui.favorites.FavoritesFragment"
         android:label="fragment_favorites"
         tools:layout="@layout/fragment_favorites" />
+    <fragment
+        android:id="@+id/credidCardFragment"
+        android:name="com.example.ecommerceapp.ui.credid_card.CredidCardFragment"
+        android:label="CredidCardFragment"
+        tools:layout="@layout/fragment_credid_card"/>
+    <activity
+        android:id="@+id/authenticationActivity"
+        android:name="com.example.ecommerceapp.AuthenticationActivity"
+        android:label="AuthenticationActivity"
+        tools:layout="@layout/activity_authentication"/>
+    <fragment
+        android:id="@+id/addressFragment"
+        android:name="com.example.ecommerceapp.ui.address.AddressFragment"
+        android:label="AddressFragment"
+        tools:layout="@layout/address_fragment"/>
+    <fragment
+        android:id="@+id/orderDetailFragment"
+        android:name="com.example.rshlnapp.ui.orderDetails.OrderDetailFragment"
+        android:label="OrderDetailFragment"
+        tools:layout="@layout/order_detail_fragment"/>
+    <fragment
+        android:id="@+id/productRequestFragment"
+        android:name="com.example.ecommerceapp.ui.product_request.ProductRequestFragment"
+        android:label="fragment_product_request"
+        tools:layout="@layout/fragment_product_request" />
 </navigation>

@@ -7,8 +7,12 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.ecommerceapp.AuthenticationActivity
 import com.example.ecommerceapp.MainActivity
 import com.example.ecommerceapp.R
@@ -20,7 +24,10 @@ import com.example.ecommerceapp.daos.UserDao
 import com.example.ecommerceapp.databinding.FragmentProfileBinding
 import com.example.ecommerceapp.models.Address
 import com.example.ecommerceapp.models.User
+import com.example.ecommerceapp.ui.account.AccountFragment
+import com.example.ecommerceapp.ui.account.AccountFragmentDirections
 import com.example.ecommerceapp.ui.address.AddressFragment
+import com.example.ecommerceapp.ui.orders.OrdersFragment
 import com.example.rshlnapp.ui.edit_address.EditAddressFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -32,7 +39,7 @@ import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
 
-class ProfileFragment : Fragment(), IAddressAdapter {
+class ProfileFragment() : Fragment(), IAddressAdapter {
 
     private lateinit var binding: FragmentProfileBinding
     lateinit var adapter: AddressAdapter
@@ -75,6 +82,19 @@ class ProfileFragment : Fragment(), IAddressAdapter {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+        /*requireActivity().onBackPressedDispatcher.addCallback(this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    val currentFragment = this@ProfileFragment
+                    if (previousFragment is AccountFragment) {
+                        requireActivity().supportFragmentManager.beginTransaction()
+                            .remove(currentFragment).show(previousFragment).commit()
+                        (activity as MainActivity).supportActionBar?.title = "Your Profile"
+                        (activity as MainActivity).setDrawerLocked(false)
+                        (activity as MainActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
+                    }
+                }
+            })*/
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -108,6 +128,7 @@ class ProfileFragment : Fragment(), IAddressAdapter {
             getString(R.string.title_address_fragment)
         ).hide(currentFragment).commit()
         (activity as MainActivity).setDrawerLocked(true)
+
     }
 
     override fun onEditClicked(address: Address) {

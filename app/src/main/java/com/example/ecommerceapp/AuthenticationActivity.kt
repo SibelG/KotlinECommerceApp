@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import com.example.ecommerceapp.daos.UserDao
 import com.example.ecommerceapp.databinding.ActivityAuthenticationBinding
 import com.example.ecommerceapp.models.User
+import com.example.ecommerceapp.ui.home.HomeFragment
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -187,6 +188,16 @@ class AuthenticationActivity : AppCompatActivity() {
                     val account = task.getResult(ApiException::class.java)!!
                     Log.d("SignInActivity", "firebaseAuthWithGoogle:" + account.id)
                     firebaseAuthWithGoogle(account.idToken!!)
+
+                    val email= account.email
+                    val googleFirstName= account.givenName
+                    val picture= account.photoUrl.toString()
+                    val user = User(userId = auth.currentUser!!.uid,userName = googleFirstName.toString(), userImage = picture)
+                    UserDao().addUser(this,user)
+                    /*val Intent=Intent(this,HomeFragment::class.java)
+                    intent.putExtra("email",email)
+                    intent.putExtra("name",googleFirstName)
+                    startActivity(intent)*/
 
                 } catch (e: ApiException) {
                     // Google Sign In failed, update UI appropriately
