@@ -2,7 +2,8 @@
 Firestore-Firebase-Google Authentication-Mvvm-Navigation Component
 
 # Assets
-![image](https://user-images.githubusercontent.com/46397935/202049775-cdc3acc3-6fe5-455e-8db0-be1d03614f37.png)
+![image](https://user-images.githubusercontent.com/46397935/202049873-0fc11a22-b469-4906-959b-aefa84bcee74.png)
+![image](https://user-images.githubusercontent.com/46397935/202049985-ac04ba8c-0278-4767-b6d1-34d2a5b6e945.png)
 ![image](https://user-images.githubusercontent.com/46397935/202049526-30a9ef43-5bf7-4fa2-84f5-d07de3875cf2.png)
 ![image](https://user-images.githubusercontent.com/46397935/202047310-3af04dd5-6b2b-4f8b-8b01-55ce3d8f5bdc.png)
 ![image](https://user-images.githubusercontent.com/46397935/202048137-14abe49c-f8b4-447e-bf78-dc68fcf1162c.png)
