@@ -12,12 +12,12 @@
 
         <ImageView
             android:id="@+id/accountImageProfile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="62dp"
+            android:layout_height="69dp"
             android:layout_margin="@dimen/dp_16"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_account_profile" />
+            app:srcCompat="@drawable/ic_baseline_account_circle_24" />
 
         <TextView
             android:id="@+id/accountProfileName"
@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_16"
-            android:text="Ameen Essa"
+            android:text="Sibel Gençtürk"
             app:layout_constraintBottom_toBottomOf="@+id/accountImageProfile"
             app:layout_constraintStart_toEndOf="@id/accountImageProfile"
             app:layout_constraintTop_toTopOf="@id/accountImageProfile"
@@ -36,7 +36,7 @@
             style="@style/TextViewRegular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ameen.mobiledev@gmail.com"
+            android:text="sbl.gencturks@gmail.com"
             android:textSize="@dimen/sp_12"
             app:layout_constraintEnd_toEndOf="@id/accountProfileName"
             app:layout_constraintHorizontal_bias="0.0"

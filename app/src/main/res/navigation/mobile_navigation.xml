@@ -77,6 +77,8 @@
         <action
             android:id="@+id/action_nav_account_to_productRequestFragment"
             app:destination="@id/productRequestFragment" />
+
+
     </fragment>
     <fragment
         android:id="@+id/nav_favorite"
@@ -108,4 +110,18 @@
         android:name="com.example.ecommerceapp.ui.product_request.ProductRequestFragment"
         android:label="fragment_product_request"
         tools:layout="@layout/fragment_product_request" />
+
+    <fragment
+        android:id="@+id/locateUserLocationFragment"
+        android:name="com.example.ecommerceapp.ui.tracking.LocateUserLocationFragment"
+        android:label="fragment_locate_user_location"
+        tools:layout="@layout/fragment_locate_user_location" />
+    <fragment
+        android:id="@+id/chooseAddressFragment"
+        android:name="com.example.ecommerceapp.ui.choose_address.ChooseAddressFragment"
+        android:label="ChooseAddressFragment" >
+        <action
+            android:id="@+id/action_chooseAddressFragment_to_locateUserLocationFragment"
+            app:destination="@id/locateUserLocationFragment" />
+    </fragment>
 </navigation>

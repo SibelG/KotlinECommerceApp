@@ -5,6 +5,7 @@ import android.view.*
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.ecommerceapp.MainActivity
 import com.example.ecommerceapp.R
 import com.example.ecommerceapp.Utils
@@ -14,9 +15,11 @@ import com.example.ecommerceapp.daos.UserDao
 import com.example.ecommerceapp.databinding.ChooseAddressFragmentBinding
 import com.example.ecommerceapp.models.Cart
 import com.example.ecommerceapp.models.User
+import com.example.ecommerceapp.ui.account.AccountFragmentDirections
 import com.example.ecommerceapp.ui.address.AddressFragment
 import com.example.ecommerceapp.ui.detail.DetailFragment
 import com.example.ecommerceapp.ui.summary.SummaryFragment
+import com.example.ecommerceapp.ui.tracking.LocateUserLocationFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -104,7 +107,16 @@ class ChooseAddressFragment(val previousFragment: Fragment, val cart: Cart) : Fr
         }
         return super.onOptionsItemSelected(item)
     }
+    fun selectUserLocation() {
 
+        val currentFragment = this
+        val locationFragment= LocateUserLocationFragment(currentFragment)
+        requireActivity().supportFragmentManager.beginTransaction().add(
+            R.id.nav_host_fragment_content_main,
+            locationFragment,
+            getString(R.string.title_locate)
+        ).hide(currentFragment).commit()
+    }
     fun setupRecyclerView() {
         GlobalScope.launch {
             currentUser =

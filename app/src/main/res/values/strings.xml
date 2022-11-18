@@ -14,6 +14,7 @@
     <string name="menu_orders">Your Orders</string>
     <string name="menu_profile">Your Profile</string>
     <string name="menu_request">Your Product Requests</string>
+    <string name="menu_tracking">Tracking Product</string>
     <string name="cart">Cart</string>
     <string name="welcome_text">Welcome to the FashionShop</string>
     <string name="enter_phone_number">Enter Phone Number</string>
@@ -30,6 +31,7 @@
     <string name="title_summary_fragment">Order Summary</string>
     <string name="title_order_details">Order Details</string>
     <string name="title_add_credid">Add Credid Card</string>
+    <string name="title_locate">Select Address</string>
     <string name="amount_payable">Amount Payable</string>
     <string name="shipping_address">Shipping Address-</string>
     <string name="email_helpline">ctempire5@gmail.com</string>
@@ -171,4 +173,5 @@
     <string name="product_quantity">Quantity:</string>
     <string name="product_total_price">Total Price:</string>
     <string name="accountUpdatedSuccessfully">Account Updated Successfully</string>
+    <string name="drag_info">Long press any marker and drag to a position for accurate position</string>
 </resources>

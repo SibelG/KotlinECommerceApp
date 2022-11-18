@@ -30,7 +30,7 @@
         <activity android:name=".MainActivity"></activity>
         <activity android:name=".AuthenticationActivity"></activity>
 
-    <service android:name=".fcm.PushNotificationService"
+    <service android:name="com.example.ecommerceapp.data.database.fcm.PushNotificationService"
         android:exported="false"
         android:enabled="true"
         android:stopWithTask="false">

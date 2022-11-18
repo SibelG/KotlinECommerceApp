@@ -2,10 +2,7 @@ package com.example.ecommerceapp
 
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.ecommerceapp.adapters.BrandAdapter
-import com.example.ecommerceapp.adapters.CartAdapter
-import com.example.ecommerceapp.adapters.CategoryAdapter
-import com.example.ecommerceapp.adapters.ProductAdapter
+import com.example.ecommerceapp.adapters.*
 import com.example.ecommerceapp.models.Brand
 import com.example.ecommerceapp.models.CartItemOffline
 import com.example.ecommerceapp.models.Category
@@ -35,3 +32,9 @@ fun bindCartRecyclerView(recyclerView: RecyclerView, data: List<CartItemOffline>
     val adapter = recyclerView.adapter as CartAdapter
     adapter.submitList(data)
 }
+
+/*@BindingAdapter("favListData")
+fun bindFavRecyclerView(recyclerView: RecyclerView, data: List<Product>?){
+    val adapter = recyclerView.adapter as FavoritesAdapter
+    adapter.submitList(data)
+}*/

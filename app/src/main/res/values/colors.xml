@@ -11,4 +11,7 @@
     <color name="green">#67EF2D</color>
     <color name="greenTrans">#FFEDFBF4</color>
     <color name="card_color">#F89234</color>
+    <color name="grey">#A6A5A4</color>
+    <color name="filledBlack">#000</color>
+    <color name="textColorPrimary">#222121</color>
 </resources>
