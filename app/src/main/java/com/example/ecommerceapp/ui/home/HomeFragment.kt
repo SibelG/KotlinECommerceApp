@@ -28,6 +28,7 @@ class HomeFragment : Fragment(), IProductAdapter {
     private lateinit var categoryAdapter: CategoryAdapter
     private lateinit var brandAdapter: BrandAdapter
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -72,10 +73,12 @@ class HomeFragment : Fragment(), IProductAdapter {
                 binding.homeFragmentProgressBar.visibility = View.GONE
             }
         })
+
+        binding.seeMoreHeadLineText.setOnClickListener {
+            seeAllProduct()
+        }
         return binding.root
     }
-
-
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -84,6 +87,20 @@ class HomeFragment : Fragment(), IProductAdapter {
             return true
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    fun seeAllProduct(){
+
+       /* val action = HomeFragmentDirections.actionNavHomeToAllProductFragment()
+        findNavController().navigate(action)*/
+        val currentFragment = this
+        val productAllFragment = AllProductFragment()
+        requireActivity().supportFragmentManager.beginTransaction().add(
+            R.id.nav_host_fragment_content_main,
+            productAllFragment,
+            getString(R.string.title_detail_fragment)
+        ).hide(currentFragment).commit()
+        (activity as MainActivity).setDrawerLocked(true)
     }
 
     override fun onProductClicked(productId: String) {

@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_nav_home_to_detailFragment"
             app:destination="@id/detailFragment" />
+        <action
+            android:id="@+id/action_nav_home_to_allProductFragment"
+            app:destination="@id/allProductFragment" />
     </fragment>
 
     <fragment
@@ -124,4 +127,8 @@
             android:id="@+id/action_chooseAddressFragment_to_locateUserLocationFragment"
             app:destination="@id/locateUserLocationFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/allProductFragment"
+        android:name="com.example.ecommerceapp.ui.home.AllProductFragment"
+        android:label="AllProductFragment" />
 </navigation>

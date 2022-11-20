@@ -3,11 +3,17 @@
 <layout xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
         <variable
             name="viewModel"
             type="com.example.ecommerceapp.ui.home.HomeViewModel" />
+
+        <variable
+            name="fragment"
+            type="com.example.ecommerceapp.ui.home.HomeFragment" />
     </data>
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -93,6 +99,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_32"
                 android:text="Best Selling"
+                android:textSize="14sp"
                 app:layout_constraintEnd_toStartOf="@+id/seeMoreHeadLineText"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@id/startGuideLine"
@@ -119,13 +126,15 @@
                 android:id="@+id/productsRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="@dimen/dp_16"
+                android:layout_marginEnd="16dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toStartOf="@id/endGuideLine"
                 app:layout_constraintStart_toStartOf="@id/startGuideLine"
                 app:layout_constraintTop_toBottomOf="@id/bestSellingHeadLineText"
-                tools:itemCount="2"
                 app:productListData="@{viewModel.products}"
+                tools:itemCount="2"
                 tools:listitem="@layout/item_product"
                 tools:orientation="horizontal" />
 

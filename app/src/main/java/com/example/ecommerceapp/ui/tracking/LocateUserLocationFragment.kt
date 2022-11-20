@@ -47,7 +47,7 @@ import com.karumi.dexter.listener.single.PermissionListener
 import java.io.IOException
 
 
-class LocateUserLocationFragment( private val previosFragment:Fragment) : Fragment(),
+class LocateUserLocationFragment( private val previosFragment:Fragment) : Fragment(R.layout.fragment_locate_user_location),
     OnMapReadyCallback, LocationListener,
     GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
 

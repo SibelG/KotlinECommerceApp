@@ -11,6 +11,7 @@ import com.example.ecommerceapp.models.Brand
 import com.example.ecommerceapp.models.Category
 import com.example.ecommerceapp.models.Product
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
@@ -24,6 +25,13 @@ class HomeViewModel : ViewModel() {
     private val _products = MutableLiveData<List<Product>>()
     val products: LiveData<List<Product>>
         get() = _products
+
+    private val _productsFilter = MutableLiveData<List<Product>>()
+    val productsFilter: LiveData<List<Product>>
+        get() = _productsFilter
+
+
+    var productDao=ProductDao()
 
 
     private val _category = MutableLiveData<List<Category>>()
@@ -52,11 +60,12 @@ class HomeViewModel : ViewModel() {
         retrieveAllProducts()
         retrieveAllCategories()
         retrieveAllBrands()
+
     }
 
 
     private fun retrieveAllProducts(){
-        val productsCollection = FirebaseFirestore.getInstance().collection("products")
+        val productsCollection = FirebaseFirestore.getInstance().collection("products").limit(3)
         viewModelScope.launch {
             try {
                 val query = productsCollection.get().await()
@@ -75,6 +84,18 @@ class HomeViewModel : ViewModel() {
             }
         }
     }
+    fun retrieveAll(collection:Query){
+        //val productsCollection = FirebaseFirestore.getInstance().collection("products").limit(3)
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                _productsFilter.postValue(productDao.retrieveAll(collection))
+                _status.value = ProductStatus.DONE
+            }catch (e: Exception){
+                Log.d("CHECKING",e.message.toString())
+            }
+
+        }
+    }
 
 
     private fun retrieveAllCategories(){
@@ -85,6 +106,7 @@ class HomeViewModel : ViewModel() {
                 val documents = query.documents
                 for (document in documents){
                     val category = document.toObject(Category::class.java)!!
+                    category.categoryId = document.id
                     mCategories.add(category)
                 }
             }catch (e: Exception){
@@ -92,18 +114,20 @@ class HomeViewModel : ViewModel() {
             }
             withContext(Dispatchers.Main){
                 _category.value = mCategories
+                _status.value = ProductStatus.DONE
             }
         }
     }
 
     private fun retrieveAllBrands(){
-        val brandCollection = FirebaseFirestore.getInstance().collection("brands")
+        val brandCollection = FirebaseFirestore.getInstance().collection("brands").limit(3)
         viewModelScope.launch {
             try {
                 val query = brandCollection.get().await()
                 val documents = query.documents
                 for (document in documents){
                     val brand = document.toObject(Brand::class.java)!!
+                    brand.brandId = document.id
                     mBrands.add(brand)
                 }
                 Log.d("CHECK", mBrands.toString())
@@ -112,6 +136,7 @@ class HomeViewModel : ViewModel() {
             }
             withContext(Dispatchers.Main){
                 _brand.value = mBrands
+                _status.value = ProductStatus.DONE
             }
         }
     }

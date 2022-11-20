@@ -174,4 +174,25 @@
     <string name="product_total_price">Total Price:</string>
     <string name="accountUpdatedSuccessfully">Account Updated Successfully</string>
     <string name="drag_info">Long press any marker and drag to a position for accurate position</string>
+
+    <string name="selected_item">Selected item:</string>
+
+    <string-array name="sorting">
+        <item>Recommended</item>
+        <item>Lowest Price</item>
+        <item>Highest Price</item>
+        <item>Bestsellers</item>
+        <item>Top Favorites</item>
+        <item>Newest</item>
+        <item>Most Evaluated</item>
+    </string-array>
+
+    <string-array name="filtering">
+        <item>Gender</item>
+        <item>Category</item>
+        <item>Brand</item>
+        <item>Size</item>
+        <item>Price</item>
+        <item>Color</item>
+    </string-array>
 </resources>
