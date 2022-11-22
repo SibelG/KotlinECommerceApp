@@ -98,6 +98,10 @@ class AllProductFragment() : Fragment(), IFilterProductAdapter {
                 var str = parent.getItemAtPosition(position);
                 when(str) {
                     "Recommended" -> setupRecyclerView(FirebaseFirestore.getInstance().collection("products"))
+                    "Lowest Price" -> setupRecyclerView(FirebaseFirestore.getInstance().collection("products").orderBy("productPrice"))
+                    "Highest Price" -> setupRecyclerView(FirebaseFirestore.getInstance().collection("products").orderBy("productPrice",Query.Direction.DESCENDING))
+                    "Newest" -> setupRecyclerView(FirebaseFirestore.getInstance().collection("products").orderBy("productId", Query.Direction.DESCENDING))
+
 
 
                     else -> print("I don't know anything about it")

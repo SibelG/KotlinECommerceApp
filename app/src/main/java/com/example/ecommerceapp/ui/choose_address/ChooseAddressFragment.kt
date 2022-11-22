@@ -63,6 +63,9 @@ class ChooseAddressFragment(val previousFragment: Fragment, val cart: Cart) : Fr
                 goToSummaryFragment(position)
             }
         }
+        binding.selectAddress.setOnClickListener {
+            selectUserLocation()
+        }
 
         return binding.root
     }
@@ -117,6 +120,7 @@ class ChooseAddressFragment(val previousFragment: Fragment, val cart: Cart) : Fr
             getString(R.string.title_locate)
         ).hide(currentFragment).commit()
     }
+
     fun setupRecyclerView() {
         GlobalScope.launch {
             currentUser =

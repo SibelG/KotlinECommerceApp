@@ -19,18 +19,13 @@ import androidx.fragment.app.Fragment
 import android.webkit.PermissionRequest
 import android.widget.EditText
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.activityViewModels
+import com.example.ecommerceapp.*
 import com.example.ecommerceapp.R
-import com.example.ecommerceapp.Utils.BASE_LATITUDE
-import com.example.ecommerceapp.Utils.BASE_LONGITUDE
-import com.example.ecommerceapp.Utils.LOCATION_ZOOM
-import com.example.ecommerceapp.closeFragment
+import com.example.ecommerceapp.daos.UserDao
 import com.example.ecommerceapp.databinding.FragmentLocateUserLocationBinding
+import com.example.ecommerceapp.models.User
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.GoogleApiClient
@@ -38,16 +33,13 @@ import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
-import java.util.*
-import com.karumi.dexter.Dexter
-import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.listener.PermissionDeniedResponse
-import com.karumi.dexter.listener.PermissionGrantedResponse
-import com.karumi.dexter.listener.single.PermissionListener
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import java.io.IOException
 
 
-class LocateUserLocationFragment( private val previosFragment:Fragment) : Fragment(R.layout.fragment_locate_user_location),
+class LocateUserLocationFragment( private val previosFragment:Fragment) : Fragment(),
     OnMapReadyCallback, LocationListener,
     GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
 
@@ -60,10 +52,22 @@ class LocateUserLocationFragment( private val previosFragment:Fragment) : Fragme
     internal var mCurrLocationMarker: Marker? = null
     internal var mGoogleApiClient: GoogleApiClient? = null
     internal lateinit var mLocationRequest: LocationRequest
+    private lateinit var userDao: UserDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback(this,
+                object : OnBackPressedCallback(true) {
+                    override fun handleOnBackPressed() {
+                        val currentFragment = this@LocateUserLocationFragment
+                        requireActivity().supportFragmentManager.beginTransaction()
+                                .remove(currentFragment).show(previosFragment).commit()
+                            (activity as MainActivity).supportActionBar?.title = "Account Settings"
+                            (activity as MainActivity).setDrawerLocked(false)
+                            (activity as MainActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
 
+                    }
+                })
     }
 
     override fun onCreateView(
@@ -72,11 +76,24 @@ class LocateUserLocationFragment( private val previosFragment:Fragment) : Fragme
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentLocateUserLocationBinding.inflate(inflater)
-        val mapFragment = requireActivity().supportFragmentManager
+
+
+        val mapFragment = childFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        userDao = UserDao()
+
+        binding.searchButton.setOnClickListener{
+            searchLocation()
+        }
         return binding.root
 
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        (activity as MainActivity).hideBottomNav()
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -152,8 +169,8 @@ class LocateUserLocationFragment( private val previosFragment:Fragment) : Fragme
 
     }
 
-    fun searchLocation(view: View) {
-        val locationSearch=binding.editText
+    fun searchLocation() {
+        val locationSearch= binding.editText
         lateinit var location: String
         location = locationSearch.text.toString()
         var addressList: List<Address>? = null
@@ -173,7 +190,22 @@ class LocateUserLocationFragment( private val previosFragment:Fragment) : Fragme
             val latLng = LatLng(address.latitude, address.longitude)
             mMap!!.addMarker(MarkerOptions().position(latLng).title(location))
             mMap!!.animateCamera(CameraUpdateFactory.newLatLng(latLng))
+            /*val selectedAddress = com.example.ecommerceapp.models.Address(
+                userName = location,
+                mobileNumber = address.phone,
+                houseNumber= address.subThoroughfare,
+                city = address.locality,
+                streetName = address.thoroughfare
+
+            )
+            GlobalScope.launch {
+                val currentUser =
+                    userDao.getUserById(Utils.currentUserId).await().toObject(User::class.java)!!
+                currentUser.addresses.add(selectedAddress)
+                userDao.updateProfile(currentUser)
+            }*/
             Toast.makeText(requireContext(), address.latitude.toString() + " " + address.longitude, Toast.LENGTH_LONG).show()
+            println("strre"+address.locality+address.subThoroughfare)
         }
     }
 
