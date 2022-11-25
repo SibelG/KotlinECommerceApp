@@ -1,23 +1,29 @@
 package com.example.ecommerceapp
 
 import android.graphics.Color.green
-import android.graphics.drawable.Drawable
+import android.graphics.Color.red
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.*
 import com.example.ecommerceapp.databinding.ActivityMainBinding
+import com.example.ecommerceapp.models.CartItemOffline
 import com.example.ecommerceapp.summary.HelplineFragment
 import com.example.ecommerceapp.ui.account.AccountFragment
 import com.example.ecommerceapp.ui.cart.CartFragment
+import com.example.ecommerceapp.ui.cart.CartViewModel
 import com.example.ecommerceapp.ui.favorites.FavoritesFragment
 import com.example.ecommerceapp.ui.home.HomeFragment
 import com.example.ecommerceapp.ui.orders.OrdersFragment
@@ -25,8 +31,7 @@ import com.example.ecommerceapp.ui.profile.ProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
+
 
 class MainActivity : AppCompatActivity(), DrawerLocker {
 
@@ -35,11 +40,14 @@ class MainActivity : AppCompatActivity(), DrawerLocker {
     private lateinit var binding: ActivityMainBinding
     private val connectionLiveData by lazy { ConnectionLiveData(this) }
     private var firstCheckInternetConnection = true
+    private lateinit var shopViewModel: CartViewModel
+    var cartQuantity: List<CartItemOffline> = ArrayList()
+    var quantity=""
 
     //create variables for the fragments
     val homeFragment = HomeFragment()
     val ordersFragment = OrdersFragment()
-    val profileFragment = ProfileFragment()
+    val profileFragment = ProfileFragment("MainActivity")
     val helplineFragment = HelplineFragment()
     val accountFragment = AccountFragment()
     val favoritesFragment = FavoritesFragment()
@@ -68,7 +76,13 @@ class MainActivity : AppCompatActivity(), DrawerLocker {
         drawerLayout.addDrawerListener(drawerToggle)
         drawerToggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        shopViewModel = ViewModelProvider(this).get(CartViewModel::class.java)
+        shopViewModel.subQuantity.observe(this, Observer<String> {
+            quantity = it
+            invalidateOptionsMenu()
 
+
+        })
         /*appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_home, R.id.nav_profile, R.id.nav_orders,
@@ -201,8 +215,20 @@ class MainActivity : AppCompatActivity(), DrawerLocker {
         super.onPause()
         firstCheckInternetConnection = true
     }
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main, menu)
+
+        val menuItem:MenuItem = menu.findItem(R.id.action_cart)
+        val actionView: View = menuItem.getActionView()
+
+        val cartBadgeTextView: TextView = actionView.findViewById(R.id.cart_badge_text_view)
+
+        cartBadgeTextView.text = quantity
+        cartBadgeTextView.setVisibility(if (quantity == "0") View.GONE else View.VISIBLE)
+
+        actionView.setOnClickListener {
+            onOptionsItemSelected(menuItem)
+        }
         return true
     }
 

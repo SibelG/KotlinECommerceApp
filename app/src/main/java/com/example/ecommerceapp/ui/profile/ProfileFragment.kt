@@ -39,7 +39,7 @@ import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
 
-class ProfileFragment() : Fragment(), IAddressAdapter {
+class ProfileFragment(val fromWhere: String) : Fragment(), IAddressAdapter {
 
     private lateinit var binding: FragmentProfileBinding
     lateinit var adapter: AddressAdapter
@@ -86,10 +86,11 @@ class ProfileFragment() : Fragment(), IAddressAdapter {
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     val currentFragment = this@ProfileFragment
-                    if (previousFragment is AccountFragment) {
+                    val accountFragment= AccountFragment()
+                    if (fromWhere=="AccountFragment") {
                         requireActivity().supportFragmentManager.beginTransaction()
-                            .remove(currentFragment).show(previousFragment).commit()
-                        (activity as MainActivity).supportActionBar?.title = "Your Profile"
+                            .remove(currentFragment).show(accountFragment).commit()
+                        (activity as MainActivity).supportActionBar?.title = "AccountFragment"
                         (activity as MainActivity).setDrawerLocked(false)
                         (activity as MainActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
                     }

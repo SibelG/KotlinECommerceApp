@@ -2,6 +2,7 @@ package com.example.ecommerceapp.ui.cart
 
 import android.os.Bundle
 import android.view.*
+import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -30,6 +31,7 @@ class CartFragment : Fragment(), ICartAdapter {
     private lateinit var adapter: CartAdapter
     private lateinit var userDao: UserDao
     private lateinit var currentUser: User
+    var cartQuantity=""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,6 +55,11 @@ class CartFragment : Fragment(), ICartAdapter {
         viewModel.subtotal.observe(viewLifecycleOwner, {
             binding.totalAmountCart.text = it
         })
+
+        viewModel.subQuantity.observe(viewLifecycleOwner, {
+            cartQuantity = it
+        })
+
 
         viewModel.listIsEmpty.observe(viewLifecycleOwner, {
             if (it) {
@@ -109,9 +116,11 @@ class CartFragment : Fragment(), ICartAdapter {
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
-        menu.findItem(R.id.action_cart).setVisible(false)
+       // menu.findItem(R.id.action_cart).setVisible(false)
         super.onPrepareOptionsMenu(menu)
     }
+
+  
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
@@ -141,6 +150,7 @@ class CartFragment : Fragment(), ICartAdapter {
                 }
             }
             cartItemOffline.quantity += 1
+            cartQuantity= cartItemOffline.quantity.toString()
             val price = cartItemOffline.product.productPrice
             currentUser.cart.price += price
             val cartItem = CartItem(cartItemOffline.productId,cartItemOffline.product.productName,cartItemOffline.quantity)
@@ -165,6 +175,7 @@ class CartFragment : Fragment(), ICartAdapter {
             }
             if (cartItemOffline.quantity > 1) {
                 cartItemOffline.quantity -= 1
+                cartQuantity= cartItemOffline.quantity.toString()
                 val price = cartItemOffline.product.productPrice
                 currentUser.cart.price -= price
                 val cartItem = CartItem(cartItemOffline.productId,cartItemOffline.product.productName,cartItemOffline.quantity)

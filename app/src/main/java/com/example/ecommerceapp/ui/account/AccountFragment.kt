@@ -115,14 +115,15 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
     }
 
     fun openProfileFragment() {
-        val profileFragment = ProfileFragment()
+       /* val profileFragment = ProfileFragment("AccountFragment")
         val currentFragment = this
         requireActivity().supportFragmentManager.beginTransaction().add(
             R.id.nav_host_fragment_content_main,
             profileFragment,
             getString(R.string.menu_profile)
-        ).hide(currentFragment).commit()
-        (activity as MainActivity).setDrawerLocked(true)
+        ).hide(currentFragment).commit()*/
+        val action = AccountFragmentDirections.actionNavAccountToNavProfile()
+        findNavController().navigate(action)
     }
 
     fun openDeliveryAddressFragment() {

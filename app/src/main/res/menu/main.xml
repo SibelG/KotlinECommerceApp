@@ -6,5 +6,5 @@
         android:title="@string/cart"
         app:showAsAction="always"
         android:icon="@drawable/ic_cart"
-        android:actionLayout="@layout/action_cart_layout"/>
+        app:actionLayout="@layout/action_cart_layout"/>
 </menu>
