@@ -96,7 +96,7 @@ class HomeFragment : Fragment(), IProductAdapter {
         val currentFragment = this
         val productAllFragment = AllProductFragment()
         requireActivity().supportFragmentManager.beginTransaction().add(
-            R.id.nav_host_fragment_content_main,
+            R.id.nav_host_fragment,
             productAllFragment,
             getString(R.string.title_detail_fragment)
         ).hide(currentFragment).commit()
@@ -108,7 +108,7 @@ class HomeFragment : Fragment(), IProductAdapter {
         val currentFragment = this
         val productDetailFragment = DetailFragment(productId, "HomeFragment")
         requireActivity().supportFragmentManager.beginTransaction().add(
-            R.id.nav_host_fragment_content_main,
+            R.id.nav_host_fragment,
             productDetailFragment,
             getString(R.string.title_detail_fragment)
         ).hide(currentFragment).commit()

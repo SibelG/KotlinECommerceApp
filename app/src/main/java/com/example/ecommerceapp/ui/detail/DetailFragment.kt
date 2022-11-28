@@ -67,7 +67,7 @@ class DetailFragment(val productId: String,val fromWhere: String) : Fragment() {
         val cart = Cart(cartItems,product.productPrice)
         val chooseAddressFragment = ChooseAddressFragment(this,cart)
         val currentFragment = this
-        requireActivity().supportFragmentManager.beginTransaction().add(R.id.nav_host_fragment_content_main,chooseAddressFragment,getString(R.string.title_choose_address_fragment)).hide(currentFragment).commit()
+        requireActivity().supportFragmentManager.beginTransaction().add(R.id.nav_host_fragment,chooseAddressFragment,getString(R.string.title_choose_address_fragment)).hide(currentFragment).commit()
     }
 
     private fun addProductToCart(productId: String) {
@@ -111,7 +111,7 @@ class DetailFragment(val productId: String,val fromWhere: String) : Fragment() {
                 }else{
                     val cartFragment = CartFragment()
                     val currentFragment = this@DetailFragment
-                    requireActivity().supportFragmentManager.beginTransaction().remove(currentFragment).add(R.id.nav_host_fragment_content_main,cartFragment,getString(R.string.title_cart_fragment)).commit()
+                    requireActivity().supportFragmentManager.beginTransaction().remove(currentFragment).add(R.id.nav_host_fragment,cartFragment,getString(R.string.title_cart_fragment)).commit()
                     (activity as MainActivity).supportActionBar?.title = "Cart"
                 }
             }

@@ -54,7 +54,7 @@ class SummaryFragment(
     private fun goToPaymentFragment() {
         val currentFragment = this
         val paymentFragment = PaymentFragment(currentFragment,currentUser,address,cart,cartItemsOffline)
-        requireActivity().supportFragmentManager.beginTransaction().add(R.id.nav_host_fragment_content_main,paymentFragment,getString(R.string.title_payment_fragment)).hide(currentFragment).commit()
+        requireActivity().supportFragmentManager.beginTransaction().add(R.id.nav_host_fragment,paymentFragment,getString(R.string.title_payment_fragment)).hide(currentFragment).commit()
     }
 
     private fun setupRecyclerView() {

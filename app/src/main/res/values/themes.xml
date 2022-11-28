@@ -20,7 +20,9 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-
+    <style name="bigTextTheme">
+        <item name="android:textSize">17dp</item>
+    </style>
     <style name="SearchViewStyle">
         <item name="android:background">@drawable/search_view</item>
         <item name="android:textColor">@color/black</item>

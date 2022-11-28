@@ -85,7 +85,7 @@ class PaymentFragment(
                 order.orderId = orderId
                 val currentFragment = this@PaymentFragment
                 val orderDetailsFragment = OrderDetailFragment(currentFragment,order,cartItemsOffline)
-                requireActivity().supportFragmentManager.beginTransaction().add(R.id.nav_host_fragment_content_main,orderDetailsFragment,getString(R.string.title_order_details)).hide(currentFragment).commit()
+                requireActivity().supportFragmentManager.beginTransaction().add(R.id.nav_host_fragment,orderDetailsFragment,getString(R.string.title_order_details)).hide(currentFragment).commit()
             }
         }
     }

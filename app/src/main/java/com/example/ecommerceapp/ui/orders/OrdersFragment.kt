@@ -104,7 +104,7 @@ class OrdersFragment : Fragment(), IOrderAdapter {
                 val currentFragment = this@OrdersFragment
                 val orderDetailFragment = OrderDetailFragment(currentFragment, order, cartItemsOffline)
                 requireActivity().supportFragmentManager.beginTransaction().add(
-                    R.id.nav_host_fragment_content_main,
+                    R.id.nav_host_fragment,
                     orderDetailFragment,
                     getString(R.string.title_order_details)
                 ).hide(currentFragment).commit()

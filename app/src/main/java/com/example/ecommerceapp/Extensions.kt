@@ -16,7 +16,7 @@ fun Fragment.showToast(msg: String) {
 }
 
 fun MainActivity.showBottomNav(){
-    val navigation = findViewById<BottomNavigationView>(R.id.navigation)
+    val navigation = findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
     if(!navigation.isShown)
         navigation.visibility= View.VISIBLE
 }
@@ -24,7 +24,7 @@ fun Fragment.closeFragment() {
     findNavController().popBackStack()
 }
 fun MainActivity.hideBottomNav(){
-    val navigation = findViewById<BottomNavigationView>(R.id.navigation)
+    val navigation = findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
     navigation.visibility=View.GONE
 }
 

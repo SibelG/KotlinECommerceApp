@@ -64,7 +64,7 @@ class CredidCardFragment : Fragment() ,ICredidCardAdapter{
         val addCredid = AddCredidCardFragment(this)
         val currentFragment = this
         requireActivity().supportFragmentManager.beginTransaction().add(
-            R.id.nav_host_fragment_content_main,
+            R.id.nav_host_fragment,
             addCredid,
             getString(R.string.title_add_credid)
         ).hide(currentFragment).commit()

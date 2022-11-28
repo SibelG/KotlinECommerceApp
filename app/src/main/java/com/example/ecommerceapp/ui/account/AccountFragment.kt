@@ -37,7 +37,7 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
     private lateinit var viewModel: AccountViewModel
     private lateinit var binding: FragmentAccountBinding
 
-    lateinit var firebaseAuth: FirebaseAuth
+    val firebaseAuth= FirebaseAuth.getInstance()
     private var mImageUri: Uri? = null
     private lateinit var userDao: UserDao
     private lateinit var auth: FirebaseAuth
@@ -55,7 +55,6 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
         binding = FragmentAccountBinding.inflate(inflater)
         viewModel = ViewModelProvider(this).get(AccountViewModel::class.java)
 
-        auth = Firebase.auth
         userDao = UserDao()
 
         setupRecyclerView()
@@ -63,9 +62,7 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
         (activity as MainActivity).supportActionBar?.title = "Account Settings"
         (activity as MainActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
 
-        binding.addressSection.setOnClickListener{
-            openDeliveryAddressFragment()
-        }
+
         binding.cardSection.setOnClickListener{
             openUserCredidCardFragment()
         }
@@ -83,6 +80,10 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
         }
         binding.accountImageProfile.setOnClickListener {
             changeUserProfileImage()
+        }
+        binding.trackSection.setOnClickListener{
+            trackingFragment()
+
         }
 
         // Inflate the layout for this fragment
@@ -105,13 +106,15 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
         }
     }
     fun openOrdersFragment() {
-        val currentFragment = this
+        /*val currentFragment = this
         val ordersFragment = OrdersFragment()
         requireActivity().supportFragmentManager.beginTransaction().add(
-            R.id.nav_host_fragment_content_main,
+            R.id.nav_host_fragment,
             ordersFragment,
             getString(R.string.menu_orders)
-        ).hide(currentFragment).commit()
+        ).hide(currentFragment).commit()*/
+        val action = AccountFragmentDirections.actionNavAccountToNavOrders()
+        findNavController().navigate(action)
     }
 
     fun openProfileFragment() {
@@ -126,34 +129,29 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
         findNavController().navigate(action)
     }
 
-    fun openDeliveryAddressFragment() {
-        val currentFragment = this
-        val addressFragment = AddressFragment(currentFragment)
-        requireActivity().supportFragmentManager.beginTransaction().add(
-            R.id.nav_host_fragment_content_main,
-            addressFragment,
-            getString(R.string.menu_credid)
-        ).hide(currentFragment).commit()
-    }
     fun openUserCredidCardFragment() {
-        val currentFragment = this
+       /* val currentFragment = this
         val credidFragment = CredidCardFragment()
         requireActivity().supportFragmentManager.beginTransaction().add(
-            R.id.nav_host_fragment_content_main,
+            R.id.nav_host_fragment,
             credidFragment,
             getString(R.string.menu_credid)
-        ).hide(currentFragment).commit()
+        ).hide(currentFragment).commit()*/
+        val action = AccountFragmentDirections.actionNavAccountToCredidCardFragment()
+        findNavController().navigate(action)
     }
 
 
     fun openProductRequestFragment() {
-        val currentFragment = this
+        /*val currentFragment = this
         val productRequestFragment = ProductRequestFragment()
         requireActivity().supportFragmentManager.beginTransaction().add(
-            R.id.nav_host_fragment_content_main,
+            R.id.nav_host_fragment,
             productRequestFragment,
             getString(R.string.menu_request)
-        ).hide(currentFragment).commit()
+        ).hide(currentFragment).commit()*/
+        val action = AccountFragmentDirections.actionNavAccountToProductRequestFragment()
+        findNavController().navigate(action)
     }
     fun openHelpFragment() {
         // TODO: Add help information.
@@ -161,6 +159,11 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
 
     fun openAboutFragment() {
         // TODO: Add about app information.
+    }
+
+    fun trackingFragment(){
+        val action = AccountFragmentDirections.actionNavAccountToTrackingFragment()
+        findNavController().navigate(action)
     }
 
     fun logout() {

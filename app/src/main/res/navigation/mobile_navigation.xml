@@ -80,6 +80,9 @@
         <action
             android:id="@+id/action_nav_account_to_productRequestFragment"
             app:destination="@id/productRequestFragment" />
+        <action
+            android:id="@+id/action_nav_account_to_trackingFragment"
+            app:destination="@id/trackingFragment" />
 
 
     </fragment>
@@ -131,4 +134,14 @@
         android:id="@+id/allProductFragment"
         android:name="com.example.ecommerceapp.ui.home.AllProductFragment"
         android:label="AllProductFragment" />
+    <fragment
+        android:id="@+id/trackingFragment"
+        android:name="com.example.ecommerceapp.ui.tracking.TrackingFragment"
+        android:label="TrackingFragment" />
+    <fragment
+        android:id="@+id/action_cart"
+        android:name="com.example.ecommerceapp.ui.cart.CartFragment"
+        android:label="CartFragment"
+        tools:layout="@layout/detail_fragment"/>
+
 </navigation>

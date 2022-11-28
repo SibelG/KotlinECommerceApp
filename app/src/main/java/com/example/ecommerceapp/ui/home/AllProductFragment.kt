@@ -174,7 +174,7 @@ class AllProductFragment() : Fragment(), IFilterProductAdapter {
         val currentFragment = this
         val productDetailFragment = DetailFragment(productId, "AllProductFragment")
         requireActivity().supportFragmentManager.beginTransaction().add(
-            R.id.nav_host_fragment_content_main,
+            R.id.nav_host_fragment,
             productDetailFragment,
             getString(R.string.title_detail_fragment)
         ).hide(currentFragment).commit()

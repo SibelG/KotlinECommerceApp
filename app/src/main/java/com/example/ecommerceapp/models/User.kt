@@ -9,6 +9,7 @@ data class User(
     val userName: String="",
     val userImage: String="",
     val mobileNumber: String="",
+    val userEmail: String="",
     var cart: Cart=Cart(),
     var credidCards: ArrayList<CredidCard> = ArrayList(),
     val orders: ArrayList<String> = ArrayList(),

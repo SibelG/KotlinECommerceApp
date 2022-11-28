@@ -17,7 +17,7 @@ import com.example.ecommerceapp.daos.OrderDao
 import com.example.ecommerceapp.databinding.OrderDetailFragmentBinding
 import com.example.ecommerceapp.models.CartItemOffline
 import com.example.ecommerceapp.models.Order
-import com.example.ecommerceapp.ui.OrderStatus
+import com.example.ecommerceapp.models.OrderStatus
 import com.example.ecommerceapp.ui.orderDetails.OrderDetailViewModel
 import com.example.ecommerceapp.ui.orders.OrdersFragment
 
@@ -43,7 +43,7 @@ class OrderDetailFragment(
         (activity as MainActivity).supportActionBar?.title = "Order Details"
         (activity as MainActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
 
-        if (order.orderStatus== OrderStatus.PLACED || order.orderStatus==OrderStatus.APPROVED || order.orderStatus==OrderStatus.PACKED || order.orderStatus==OrderStatus.SHIPPED) {
+        if (order.orderStatus== OrderStatus.PLACED || order.orderStatus== OrderStatus.APPROVED || order.orderStatus== OrderStatus.PACKED || order.orderStatus== OrderStatus.SHIPPED) {
             binding.cancelOrderButton.isEnabled = true
         }
 

@@ -39,7 +39,7 @@ import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
 
-class ProfileFragment(val fromWhere: String) : Fragment(), IAddressAdapter {
+class ProfileFragment() : Fragment(), IAddressAdapter {
 
     private lateinit var binding: FragmentProfileBinding
     lateinit var adapter: AddressAdapter
@@ -124,7 +124,7 @@ class ProfileFragment(val fromWhere: String) : Fragment(), IAddressAdapter {
         val addressFragment = AddressFragment(this)
         val currentFragment = this
         requireActivity().supportFragmentManager.beginTransaction().add(
-            R.id.nav_host_fragment_content_main,
+            R.id.nav_host_fragment,
             addressFragment,
             getString(R.string.title_address_fragment)
         ).hide(currentFragment).commit()
@@ -135,7 +135,7 @@ class ProfileFragment(val fromWhere: String) : Fragment(), IAddressAdapter {
     override fun onEditClicked(address: Address) {
         val currentFragment = this
         val editAddressFragment = EditAddressFragment(this,address)
-        requireActivity().supportFragmentManager.beginTransaction().add(R.id.nav_host_fragment_content_main,editAddressFragment,getString(R.string.title_edit_address_fragment)).hide(currentFragment).commit()
+        requireActivity().supportFragmentManager.beginTransaction().add(R.id.nav_host_fragment,editAddressFragment,getString(R.string.title_edit_address_fragment)).hide(currentFragment).commit()
         (activity as MainActivity).setDrawerLocked(true)
     }
 

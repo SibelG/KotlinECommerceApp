@@ -1,6 +1,7 @@
 package com.example.ecommerceapp
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
@@ -11,7 +12,6 @@ import androidx.databinding.DataBindingUtil
 import com.example.ecommerceapp.daos.UserDao
 import com.example.ecommerceapp.databinding.ActivityAuthenticationBinding
 import com.example.ecommerceapp.models.User
-import com.example.ecommerceapp.ui.home.HomeFragment
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -39,6 +39,7 @@ class AuthenticationActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAuthenticationBinding
     var number: String = ""
     lateinit var auth: FirebaseAuth
+    var user= FirebaseAuth.getInstance().currentUser
     private val TAG = "AuthenticationActivity"
 
     // we will use this to match the sent otp from firebase
@@ -189,16 +190,24 @@ class AuthenticationActivity : AppCompatActivity() {
                     Log.d("SignInActivity", "firebaseAuthWithGoogle:" + account.id)
                     firebaseAuthWithGoogle(account.idToken!!)
 
-                    val email= account.email
+                    /*val email= account.email
                     val googleFirstName= account.givenName
                     val picture= account.photoUrl.toString()
-                    val user = User(userId = auth.currentUser!!.uid,userName = googleFirstName.toString(), userImage = picture)
-                    UserDao().addUser(this,user)
-                    /*val Intent=Intent(this,HomeFragment::class.java)
-                    intent.putExtra("email",email)
-                    intent.putExtra("name",googleFirstName)
-                    startActivity(intent)*/
+                    val user = User(userId = auth.currentUser!!.uid,userName = googleFirstName.toString(),userEmail= email.toString(), userImage = picture)*/
 
+                    if (user != null) {
+                        for (profile in user!!.getProviderData()) {
+                            // Id of the provider (ex: google.com)
+                            val providerId = profile.providerId
+                            val uid = profile.uid
+                            val name = profile.displayName
+                            val email = profile.email
+                            val photoUrl: Uri? = profile.photoUrl
+
+                            val user = User(userId = uid,userName = name.toString(),userEmail= email.toString())
+                            UserDao().addUser(this,user)
+                        }
+                    }
                 } catch (e: ApiException) {
                     // Google Sign In failed, update UI appropriately
                     Log.w("SignInActivity", "Google sign in failed", e)

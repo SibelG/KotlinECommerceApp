@@ -48,7 +48,7 @@ class ChooseAddressFragment(val previousFragment: Fragment, val cart: Cart) : Fr
             val currentFragment = this
             val addressFragment = AddressFragment(currentFragment)
             requireActivity().supportFragmentManager.beginTransaction().add(
-                R.id.nav_host_fragment_content_main,
+                R.id.nav_host_fragment,
                 addressFragment,
                 getString(R.string.title_address_fragment)
             ).hide(currentFragment).commit()
@@ -75,7 +75,7 @@ class ChooseAddressFragment(val previousFragment: Fragment, val cart: Cart) : Fr
         val currentFragment = this
         val summaryFragment = SummaryFragment(currentFragment, currentUser, address, cart)
         requireActivity().supportFragmentManager.beginTransaction().add(
-            R.id.nav_host_fragment_content_main,
+            R.id.nav_host_fragment,
             summaryFragment,
             getString(R.string.title_summary_fragment)
         ).hide(currentFragment).commit()
@@ -115,7 +115,7 @@ class ChooseAddressFragment(val previousFragment: Fragment, val cart: Cart) : Fr
         val currentFragment = this
         val locationFragment= LocateUserLocationFragment(currentFragment)
         requireActivity().supportFragmentManager.beginTransaction().add(
-            R.id.nav_host_fragment_content_main,
+            R.id.nav_host_fragment,
             locationFragment,
             getString(R.string.title_locate)
         ).hide(currentFragment).commit()

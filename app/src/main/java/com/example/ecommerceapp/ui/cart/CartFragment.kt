@@ -92,7 +92,7 @@ class CartFragment : Fragment(), ICartAdapter {
         val chooseAddressFragment = ChooseAddressFragment(currentFragment, cart)
         //navigate using fragment manager
         requireActivity().supportFragmentManager.beginTransaction().add(
-            R.id.nav_host_fragment_content_main,
+            R.id.nav_host_fragment,
             chooseAddressFragment,
             getString(R.string.title_choose_address_fragment)
         ).hide(currentFragment).commit()
@@ -108,7 +108,7 @@ class CartFragment : Fragment(), ICartAdapter {
                     val currentFragment = this@CartFragment
                     requireActivity().supportFragmentManager.beginTransaction()
                         .remove(currentFragment).show(homeFragment).commit()
-                    (activity as MainActivity).supportActionBar?.title = "RSHLN"
+                    (activity as MainActivity).supportActionBar?.title = "Cart"
                     (activity as MainActivity).setDrawerLocked(false)
                     (activity as MainActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
                 }
@@ -120,7 +120,7 @@ class CartFragment : Fragment(), ICartAdapter {
         super.onPrepareOptionsMenu(menu)
     }
 
-  
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
@@ -133,7 +133,7 @@ class CartFragment : Fragment(), ICartAdapter {
         val currentFragment = this
         val productDetailFragment = DetailFragment(productId,"CartFragment")
         requireActivity().supportFragmentManager.beginTransaction().add(
-            R.id.nav_host_fragment_content_main,
+            R.id.nav_host_fragment,
             productDetailFragment,
             getString(R.string.title_detail_fragment)
         ).remove(currentFragment).commit()

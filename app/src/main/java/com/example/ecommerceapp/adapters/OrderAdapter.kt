@@ -9,7 +9,7 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ecommerceapp.R
 import com.example.ecommerceapp.models.Order
-import com.example.ecommerceapp.ui.OrderStatus
+import com.example.ecommerceapp.models.OrderStatus
 
 
 class OrderAdapter(private val clickListener: IOrderAdapter,val orders: List<Order>): RecyclerView.Adapter<OrderAdapter.ViewHolder>(){

@@ -29,7 +29,7 @@ class ActivitySplashScreen : AppCompatActivity() {
             }
 
             override fun onTransitionCompleted(p0: MotionLayout?, p1: Int) {
-                startActivity(Intent(this@ActivitySplashScreen, MainActivity::class.java))
+                startActivity(Intent(this@ActivitySplashScreen, AuthenticationActivity::class.java))
             }
 
             override fun onTransitionTrigger(p0: MotionLayout?, p1: Int, p2: Boolean, p3: Float) {

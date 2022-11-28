@@ -1,7 +1,6 @@
 package com.example.ecommerceapp
 
-import android.graphics.Color.green
-import android.graphics.Color.red
+
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
@@ -10,14 +9,17 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.*
+import com.example.ecommerceapp.Utils.currentUserId
 import com.example.ecommerceapp.databinding.ActivityMainBinding
 import com.example.ecommerceapp.models.CartItemOffline
 import com.example.ecommerceapp.summary.HelplineFragment
@@ -31,23 +33,27 @@ import com.example.ecommerceapp.ui.profile.ProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import org.w3c.dom.Text
 
 
-class MainActivity : AppCompatActivity(), DrawerLocker {
+class MainActivity : AppCompatActivity(),DrawerLocker {
 
     lateinit var drawerLayout: DrawerLayout
     private lateinit var appBarConfiguration: AppBarConfiguration
+    lateinit var navController: NavController
     private lateinit var binding: ActivityMainBinding
     private val connectionLiveData by lazy { ConnectionLiveData(this) }
     private var firstCheckInternetConnection = true
     private lateinit var shopViewModel: CartViewModel
-    var cartQuantity: List<CartItemOffline> = ArrayList()
-    var quantity=""
+    var quantity: String = ""
+    var userMail : String = ""
 
     //create variables for the fragments
     val homeFragment = HomeFragment()
     val ordersFragment = OrdersFragment()
-    val profileFragment = ProfileFragment("MainActivity")
+    val profileFragment = ProfileFragment()
     val helplineFragment = HelplineFragment()
     val accountFragment = AccountFragment()
     val favoritesFragment = FavoritesFragment()
@@ -61,12 +67,13 @@ class MainActivity : AppCompatActivity(), DrawerLocker {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.appBarMain.toolbar)
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
 
         drawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
-        val bottomNavView: BottomNavigationView= binding.navigation
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
+        val bottomNavView : BottomNavigationView = findViewById(R.id.bottom_navigation_view)
+        navController = findNavController(R.id.nav_host_fragment)
         val drawerToggle = ActionBarDrawerToggle(
             this,
             drawerLayout,
@@ -76,110 +83,32 @@ class MainActivity : AppCompatActivity(), DrawerLocker {
         drawerLayout.addDrawerListener(drawerToggle)
         drawerToggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        binding.navView.getHeaderView(0).findViewById<TextView>(R.id.emailText).text =
+            Firebase.auth.currentUser?.email?:""
+
+        appBarConfiguration = AppBarConfiguration(setOf(
+            R.id.nav_home, R.id.nav_favorite, R.id.nav_account), drawerLayout)
+
+        navView.setupWithNavController(navController)
+        bottomNavView.setupWithNavController(navController)
+        setupActionBarWithNavController(navController, appBarConfiguration)
+
         shopViewModel = ViewModelProvider(this).get(CartViewModel::class.java)
         shopViewModel.subQuantity.observe(this, Observer<String> {
             quantity = it
             invalidateOptionsMenu()
 
-
         })
-        /*appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.nav_home, R.id.nav_profile, R.id.nav_orders,
-                R.id.nav_helpline
-            ), drawerLayout
-        )
-
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)*/
-        //bottomNavView.setupWithNavController(navController)
-        bottomNavView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-        openFragment(homeFragment)
-
-        /*fragmentManager.beginTransaction().apply {
-            add(
-                R.id.nav_host_fragment_content_main,
-                profileFragment,
-                getString(R.string.menu_profile)
-            ).hide(profileFragment)
-            add(
-                R.id.nav_host_fragment_content_main,
-                ordersFragment,
-                getString(R.string.menu_orders)
-            ).hide(ordersFragment)
-            add(
-                R.id.nav_host_fragment_content_main,
-                helplineFragment,
-                getString(R.string.title_fragment_helpline)
-            ).hide(helplineFragment)
-
-            add(R.id.nav_host_fragment_content_main, homeFragment, getString(R.string.menu_home))
-        }.commit()*/
-
-        navView.setNavigationItemSelectedListener { item ->
-            drawerLayout.closeDrawer(GravityCompat.START)
-            when (item.itemId) {
-
-                R.id.nav_home -> {
-                    openFragment(homeFragment)
-                    /*fragmentManager.beginTransaction().hide(activeFragment).show(homeFragment)
-                        .commit()
-                    activeFragment = homeFragment*/
-
-                    true
-                }
-                R.id.nav_profile -> {
-                   openFragment(profileFragment)
-                    true
-                }
-                R.id.nav_orders -> {
-                    openFragment(ordersFragment)
-                    true
-                }
-                R.id.nav_helpline -> {
-                    openFragment(helplineFragment)
-                    true
-                }
-                else -> {
-                    false
-                }
-            }
-        }
 
 
         observeNetworkConnection()
     }
-    /*override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
+
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-    }*/
 
-    private val mOnNavigationItemSelectedListener =
-        BottomNavigationView.OnNavigationItemSelectedListener { item ->
-            item.setChecked(true)
-            when (item.itemId) {
-
-                R.id.homeFragment -> {
-                    openFragment(homeFragment)
-                    return@OnNavigationItemSelectedListener true
-                }
-                R.id.favoriteFragment -> {
-                    openFragment(favoritesFragment)
-                    return@OnNavigationItemSelectedListener true
-                }
-                R.id.accountFragment -> {
-                    openFragment(accountFragment)
-                    return@OnNavigationItemSelectedListener true
-                }
-            }
-            false
-        }
-
-    private fun openFragment(fragment: Fragment) {
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.nav_host_fragment_content_main, fragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
     }
 
     private fun observeNetworkConnection() {
@@ -241,17 +170,19 @@ class MainActivity : AppCompatActivity(), DrawerLocker {
             R.id.action_cart -> {
 //                Toast.makeText(this,"Ruko zara sabr karo",Toast.LENGTH_LONG).show()
                 val cartFragment = CartFragment()
-                /*fragmentManager.beginTransaction().add(
-                    R.id.nav_host_fragment_content_main,
-                    cartFragment,
-                    getString(R.string.title_cart_fragment)
-                ).hide(activeFragment).commit()*/
-                openFragment(cartFragment)
+                loadFragment(cartFragment)
                 setDrawerLocked(true)
                 true
+
             }
             else -> false
         }
+    }
+    private  fun loadFragment(fragment: Fragment){
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.nav_host_fragment,fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 
     override fun onBackPressed() {

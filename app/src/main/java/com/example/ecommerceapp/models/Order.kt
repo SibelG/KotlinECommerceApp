@@ -2,7 +2,6 @@ package com.example.ecommerceapp.models
 
 
 import android.os.Parcelable
-import com.example.ecommerceapp.ui.OrderStatus
 import kotlinx.parcelize.Parcelize
 
 

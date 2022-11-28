@@ -190,7 +190,7 @@ class LocateUserLocationFragment( private val previosFragment:Fragment) : Fragme
             val latLng = LatLng(address.latitude, address.longitude)
             mMap!!.addMarker(MarkerOptions().position(latLng).title(location))
             mMap!!.animateCamera(CameraUpdateFactory.newLatLng(latLng))
-            /*val selectedAddress = com.example.ecommerceapp.models.Address(
+            val selectedAddress = com.example.ecommerceapp.models.Address(
                 userName = location,
                 mobileNumber = address.phone,
                 houseNumber= address.subThoroughfare,
@@ -203,7 +203,7 @@ class LocateUserLocationFragment( private val previosFragment:Fragment) : Fragme
                     userDao.getUserById(Utils.currentUserId).await().toObject(User::class.java)!!
                 currentUser.addresses.add(selectedAddress)
                 userDao.updateProfile(currentUser)
-            }*/
+            }
             Toast.makeText(requireContext(), address.latitude.toString() + " " + address.longitude, Toast.LENGTH_LONG).show()
             println("strre"+address.locality+address.subThoroughfare)
         }
