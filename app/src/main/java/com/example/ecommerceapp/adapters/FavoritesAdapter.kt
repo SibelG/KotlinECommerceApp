@@ -1,48 +1,69 @@
 package com.example.ecommerceapp.adapters
 
 import android.annotation.SuppressLint
-import android.media.Image
+import android.text.method.TextKeyListener.clear
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.RoundedCornersTransformation
 import com.example.ecommerceapp.R
 import com.example.ecommerceapp.databinding.ItemFavBinding
-import com.example.ecommerceapp.databinding.ItemProductBinding
 import com.example.ecommerceapp.models.Product
+import javax.inject.Inject
 
-class FavoritesAdapter(private val clickListener: IFavoritesAdapter): ListAdapter<Product, FavoritesAdapter.ViewHolder?>(DiffCallback) {
+class FavoriteAdapter
+constructor() : RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(ItemFavBinding.inflate(LayoutInflater.from(parent.context)))
+    private val productList = mutableListOf<Product>()
+    private lateinit var favListener: FavoriteProductListener
+    fun addProducts(list: List<Product>, listener: FavoriteProductListener) {
+        favListener = listener
+        productList.apply {
+            clear()
+            addAll(list)
+            if (list.isNotEmpty())
+                add(list[0])
+        }
+        notifyDataSetChanged()
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val product = getItem(position)
-        holder.bind(product)
-        holder.productItem.setOnClickListener{
-            clickListener.onProductClicked(product.productId)
-        }
-        holder.productFav.setOnClickListener{
-            holder.productFav.setImageResource(R.drawable.ic_baseline_favorite_24)
-        }
+    fun getAllFavoriteProducts() = productList
+
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): FavoriteAdapter.FavoriteViewHolder =
+        FavoriteViewHolder(
+            DataBindingUtil.inflate(
+                LayoutInflater.from(parent.context),
+                R.layout.item_fav,
+                parent,
+                false
+            )
+        )
+
+    override fun onBindViewHolder(holder: FavoriteAdapter.FavoriteViewHolder, position: Int) {
+        holder.bind(productList[position])
     }
 
-    class ViewHolder(private var binding: ItemFavBinding): RecyclerView.ViewHolder(binding.root){
-        val productImage: ImageView = binding.productImageInProductFragment
-        val productName: TextView = binding.productNameInProductFragment
-        val productDescription: TextView = binding.productDescriptionInProductFragment
-        val productPrice: TextView = binding.productPriceInProductFragment
-        val availabilityLabel: TextView = binding.availabilityLabel
-        val productItem: LinearLayout = binding.productItem
-        val productFav: ImageView = binding.favProductView
+    override fun getItemCount(): Int = productList.size
+
+    inner class FavoriteViewHolder(private val binding: ItemFavBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        val productImage: ImageView = binding.fabProductImage
+        val productName: TextView = binding.favProductName
+        val productDescription: TextView = binding.favProductDescription
+        val productPrice: TextView = binding.favProductPrice
+        val availabilityLabel: TextView = binding.availabilityLabelFav
+        val productItem: LinearLayout = binding.productItemFav
 
         @SuppressLint("ResourceAsColor")
         fun bind(product: Product){
@@ -63,22 +84,8 @@ class FavoritesAdapter(private val clickListener: IFavoritesAdapter): ListAdapte
         }
     }
 
-    companion object DiffCallback: DiffUtil.ItemCallback<Product>(){
-        override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean {
-            return oldItem.productId == newItem.productId
-        }
-
-        override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean {
-            return oldItem == newItem
-        }
+    interface FavoriteProductListener {
+        fun onFavProductClick(productModel: Product, favProductImage: ImageView)
     }
 
-    private var onItemClickListener: ((Product) -> Unit)? = null
-    fun onItemClicked(listner: (Product) -> Unit) {
-        onItemClickListener = listner
-    }
-}
-
-interface IFavoritesAdapter{
-    fun onProductClicked(productId: String)
 }

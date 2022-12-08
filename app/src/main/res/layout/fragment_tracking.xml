@@ -109,7 +109,7 @@
                 android:layout_height="60dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:background="@{order.orderStatus != OrderStatus.PLACED? @color/green: @color/lightBlack}"
+                android:background="@{order.orderStatus != OrderStatus.PLACED? @color/green: @color/gray}"
                 app:layout_constraintEnd_toEndOf="@+id/view5"
                 app:layout_constraintStart_toStartOf="@+id/view5"
                 app:layout_constraintTop_toBottomOf="@+id/view5" />
@@ -130,7 +130,7 @@
                 android:layout_height="60dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:background="@{order.orderStatus!= OrderStatus.PLACED &amp;&amp; order.orderStatus!= OrderStatus.APPROVED? @color/green: @color/lightBlack}"
+                android:background="@{order.orderStatus!= OrderStatus.PLACED &amp;&amp; order.orderStatus!= OrderStatus.APPROVED? @color/green: @color/gray}"
                 app:layout_constraintEnd_toEndOf="@+id/view7"
                 app:layout_constraintStart_toStartOf="@+id/view7"
                 app:layout_constraintTop_toBottomOf="@+id/view7" />
@@ -168,7 +168,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/order_placed_message"
-                    android:textColor="@color/lightBlack"
+                    android:textColor="@color/gray"
                     android:textSize="12dp" />
             </LinearLayout>
 
@@ -194,7 +194,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/order_confirmed_message"
-                    android:textColor="@color/lightBlack"
+                    android:textColor="@color/gray"
                     android:textSize="12dp" />
             </LinearLayout>
 
@@ -220,7 +220,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/order_shipped_message"
-                    android:textColor="@color/lightBlack"
+                    android:textColor="@color/gray"
                     android:textSize="12dp" />
             </LinearLayout>
 
@@ -246,7 +246,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/order_delivered_message"
-                    android:textColor="@color/lightBlack"
+                    android:textColor="@color/gray"
                     android:textSize="12dp" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

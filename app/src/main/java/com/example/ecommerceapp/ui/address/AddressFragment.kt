@@ -22,7 +22,7 @@ import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
 
-class AddressFragment(val previousFragment: Fragment) : Fragment() {
+class AddressFragment() : Fragment() {
 
     private lateinit var viewModel: AddressViewModel
     private lateinit var binding: AddressFragmentBinding
@@ -60,7 +60,7 @@ class AddressFragment(val previousFragment: Fragment) : Fragment() {
                 currentUser.addresses.add(address)
                 userDao.updateProfile(currentUser)
                 withContext(Dispatchers.Main) {
-                    goToPreviousFragment()
+                    //goToPreviousFragment()
                 }
             }
         } else {
@@ -69,7 +69,7 @@ class AddressFragment(val previousFragment: Fragment) : Fragment() {
         }
     }
 
-    private fun goToPreviousFragment() {
+    /*private fun goToPreviousFragment() {
         val profileFragment = (activity as MainActivity).activeFragment
         val currentFragment = this@AddressFragment
         if (previousFragment==profileFragment){
@@ -87,12 +87,12 @@ class AddressFragment(val previousFragment: Fragment) : Fragment() {
             (activity as MainActivity).supportActionBar?.title = "Choose an address"
             Toast.makeText(requireContext(), "Address added successfully", Toast.LENGTH_LONG).show()
         }
-    }
+    }*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        requireActivity().onBackPressedDispatcher.addCallback(this,
+        /*requireActivity().onBackPressedDispatcher.addCallback(this,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     val profileFragment = (activity as MainActivity).activeFragment
@@ -108,7 +108,7 @@ class AddressFragment(val previousFragment: Fragment) : Fragment() {
                         (activity as MainActivity).supportActionBar?.title = "Choose an Address"
                     }
                 }
-            })
+            })*/
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {

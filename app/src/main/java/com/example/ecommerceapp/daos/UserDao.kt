@@ -5,12 +5,16 @@ package com.example.ecommerceapp.daos
 
 
 import android.content.Context
+import android.net.Uri
 import android.widget.Toast
+import com.example.ecommerceapp.R
 import com.example.ecommerceapp.Utils
 import com.example.ecommerceapp.models.User
 import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
@@ -18,8 +22,9 @@ import kotlinx.coroutines.tasks.await
 class UserDao() {
 
     //create instance of the database
-    private val db = FirebaseFirestore.getInstance()
-
+    private val db  by lazy { FirebaseFirestore.getInstance()}
+    private val firebaseStorage by lazy { FirebaseStorage.getInstance()}
+    private val userUid by lazy { FirebaseAuth.getInstance().uid!! }
     //choose the collection
     val usersCollection = db.collection("users")
 
@@ -40,6 +45,38 @@ class UserDao() {
         }
     }
 
+     suspend fun uploadUserInformation(
+        userName: String,
+        imageUri: Uri?,
+        userEmail: String,
+        context: Context
+    ){
+         GlobalScope.launch {
+             try {
+                 var accountStatusMessage = context.getString(R.string.accountCreatedSuccessfully)
+                 if (imageUri != null) {
+                     val uploadedImagePath = uploadUserImage(imageUri)
+                     val userInfoModel =
+                         User(userUid, userName, uploadedImagePath, userEmail)
+                     usersCollection.document(userUid).set(userInfoModel)
+                 } else {
+                     val userInfoModel =
+                         User(userUid, userName, "", userEmail)
+                     updateProfile(userInfoModel)
+                     accountStatusMessage = context.getString(R.string.accountUpdatedSuccessfully)
+                 }
+             } catch (e: Exception) {
+
+             }
+         }
+    }
+
+    private suspend fun uploadUserImage(imageUri: Uri): String {
+        val uploadingResult =
+            firebaseStorage.reference.child("${"users"}/${System.currentTimeMillis()}.jpg")
+                .putFile(imageUri).await()
+        return uploadingResult.metadata?.reference?.downloadUrl?.await().toString()
+    }
     //this method will return an task instance of the user with the help of the user id
     fun getUserById(uid: String): Task<DocumentSnapshot> {
         return usersCollection.document(uid).get()

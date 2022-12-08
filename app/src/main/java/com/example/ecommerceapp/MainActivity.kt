@@ -38,7 +38,7 @@ import com.google.firebase.ktx.Firebase
 import org.w3c.dom.Text
 
 
-class MainActivity : AppCompatActivity(),DrawerLocker {
+class MainActivity : AppCompatActivity(), DrawerLocker {
 
     lateinit var drawerLayout: DrawerLayout
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -49,14 +49,10 @@ class MainActivity : AppCompatActivity(),DrawerLocker {
     private lateinit var shopViewModel: CartViewModel
     var quantity: String = ""
     var userMail : String = ""
+    lateinit var drawerToggle:ActionBarDrawerToggle
 
     //create variables for the fragments
     val homeFragment = HomeFragment()
-    val ordersFragment = OrdersFragment()
-    val profileFragment = ProfileFragment()
-    val helplineFragment = HelplineFragment()
-    val accountFragment = AccountFragment()
-    val favoritesFragment = FavoritesFragment()
     val fragmentManager = supportFragmentManager
 
     var activeFragment: Fragment = homeFragment
@@ -71,10 +67,10 @@ class MainActivity : AppCompatActivity(),DrawerLocker {
         setSupportActionBar(toolbar)
 
         drawerLayout = binding.drawerLayout
-        val navView: NavigationView = binding.navView
+        var  navView: NavigationView = binding.navView
         val bottomNavView : BottomNavigationView = findViewById(R.id.bottom_navigation_view)
         navController = findNavController(R.id.nav_host_fragment)
-        val drawerToggle = ActionBarDrawerToggle(
+        drawerToggle = ActionBarDrawerToggle(
             this,
             drawerLayout,
             R.string.navigation_drawer_open,
@@ -83,6 +79,7 @@ class MainActivity : AppCompatActivity(),DrawerLocker {
         drawerLayout.addDrawerListener(drawerToggle)
         drawerToggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
 
         binding.navView.getHeaderView(0).findViewById<TextView>(R.id.emailText).text =
             Firebase.auth.currentUser?.email?:""
@@ -93,6 +90,42 @@ class MainActivity : AppCompatActivity(),DrawerLocker {
         navView.setupWithNavController(navController)
         bottomNavView.setupWithNavController(navController)
         setupActionBarWithNavController(navController, appBarConfiguration)
+        /*navView.setNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_home -> {
+                    fragmentManager.beginTransaction().hide(activeFragment).show(homeFragment)
+                        .commit()
+                    activeFragment = homeFragment
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    true
+                }
+                R.id.nav_profile -> {
+                    fragmentManager.beginTransaction().hide(activeFragment).show(profileFragment)
+                        .commit()
+                    activeFragment = profileFragment
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    true
+                }
+                R.id.nav_orders -> {
+                    fragmentManager.beginTransaction().hide(activeFragment).show(ordersFragment)
+                        .commit()
+                    activeFragment = ordersFragment
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    true
+                }
+                R.id.nav_helpline->{
+                    fragmentManager.beginTransaction().hide(activeFragment).show(helplineFragment)
+                        .commit()
+                    activeFragment = helplineFragment
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    true
+                }
+                else -> {
+                    false
+                }
+
+            }
+        }*/
 
         shopViewModel = ViewModelProvider(this).get(CartViewModel::class.java)
         shopViewModel.subQuantity.observe(this, Observer<String> {
@@ -165,25 +198,20 @@ class MainActivity : AppCompatActivity(),DrawerLocker {
         //here create click listener for the cart icon
         return when (item.itemId) {
             android.R.id.home -> {
+               /* onBackPressed()
+                true*/
                 false
             }
             R.id.action_cart -> {
 //                Toast.makeText(this,"Ruko zara sabr karo",Toast.LENGTH_LONG).show()
-                val cartFragment = CartFragment()
-                loadFragment(cartFragment)
-                setDrawerLocked(true)
+                navController.navigate(R.id.action_cart)
                 true
 
             }
             else -> false
         }
     }
-    private  fun loadFragment(fragment: Fragment){
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.nav_host_fragment,fragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
-    }
+
 
     override fun onBackPressed() {
         if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -200,6 +228,7 @@ class MainActivity : AppCompatActivity(),DrawerLocker {
             drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
         }
     }
+
 }
 
 interface DrawerLocker {

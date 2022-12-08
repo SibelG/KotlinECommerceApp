@@ -14,7 +14,9 @@ import coil.load
 import coil.transform.RoundedCornersTransformation
 import com.example.ecommerceapp.R
 import com.example.ecommerceapp.databinding.ItemProductCartBinding
+import com.example.ecommerceapp.loadImage
 import com.example.ecommerceapp.models.CartItemOffline
+import com.example.ecommerceapp.models.Product
 
 
 class CartAdapter(private val clickListener: ICartAdapter) :
@@ -44,9 +46,7 @@ class CartAdapter(private val clickListener: ICartAdapter) :
         holder.deleteButton.setOnClickListener {
             clickListener.onDeleteClicked(cartItem)
         }
-        holder.item_product.setOnClickListener{
-            clickListener.onProductClicked(cartItem.productId)
-        }
+
     }
 
     class ViewHolder(private var binding: ItemProductCartBinding) :
@@ -61,9 +61,7 @@ class CartAdapter(private val clickListener: ICartAdapter) :
         val addButton: ImageButton = binding.addProductButtonInCart
 
         fun bind(cartItem: CartItemOffline) {
-            productImage.load(cartItem.product.productImage) {
-                transformations(RoundedCornersTransformation())
-            }
+            productImage.loadImage(cartItem.product.productImage)
             productName.text = cartItem.product.productName
             val price = cartItem.product.productPrice.toString()
             if (cartItem.product.availability) {
@@ -93,7 +91,6 @@ class CartAdapter(private val clickListener: ICartAdapter) :
 }
 
 interface ICartAdapter {
-    fun onProductClicked(productId: String)
     fun onAddClicked(cartItem: CartItemOffline)
     fun onDeleteClicked(cartItem: CartItemOffline)
 }

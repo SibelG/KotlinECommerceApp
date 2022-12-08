@@ -1,5 +1,6 @@
 package com.example.ecommerceapp.ui.detail
 
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +8,9 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider.NewInstanceFactory.Companion.instance
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.load
 import coil.transform.RoundedCornersTransformation
@@ -16,23 +20,28 @@ import com.example.ecommerceapp.Utils
 import com.example.ecommerceapp.daos.ProductDao
 import com.example.ecommerceapp.daos.UserDao
 import com.example.ecommerceapp.databinding.DetailFragmentBinding
+import com.example.ecommerceapp.loadTimerGif
 import com.example.ecommerceapp.models.Cart
 import com.example.ecommerceapp.models.CartItem
 import com.example.ecommerceapp.models.Product
 import com.example.ecommerceapp.models.User
 import com.example.ecommerceapp.ui.cart.CartFragment
 import com.example.ecommerceapp.ui.choose_address.ChooseAddressFragment
+import com.example.ecommerceapp.ui.home.HomeFragmentDirections
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
-class DetailFragment(val productId: String,val fromWhere: String) : Fragment() {
+class DetailFragment() : Fragment() {
 
     private lateinit var productDao: ProductDao
     private lateinit var product: Product
     private lateinit var binding: DetailFragmentBinding
     private lateinit var currentUser: User
     private lateinit var userDao: UserDao
+    private val shopViewModel by activityViewModels<DetailViewModel>()
+    private val args by navArgs<DetailFragmentArgs>()
+    private val productModel by lazy { args.productDetails }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,12 +50,15 @@ class DetailFragment(val productId: String,val fromWhere: String) : Fragment() {
         binding = DetailFragmentBinding.inflate(inflater)
         productDao = ProductDao()
         userDao = UserDao()
-        showProductDetails(productId)
+        //cartId = args.productCartDetails.productId
+        //productId = args.productDetails.productId
+        //cartId=productId
+        showProductDetails(productModel.productId)
         (activity as MainActivity).supportActionBar?.title = "Product Details"
 
         //add click listener to add product to the cart
         binding.addToCartButton.setOnClickListener {
-            addProductToCart(productId)
+            addProductToCart(productModel.productId)
         }
 
         binding.buyNowButton.setOnClickListener {
@@ -59,15 +71,28 @@ class DetailFragment(val productId: String,val fromWhere: String) : Fragment() {
         return binding.root
     }
 
-    private fun startCheckoutProcess() {
-        //we need to paas a cart to the choose address fragment, and we don't have any cart here because we want to buy a single item here. so we will create instance of cart using that single element
-        val cartItem = CartItem(productId,product.productName,1)
-        val cartItems = ArrayList<CartItem>()
-        cartItems.add(cartItem)
-        val cart = Cart(cartItems,product.productPrice)
-        val chooseAddressFragment = ChooseAddressFragment(this,cart)
-        val currentFragment = this
-        requireActivity().supportFragmentManager.beginTransaction().add(R.id.nav_host_fragment,chooseAddressFragment,getString(R.string.title_choose_address_fragment)).hide(currentFragment).commit()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+    }
+    private fun observeListener() {
+        // check if product saved in favorite database and change icon image as following.
+        shopViewModel.favoriteLiveData(productModel.productId).observe(viewLifecycleOwner, { product ->
+            if (product != null) {
+                binding.favImage.loadTimerGif(R.drawable.favorite_gif_start)
+            } else {
+                binding.favImage.setImageResource(R.drawable.ic_favorite_border)
+            }
+        })
+    }
+
+        private fun startCheckoutProcess() {
+            val cartItem = CartItem(productModel.productId,product.productName,1)
+            val cartItems = ArrayList<CartItem>()
+            cartItems.add(cartItem)
+            val cart = Cart(cartItems,product.productPrice)
+            val action = DetailFragmentDirections.actionDetailFragmentToChooseAddressFragment(cart)
+            findNavController().navigate(action)
+       // requireActivity().supportFragmentManager.beginTransaction().add(R.id.nav_host_fragment,chooseAddressFragment,getString(R.string.title_choose_address_fragment)).hide(currentFragment).commit()
     }
 
     private fun addProductToCart(productId: String) {
@@ -98,24 +123,7 @@ class DetailFragment(val productId: String,val fromWhere: String) : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        requireActivity().onBackPressedDispatcher.addCallback(this,object: OnBackPressedCallback(true){
-            override fun handleOnBackPressed() {
-                //either we came here from home fragment or from cart fragment
-                if (fromWhere=="HomeFragment"){
-                    val homeFragment = (activity as MainActivity).activeFragment
-                    val currentFragment = this@DetailFragment
-                    requireActivity().supportFragmentManager.beginTransaction().remove(currentFragment).show(homeFragment).commit()
-                    (activity as MainActivity).supportActionBar?.title = "FashionShop"
-                    (activity as MainActivity).setDrawerLocked(false)
-                    (activity as MainActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
-                }else{
-                    val cartFragment = CartFragment()
-                    val currentFragment = this@DetailFragment
-                    requireActivity().supportFragmentManager.beginTransaction().remove(currentFragment).add(R.id.nav_host_fragment,cartFragment,getString(R.string.title_cart_fragment)).commit()
-                    (activity as MainActivity).supportActionBar?.title = "Cart"
-                }
-            }
-        })
+
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
@@ -128,6 +136,16 @@ class DetailFragment(val productId: String,val fromWhere: String) : Fragment() {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    // share product with messaging app.
+    fun shareProduct() {
+        val intent = Intent(Intent.ACTION_SEND)
+        val shareBody =
+            getString(R.string.shareProduct)
+        intent.type = "text/plain"
+        intent.putExtra(Intent.EXTRA_TEXT, shareBody)
+        startActivity(intent)
     }
 
     private fun showProductDetails(productId: String) {

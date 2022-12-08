@@ -15,6 +15,10 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+    <style name="AppBarTitleStyle">
+        <item name="android:textStyle">bold</item>
+    </style>
+
 
     <style name="Theme.ECommerceApp.NoActionBar">
         <item name="windowActionBar">false</item>
@@ -22,6 +26,12 @@
     </style>
     <style name="bigTextTheme">
         <item name="android:textSize">17dp</item>
+    </style>
+    <style name="buttonTheme">
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">14dp</item>
     </style>
     <style name="SearchViewStyle">
         <item name="android:background">@drawable/search_view</item>

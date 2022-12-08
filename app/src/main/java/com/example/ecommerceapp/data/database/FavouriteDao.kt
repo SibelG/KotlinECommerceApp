@@ -10,27 +10,24 @@ import androidx.room.Query
 import com.example.ecommerceapp.models.Product
 
 
-/*@Dao
+@Dao
 interface FavouriteDao {
 
     @Insert(onConflict = REPLACE)
-    fun saveFavourite(ProductModel: Product)
+    fun saveProduct(productModel: Product)
 
     @Query("SELECT * FROM Product")
-    fun getAllFavoriteFavourites(): MutableLiveData<List<Product>>
+    fun getAllFavoriteProducts(): LiveData<List<Product>>
 
     @Query("SELECT * FROM Product WHERE productId =:id")
-    suspend fun getSpecificFavoriteFavourite(id: String): Product?
+    suspend fun getSpecificFavoriteProduct(id: String): Product?
 
     @Query("SELECT * FROM Product WHERE productId =:id")
-    fun getSpecificFavoriteFavouriteLiveData(id: String): LiveData<Product?>
+    fun getSpecificFavoriteProductLiveData(id: String): LiveData<Product?>
 
     @Delete
-    suspend fun removeFavouriteFromFavorites(Product: Product)
+    suspend fun removeProductFromFavorites(productModel: Product)
 
     @Query("DELETE FROM Product")
-    suspend fun deleteAllFavourites()
-
-    @Query("SELECT EXISTS (SELECT 1 FROM Product WHERE productId=:id)")
-    fun isFavorite(id: String): Int
-}*/
+    suspend fun deleteAllProducts()
+}

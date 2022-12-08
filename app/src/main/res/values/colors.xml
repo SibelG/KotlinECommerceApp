@@ -15,5 +15,5 @@
     <color name="grey">#A6A5A4</color>
     <color name="filledBlack">#000</color>
     <color name="textColorPrimary">#222121</color>
-    <color name="lightBlack">#7C7C7C</color>
+    <color name="gray">#7C7C7C</color>
 </resources>

@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.ecommerceapp.MainActivity
 import com.example.ecommerceapp.R
 import com.example.ecommerceapp.Utils
@@ -18,6 +19,8 @@ import com.example.ecommerceapp.models.User
 import com.example.ecommerceapp.ui.account.AccountFragmentDirections
 import com.example.ecommerceapp.ui.address.AddressFragment
 import com.example.ecommerceapp.ui.detail.DetailFragment
+import com.example.ecommerceapp.ui.detail.DetailFragmentArgs
+import com.example.ecommerceapp.ui.detail.DetailFragmentDirections
 import com.example.ecommerceapp.ui.summary.SummaryFragment
 import com.example.ecommerceapp.ui.tracking.LocateUserLocationFragment
 import kotlinx.coroutines.Dispatchers
@@ -26,13 +29,15 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
-class ChooseAddressFragment(val previousFragment: Fragment, val cart: Cart) : Fragment(),
+class ChooseAddressFragment() : Fragment(),
     IChooseAddressAdapter {
 
     private lateinit var binding: ChooseAddressFragmentBinding
     private lateinit var adapter: ChooseAddressAdapter
     private lateinit var userDao: UserDao
     private lateinit var currentUser: User
+    private val args by navArgs<ChooseAddressFragmentArgs>()
+    private val cartModel by lazy { args.cartDetails }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,13 +50,9 @@ class ChooseAddressFragment(val previousFragment: Fragment, val cart: Cart) : Fr
 
         //add new address button click listener
         binding.addNewAddressChooseAddress.setOnClickListener {
-            val currentFragment = this
-            val addressFragment = AddressFragment(currentFragment)
-            requireActivity().supportFragmentManager.beginTransaction().add(
-                R.id.nav_host_fragment,
-                addressFragment,
-                getString(R.string.title_address_fragment)
-            ).hide(currentFragment).commit()
+            val action = ChooseAddressFragmentDirections.actionChooseAddressFragmentToAddressFragment()
+            findNavController().navigate(action)
+
         }
         //continue button action
         binding.deliverHereButtonChooseAddress.setOnClickListener {
@@ -72,19 +73,21 @@ class ChooseAddressFragment(val previousFragment: Fragment, val cart: Cart) : Fr
 
     private fun goToSummaryFragment(position: Int) {
         val address = currentUser.addresses[position]
-        val currentFragment = this
-        val summaryFragment = SummaryFragment(currentFragment, currentUser, address, cart)
-        requireActivity().supportFragmentManager.beginTransaction().add(
+       /* val currentFragment = this
+        val summaryFragment = SummaryFragment(currentFragment, currentUser, address, cartModel)*/
+        val action = ChooseAddressFragmentDirections.actionChooseAddressFragmentToSummaryFragment(address,cartModel)
+        findNavController().navigate(action)
+        /*requireActivity().supportFragmentManager.beginTransaction().replace(
             R.id.nav_host_fragment,
             summaryFragment,
             getString(R.string.title_summary_fragment)
-        ).hide(currentFragment).commit()
+        ).commit()*/
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        requireActivity().onBackPressedDispatcher.addCallback(this,
+        /*requireActivity().onBackPressedDispatcher.addCallback(this,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     val currentFragment = this@ChooseAddressFragment
@@ -96,7 +99,7 @@ class ChooseAddressFragment(val previousFragment: Fragment, val cart: Cart) : Fr
                         (activity as MainActivity).supportActionBar?.title = "Cart"
                     }
                 }
-            })
+            })*/
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {

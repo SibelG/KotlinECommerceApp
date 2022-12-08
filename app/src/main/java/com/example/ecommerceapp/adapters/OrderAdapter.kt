@@ -1,13 +1,16 @@
 package com.example.ecommerceapp.adapters
 
 import android.content.Context
+import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ecommerceapp.R
+import com.example.ecommerceapp.loadImage
 import com.example.ecommerceapp.models.Order
 import com.example.ecommerceapp.models.OrderStatus
 
@@ -38,13 +41,17 @@ class OrderAdapter(private val clickListener: IOrderAdapter,val orders: List<Ord
         val itemOrder: CardView = itemView.findViewById(R.id.item_order_view)
         val productsName: TextView = itemView.findViewById(R.id.products_name_item_order)
         val orderStatus: TextView = itemView.findViewById(R.id.order_status_item_order)
+        val orderImage: ImageView = itemView.findViewById(R.id.orderImage)
 
         fun bind(order: Order, context: Context){
             val cartItems = order.cart.items
             var name = cartItems[0].productName
+            var image = cartItems[0].productImage
             for(i in 1..(cartItems.size-1)){
                 name += ", " + cartItems[i].productName
+                image += cartItems[i].productImage
             }
+            orderImage.loadImage(image)
             productsName.text = name
             val status = order.orderStatus
             var statusString = ""

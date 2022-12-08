@@ -6,18 +6,19 @@ import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.ecommerceapp.MainActivity
 import com.example.ecommerceapp.R
 import com.example.ecommerceapp.Utils
 import com.example.ecommerceapp.adapters.CartAdapter
 import com.example.ecommerceapp.adapters.ICartAdapter
+import com.example.ecommerceapp.daos.ProductDao
 import com.example.ecommerceapp.daos.UserDao
 import com.example.ecommerceapp.databinding.CartFragmentBinding
-import com.example.ecommerceapp.models.CartItem
-import com.example.ecommerceapp.models.CartItemOffline
-import com.example.ecommerceapp.models.User
+import com.example.ecommerceapp.models.*
 import com.example.ecommerceapp.ui.choose_address.ChooseAddressFragment
 import com.example.ecommerceapp.ui.detail.DetailFragment
+import com.example.ecommerceapp.ui.home.HomeFragmentDirections
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -31,6 +32,8 @@ class CartFragment : Fragment(), ICartAdapter {
     private lateinit var adapter: CartAdapter
     private lateinit var userDao: UserDao
     private lateinit var currentUser: User
+    private lateinit var productDao: ProductDao
+    private lateinit var product: Product
     var cartQuantity=""
 
     override fun onCreateView(
@@ -42,6 +45,7 @@ class CartFragment : Fragment(), ICartAdapter {
         (activity as MainActivity).supportActionBar?.title = "Cart"
         (activity as MainActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
         userDao = UserDao()
+        productDao = ProductDao()
         binding.viewModel = viewModel
         adapter = CartAdapter(this)
         binding.cartRecyclerView.adapter = adapter
@@ -89,19 +93,27 @@ class CartFragment : Fragment(), ICartAdapter {
         //get the cart from the current user
         val cart = currentUser.cart
         //create instance of chooseAddressFragment
-        val chooseAddressFragment = ChooseAddressFragment(currentFragment, cart)
+        /*val chooseAddressFragment = ChooseAddressFragment(currentFragment, cart)
         //navigate using fragment manager
+        /*val bundle = Bundle()
+        bundle.putParcelable("chooseAddress", cart)
+        findNavController().navigate(
+            R.id.action_action_cart_to_chooseAddressFragment,
+            bundle
+        )*/
         requireActivity().supportFragmentManager.beginTransaction().add(
             R.id.nav_host_fragment,
             chooseAddressFragment,
             getString(R.string.title_choose_address_fragment)
-        ).hide(currentFragment).commit()
+        ).hide(currentFragment).commit()*/
+        val action = CartFragmentDirections.actionActionCartToChooseAddressFragment(cart)
+        findNavController().navigate(action)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        requireActivity().onBackPressedDispatcher.addCallback(this,
+        /*requireActivity().onBackPressedDispatcher.addCallback(this,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     val homeFragment = (activity as MainActivity).activeFragment
@@ -112,7 +124,7 @@ class CartFragment : Fragment(), ICartAdapter {
                     (activity as MainActivity).setDrawerLocked(false)
                     (activity as MainActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
                 }
-            })
+            })*/
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
@@ -129,15 +141,7 @@ class CartFragment : Fragment(), ICartAdapter {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onProductClicked(productId: String) {
-        val currentFragment = this
-        val productDetailFragment = DetailFragment(productId,"CartFragment")
-        requireActivity().supportFragmentManager.beginTransaction().add(
-            R.id.nav_host_fragment,
-            productDetailFragment,
-            getString(R.string.title_detail_fragment)
-        ).remove(currentFragment).commit()
-    }
+
 
     override fun onAddClicked(cartItemOffline: CartItemOffline) {
         GlobalScope.launch {
@@ -170,9 +174,21 @@ class CartFragment : Fragment(), ICartAdapter {
             for (item in currentUser.cart.items) {
                 if (item.productId == cartItemOffline.productId) {
                     currentUser.cart.items.remove(item)
+                    /*productDao.getProductById(item.productId).addOnSuccessListener {
+                        product = it.toObject(Product::class.java)!!
+                        if(product.quantity > 0){
+                            product.quantity -=1
+                            productDao.updateProduct(item.productId,product)
+
+                        }else if(product.quantity == 0){
+                            product.availability = false
+                            productDao.updateProduct(item.productId,product)
+                        }
+                    }*/
                     break
                 }
             }
+
             if (cartItemOffline.quantity > 1) {
                 cartItemOffline.quantity -= 1
                 cartQuantity= cartItemOffline.quantity.toString()
@@ -194,3 +210,5 @@ class CartFragment : Fragment(), ICartAdapter {
         }
     }
 }
+
+

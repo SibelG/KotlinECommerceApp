@@ -14,6 +14,7 @@ import coil.load
 import coil.transform.RoundedCornersTransformation
 import com.example.ecommerceapp.databinding.ItemCategoryBinding
 import com.example.ecommerceapp.databinding.ItemProductBinding
+import com.example.ecommerceapp.loadImage
 import com.example.ecommerceapp.models.Category
 import com.example.ecommerceapp.models.Product
 
@@ -39,9 +40,7 @@ class CategoryAdapter(): ListAdapter<Category, CategoryAdapter.ViewHolder?>(Diff
 
         @SuppressLint("ResourceAsColor")
         fun bind(category: Category){
-            categoryImage.load(category.categoryIcon){
-                transformations(RoundedCornersTransformation())
-            }
+            categoryImage.loadImage(category.categoryIcon)
             categoryName.text = category.categoryTitle
 
         }

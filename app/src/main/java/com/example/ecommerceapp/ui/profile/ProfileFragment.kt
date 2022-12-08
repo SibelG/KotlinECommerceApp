@@ -121,7 +121,7 @@ class ProfileFragment() : Fragment(), IAddressAdapter {
     }
 
     private fun openAddressFragment() {
-        val addressFragment = AddressFragment(this)
+        val addressFragment = AddressFragment()
         val currentFragment = this
         requireActivity().supportFragmentManager.beginTransaction().add(
             R.id.nav_host_fragment,

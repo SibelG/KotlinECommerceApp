@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.RoundedCornersTransformation
 import com.example.ecommerceapp.databinding.ItemProductBinding
+import com.example.ecommerceapp.loadImage
 import com.example.ecommerceapp.models.Order
 import com.example.ecommerceapp.models.Product
 
@@ -27,7 +28,7 @@ class ProductFilterAdapter(val products: List<Product>,private val clickListener
         val product = products[position]
         holder.bind(product)
         holder.productItem.setOnClickListener{
-            clickListener.onProductClicked(product.productId)
+            clickListener.onProductClicked(product)
         }
     }
     private val shopList: MutableList<Product> = mutableListOf()
@@ -47,9 +48,7 @@ class ProductFilterAdapter(val products: List<Product>,private val clickListener
 
         @SuppressLint("ResourceAsColor")
         fun bind(product: Product){
-            productImage.load(product.productImage){
-                transformations(RoundedCornersTransformation())
-            }
+            productImage.loadImage(product.productImage)
             productName.text = product.productName
             productDescription.text = product.description
             val price = product.productPrice.toString()
@@ -85,5 +84,5 @@ class ProductFilterAdapter(val products: List<Product>,private val clickListener
 }
 
 interface IFilterProductAdapter{
-    fun onProductClicked(productId: String)
+    fun onProductClicked(product: Product)
 }

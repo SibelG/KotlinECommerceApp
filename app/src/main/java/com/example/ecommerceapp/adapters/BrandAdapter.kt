@@ -39,9 +39,7 @@ class BrandAdapter(): ListAdapter<Brand, BrandAdapter.ViewHolder?>(DiffCallback)
 
         @SuppressLint("ResourceAsColor")
         fun bind(brand: Brand) {
-            brandImage.load(brand.brandImage) {
-                transformations(RoundedCornersTransformation())
-            }
+            brandImage.load(brand.brandImage)
             brandName.text = brand.brandTitle
             brandProducts.text = brand.brandProductsNumber.toString()
 

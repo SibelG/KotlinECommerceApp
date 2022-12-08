@@ -9,11 +9,13 @@ import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.ecommerceapp.MainActivity
 import com.example.ecommerceapp.R
 import com.example.ecommerceapp.adapters.*
 import com.example.ecommerceapp.databinding.FragmentAllProductBinding
+import com.example.ecommerceapp.models.Product
 import com.example.ecommerceapp.ui.detail.DetailFragment
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -169,16 +171,18 @@ class AllProductFragment() : Fragment(), IFilterProductAdapter {
 
     }
 
-    override fun onProductClicked(productId: String) {
+    override fun onProductClicked(product: Product) {
         //navigate to the product detail fragment
-        val currentFragment = this
-        val productDetailFragment = DetailFragment(productId, "AllProductFragment")
-        requireActivity().supportFragmentManager.beginTransaction().add(
-            R.id.nav_host_fragment,
-            productDetailFragment,
-            getString(R.string.title_detail_fragment)
-        ).hide(currentFragment).commit()
-        (activity as MainActivity).setDrawerLocked(true)
+        val action = AllProductFragmentDirections.actionAllProductFragmentToDetailFragment(product)
+        findNavController().navigate(action)
+        /*val bundle = Bundle()
+        bundle.putParcelable("productDetails", productId)
+        findNavController().navigate(
+            R.id.action_nav_home_to_detailFragment,
+            bundle
+        )*/
+
+
     }
 
 

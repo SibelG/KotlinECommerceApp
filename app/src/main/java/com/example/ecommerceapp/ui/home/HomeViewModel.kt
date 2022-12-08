@@ -30,6 +30,11 @@ class HomeViewModel : ViewModel() {
     val productsFilter: LiveData<List<Product>>
         get() = _productsFilter
 
+    private var _likedProducts = MutableLiveData<List<Product>>()
+    val likedProducts: LiveData<List<Product>> get() = _likedProducts
+
+    private var _userLikes = MutableLiveData<List<String>>()
+    val userLikes: LiveData<List<String>> get() = _userLikes
 
     var productDao=ProductDao()
 

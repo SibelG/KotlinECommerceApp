@@ -97,59 +97,36 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
             withContext(Dispatchers.Main) {
                 if(currentUser.userImage!=null){
                     binding.accountImageProfile.load(currentUser.userImage){
-                        transformations(RoundedCornersTransformation())
+                        transformations(RoundedCornersTransformation()).error(R.drawable.ic_baseline_account_circle_24)
                     }
                 }
 
-                binding.accountProfileEmail.text = currentUser.mobileNumber
+                binding.accountProfileName.text = currentUser.userName
+                binding.accountProfileEmail.text = currentUser.userEmail?:currentUser.mobileNumber
             }
         }
     }
     fun openOrdersFragment() {
-        /*val currentFragment = this
-        val ordersFragment = OrdersFragment()
-        requireActivity().supportFragmentManager.beginTransaction().add(
-            R.id.nav_host_fragment,
-            ordersFragment,
-            getString(R.string.menu_orders)
-        ).hide(currentFragment).commit()*/
+
         val action = AccountFragmentDirections.actionNavAccountToNavOrders()
         findNavController().navigate(action)
     }
 
     fun openProfileFragment() {
-       /* val profileFragment = ProfileFragment("AccountFragment")
-        val currentFragment = this
-        requireActivity().supportFragmentManager.beginTransaction().add(
-            R.id.nav_host_fragment_content_main,
-            profileFragment,
-            getString(R.string.menu_profile)
-        ).hide(currentFragment).commit()*/
+
         val action = AccountFragmentDirections.actionNavAccountToNavProfile()
         findNavController().navigate(action)
     }
 
     fun openUserCredidCardFragment() {
-       /* val currentFragment = this
-        val credidFragment = CredidCardFragment()
-        requireActivity().supportFragmentManager.beginTransaction().add(
-            R.id.nav_host_fragment,
-            credidFragment,
-            getString(R.string.menu_credid)
-        ).hide(currentFragment).commit()*/
+
         val action = AccountFragmentDirections.actionNavAccountToCredidCardFragment()
         findNavController().navigate(action)
     }
 
 
     fun openProductRequestFragment() {
-        /*val currentFragment = this
-        val productRequestFragment = ProductRequestFragment()
-        requireActivity().supportFragmentManager.beginTransaction().add(
-            R.id.nav_host_fragment,
-            productRequestFragment,
-            getString(R.string.menu_request)
-        ).hide(currentFragment).commit()*/
+
         val action = AccountFragmentDirections.actionNavAccountToProductRequestFragment()
         findNavController().navigate(action)
     }
@@ -180,6 +157,31 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
         showUserImage()
     }
 
+    fun submitUserInfo() = with(binding) {
+        val userName = accountProfileName.text.toString().trim()
+        val userEmail = accountProfileEmail.text.toString().trim()
+        if (userName.isEmpty()) {
+            showToast(getString(R.string.addUserName))
+            return@with
+        }
+        if (mImageUri == null) {
+            showToast(getString(R.string.addUserImage))
+            return@with
+        }
+        if (userEmail.isEmpty()) {
+            showToast(getString(R.string.addUserEmail))
+            return@with
+        }
+        GlobalScope.launch {
+            userDao.uploadUserInformation(
+                userName,
+                mImageUri,
+                userEmail,
+                requireContext())
+        }
+
+
+    }
 
     fun changeUserProfileImage() {
         selectImageFromGallery()

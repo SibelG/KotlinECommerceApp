@@ -6,6 +6,8 @@ import android.view.*
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ecommerceapp.MainActivity
@@ -16,6 +18,7 @@ import com.example.ecommerceapp.adapters.IProductAdapter
 import com.example.ecommerceapp.adapters.ProductAdapter
 import com.example.ecommerceapp.databinding.FragmentHomeBinding
 import com.example.ecommerceapp.models.Product
+import com.example.ecommerceapp.ui.account.AccountFragmentDirections
 import com.example.ecommerceapp.ui.detail.DetailFragment
 
 
@@ -27,7 +30,7 @@ class HomeFragment : Fragment(), IProductAdapter {
     private lateinit var adapter: ProductAdapter
     private lateinit var categoryAdapter: CategoryAdapter
     private lateinit var brandAdapter: BrandAdapter
-
+    lateinit var navController: NavController
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -80,6 +83,11 @@ class HomeFragment : Fragment(), IProductAdapter {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        navController = Navigation.findNavController(view)
+    }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
@@ -91,27 +99,32 @@ class HomeFragment : Fragment(), IProductAdapter {
 
     fun seeAllProduct(){
 
-       /* val action = HomeFragmentDirections.actionNavHomeToAllProductFragment()
-        findNavController().navigate(action)*/
-        val currentFragment = this
-        val productAllFragment = AllProductFragment()
-        requireActivity().supportFragmentManager.beginTransaction().add(
-            R.id.nav_host_fragment,
-            productAllFragment,
-            getString(R.string.title_detail_fragment)
-        ).hide(currentFragment).commit()
+        val action = HomeFragmentDirections.actionNavHomeToAllProductFragment()
+        findNavController().navigate(action)
         (activity as MainActivity).setDrawerLocked(true)
     }
 
-    override fun onProductClicked(productId: String) {
+    override fun onProductClicked(product: Product) {
         //navigate to the product detail fragment
-        val currentFragment = this
-        val productDetailFragment = DetailFragment(productId, "HomeFragment")
+
+        val action = HomeFragmentDirections.actionNavHomeToDetailFragment(product)
+        findNavController().navigate(action)
+        /*val currentFragment = this
+        val productDetailFragment = DetailFragment(productId)
         requireActivity().supportFragmentManager.beginTransaction().add(
             R.id.nav_host_fragment,
             productDetailFragment,
             getString(R.string.title_detail_fragment)
-        ).hide(currentFragment).commit()
-        (activity as MainActivity).setDrawerLocked(true)
+        ).commit()*/
+        /*val action= HomeFragmentDirections.actionNavHomeToDetailFragment()
+        navController.navigate(action)*/
+        //(activity as MainActivity).setDrawerLocked(true)
+        /*val bundle = Bundle()
+        bundle.putParcelable("productDetails", productId)
+        findNavController().navigate(
+            R.id.action_nav_home_to_detailFragment,
+            bundle
+        )*/
+
     }
 }

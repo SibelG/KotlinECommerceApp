@@ -5,13 +5,18 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.activity.OnBackPressedCallback
+import androidx.navigation.fragment.navArgs
 import com.example.ecommerceapp.MainActivity
 import com.example.ecommerceapp.R
+import com.example.ecommerceapp.Utils
 import com.example.ecommerceapp.adapters.SummaryProductAdapter
 import com.example.ecommerceapp.daos.ProductDao
+import com.example.ecommerceapp.daos.UserDao
 import com.example.ecommerceapp.databinding.SummaryFragmentBinding
 import com.example.ecommerceapp.models.*
+import com.example.ecommerceapp.ui.detail.DetailFragmentArgs
 import com.example.ecommerceapp.ui.payment.PaymentFragment
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -19,17 +24,17 @@ import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
 class SummaryFragment(
-    val previousFragment: Fragment,
-    val currentUser: User,
-    val address: Address,
-    val cart: Cart
 ) : Fragment() {
 
     private lateinit var viewModel: SummaryViewModel
     private lateinit var binding: SummaryFragmentBinding
-    private lateinit var productDao: ProductDao
+    private var productDao = ProductDao()
     private lateinit var adapter: SummaryProductAdapter
     private lateinit var cartItemsOffline: ArrayList<CartItemOffline>
+    private val args by navArgs<SummaryFragmentArgs>()
+    private val cart by lazy { args.cartDetails}
+    private val address by lazy { args.addressDetails}
+    private lateinit var currentUser : User
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,10 +43,9 @@ class SummaryFragment(
         viewModel = ViewModelProvider(this).get(SummaryViewModel::class.java)
         binding = SummaryFragmentBinding.inflate(inflater)
         (activity as MainActivity).supportActionBar?.title = "Order Summary"
-
-        productDao = ProductDao()
         setUpAddress()
         setupRecyclerView()
+        initializeCurrentUser()
 
         binding.continueButtonSummary.setOnClickListener {
             //go to payment screen
@@ -74,7 +78,13 @@ class SummaryFragment(
             }
         }
     }
-
+    private fun initializeCurrentUser() {
+        var userDao= UserDao()
+        GlobalScope.launch {
+            currentUser =
+                userDao.getUserById(Utils.currentUserId).await().toObject(User::class.java)!!
+        }
+    }
     private fun setUpAddress() {
         binding.userNameAddressSummary.text = address.userName
         binding.phoneNumberAddressSummary.text = address.mobileNumber
@@ -85,13 +95,8 @@ class SummaryFragment(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        requireActivity().onBackPressedDispatcher.addCallback(this,object : OnBackPressedCallback(true){
-            override fun handleOnBackPressed() {
-                val currentFragment = this@SummaryFragment
-                requireActivity().supportFragmentManager.beginTransaction().remove(currentFragment).show(previousFragment).commit()
-                (activity as MainActivity).supportActionBar?.title = "Choose an address"
-            }
-        })
+        (activity as MainActivity).supportActionBar?.title = "Choose an address"
+
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {

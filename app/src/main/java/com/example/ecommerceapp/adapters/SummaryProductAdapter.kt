@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.RoundedCornersTransformation
 import com.example.ecommerceapp.R
+import com.example.ecommerceapp.loadImage
 import com.example.ecommerceapp.models.CartItemOffline
 
 class SummaryProductAdapter(val items: ArrayList<CartItemOffline>): RecyclerView.Adapter<SummaryProductAdapter.ViewHolder>() {
@@ -34,9 +35,7 @@ class SummaryProductAdapter(val items: ArrayList<CartItemOffline>): RecyclerView
         val productQty: TextView = itemView.findViewById(R.id.product_qty_item_summary)
 
         fun bind(cartItem: CartItemOffline){
-            productImage.load(cartItem.product.productImage){
-                transformations(RoundedCornersTransformation())
-            }
+            productImage.loadImage(cartItem.product.productImage)
             productName.text = cartItem.product.productName
             productPrice.text = cartItem.product.productPrice.toString()
             productQty.text = "Qty - " + cartItem.quantity.toString()

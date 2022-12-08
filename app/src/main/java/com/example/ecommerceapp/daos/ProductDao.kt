@@ -1,11 +1,16 @@
 package com.example.ecommerceapp.daos
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
+import com.example.ecommerceapp.Utils
+import com.example.ecommerceapp.data.database.FavouriteDao
 import com.example.ecommerceapp.models.Product
 import com.example.ecommerceapp.models.Review
+import com.example.ecommerceapp.models.User
 import com.example.ecommerceapp.ui.home.ProductStatus
 import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
@@ -20,6 +25,8 @@ import java.lang.Exception
 class ProductDao {
     //get the instance of database
     private val db = FirebaseFirestore.getInstance()
+
+
     //get/set the collection
     val productsCollection = db.collection("products")
     private var mProducts: MutableList<Product> = mutableListOf()
@@ -36,6 +43,13 @@ class ProductDao {
             productsCollection.document(productId).set(product)
         }
     }
+    fun updateProduct(productId:String, product: Product) {
+        GlobalScope.launch {
+            //update the user in the database
+            productsCollection.document(productId).set(product).await()
+        }
+    }
+
     suspend fun retrieveAll(collection: Query): List<Product>{
         //val productsCollection = FirebaseFirestore.getInstance().collection("products")
 
