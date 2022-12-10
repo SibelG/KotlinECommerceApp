@@ -1,5 +1,5 @@
 # KotlinECommerceApp
-Firestore-Firebase-Google Authentication-Mvvm-Navigation Component
+Firestore-Firebase-Google Authentication-Mvvm-Navigation Component-Dagger  Hilt
 
 # Assets
 ![image](https://user-images.githubusercontent.com/46397935/202904789-5841ed8e-873d-4b52-8853-b509b82be5fc.png)
