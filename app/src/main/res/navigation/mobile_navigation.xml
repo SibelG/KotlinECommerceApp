@@ -36,6 +36,9 @@
         <action
             android:id="@+id/action_nav_profile_to_addressFragment"
             app:destination="@id/addressFragment" />
+        <action
+            android:id="@+id/action_nav_profile_to_editAddressFragment"
+            app:destination="@id/editAddressFragment" />
     </fragment>
 
     <activity
@@ -61,6 +64,9 @@
         <action
             android:id="@+id/action_detailFragment_to_chooseAddressFragment"
             app:destination="@id/chooseAddressFragment" />
+        <action
+            android:id="@+id/action_detailFragment_to_reviewFragment"
+            app:destination="@id/reviewFragment" />
 
 
     </fragment>
@@ -94,7 +100,11 @@
         android:id="@+id/nav_favorite"
         android:name="com.example.ecommerceapp.ui.favorites.FavoritesFragment"
         android:label="fragment_favorites"
-        tools:layout="@layout/fragment_favorites" />
+        tools:layout="@layout/fragment_favorites" >
+        <action
+            android:id="@+id/action_nav_favorite_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/credidCardFragment"
         android:name="com.example.ecommerceapp.ui.credid_card.CredidCardFragment"
@@ -110,11 +120,7 @@
         android:name="com.example.ecommerceapp.ui.address.AddressFragment"
         android:label="AddressFragment"
         tools:layout="@layout/address_fragment"/>
-    <fragment
-        android:id="@+id/orderDetailFragment"
-        android:name="com.example.rshlnapp.ui.orderDetails.OrderDetailFragment"
-        android:label="OrderDetailFragment"
-        tools:layout="@layout/order_detail_fragment"/>
+
     <fragment
         android:id="@+id/productRequestFragment"
         android:name="com.example.ecommerceapp.ui.product_request.ProductRequestFragment"
@@ -184,8 +190,64 @@
             app:argType="com.example.ecommerceapp.models.Address" />
 
         <argument
-            android:name="cartDetails"
+            android:name="cartSummary"
             app:argType="com.example.ecommerceapp.models.Cart" />
+        <action
+            android:id="@+id/action_summaryFragment_to_paymentFragment"
+            app:destination="@id/paymentFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/reviewFragment"
+        android:name="com.example.ecommerceapp.ui.review.ReviewFragment"
+        android:label="fragment_review"
+        tools:layout="@layout/fragment_review">
+
+        <argument
+            android:name="productReviews"
+            app:argType="com.example.ecommerceapp.models.Product" />
+    </fragment>
+    <fragment
+        android:id="@+id/addReviewFragment"
+        android:name="com.example.ecommerceapp.ui.review.AddReviewFragment"
+        android:label="AddReviewFragment"
+        tools:layout="@layout/fragment_add_review">
+        <argument
+            android:name="productReviews"
+            app:argType="com.example.ecommerceapp.models.Product" />
+    </fragment>
+    <fragment
+        android:id="@+id/orderDetailFragment"
+        android:name="com.example.ecommerceapp.ui.orderDetails.OrderDetailFragment"
+        android:label="OrderDetailFragment"
+        tools:layout="@layout/order_detail_fragment">
+
+        <action
+            android:id="@+id/action_orderDetailFragment_to_addReviewFragment"
+            app:destination="@id/addReviewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/paymentFragment"
+        android:name="com.example.ecommerceapp.ui.payment.PaymentFragment"
+        android:label="PaymentFragment"
+        tools:layout="@layout/payment_fragment">
+
+
+        <action
+            android:id="@+id/action_paymentFragment_to_orderDetailFragment"
+            app:destination="@id/orderDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editAddressFragment"
+        android:name="com.example.ecommerceapp.ui.edit_address.EditAddressFragment"
+        android:label="EditAddressFragment"
+        tools:layout="@layout/fragment_edit_address">
+        <action
+            android:id="@+id/action_editAddressFragment_to_nav_profile"
+            app:destination="@id/nav_profile" />
+        <argument
+            android:name="editAddress"
+            app:argType="com.example.ecommerceapp.models.Address" />
     </fragment>
 
 </navigation>

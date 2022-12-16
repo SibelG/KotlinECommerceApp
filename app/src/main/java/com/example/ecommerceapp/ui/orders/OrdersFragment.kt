@@ -1,16 +1,18 @@
 package com.example.ecommerceapp.ui.orders
 
+
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
-import com.bumptech.glide.util.Util
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.example.ecommerceapp.MainActivity
 import com.example.ecommerceapp.R
-import com.example.ecommerceapp.Utils
 import com.example.ecommerceapp.adapters.IOrderAdapter
 import com.example.ecommerceapp.adapters.OrderAdapter
 import com.example.ecommerceapp.daos.OrderDao
@@ -21,17 +23,17 @@ import com.example.ecommerceapp.models.CartItemOffline
 import com.example.ecommerceapp.models.Order
 import com.example.ecommerceapp.models.Product
 import com.example.ecommerceapp.models.User
-import com.example.rshlnapp.ui.orderDetails.OrderDetailFragment
-import com.google.android.gms.common.util.ArrayUtils
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
-import java.lang.StringBuilder
 
+
+@AndroidEntryPoint
 class OrdersFragment : Fragment(), IOrderAdapter {
 
     private lateinit var binding: FragmentOrdersBinding
@@ -101,14 +103,18 @@ class OrdersFragment : Fragment(), IOrderAdapter {
                 cartItemsOffline.add(cartItemOffline)
             }
             withContext(Dispatchers.Main){
-                val currentFragment = this@OrdersFragment
-                val orderDetailFragment = OrderDetailFragment(currentFragment, order, cartItemsOffline)
-                requireActivity().supportFragmentManager.beginTransaction().add(
-                    R.id.nav_host_fragment,
-                    orderDetailFragment,
-                    getString(R.string.title_order_details)
-                ).hide(currentFragment).commit()
+
+                val bundle = Bundle()
+                bundle.putParcelableArrayList(
+                    "itemAddress",
+                    cartItemsOffline as ArrayList<out Parcelable?>?
+                )
+                bundle.putParcelable("order",order)
+                findNavController().navigate(R.id.action_nav_orders_to_orderDetailFragment, bundle)
+
             }
         }
     }
+
+
 }

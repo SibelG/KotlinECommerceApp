@@ -6,8 +6,8 @@
         <data>
 
                 <variable
-                    name="adapter"
-                    type="com.example.ecommerceapp.adapters.FavoriteAdapter" />
+                    name="viewModel"
+                    type="com.example.ecommerceapp.ui.favorites.FavoriteViewModel" />
 
                 <variable
                     name="fragment"
@@ -61,30 +61,31 @@
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/favoriteRV"
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:adapter="@{adapter}"
+                            android:layout_width="405dp"
+                            android:layout_height="447dp"
                             android:orientation="vertical"
                             android:paddingTop="6dp"
+                            app:favListData="@{viewModel.favoriteProductsLiveData}"
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintBottom_toTopOf="@+id/addAllToBasket_Button"
                             app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:listitem="@layout/item_fav" />
 
                         <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/addAllToBasket_Button"
                             android:layout_width="match_parent"
                             android:layout_height="45dp"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginBottom="8dp"
+                            android:layout_marginBottom="80dp"
                             android:background="@drawable/button_style"
                             android:onClick="@{()-> fragment.addAllToCart()}"
                             android:text="@string/add_all_to_cart"
                             android:theme="@style/buttonTheme"
-                            app:layout_constraintBottom_toBottomOf="@+id/favoriteRV"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
                             app:layout_constraintStart_toStartOf="parent"
                             tools:ignore="TouchTargetSizeCheck" />
                 </androidx.constraintlayout.widget.ConstraintLayout>

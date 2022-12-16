@@ -14,6 +14,7 @@ import coil.load
 import coil.transform.RoundedCornersTransformation
 import com.example.ecommerceapp.databinding.ItemProductBinding
 import com.example.ecommerceapp.loadImage
+import com.example.ecommerceapp.models.Order
 import com.example.ecommerceapp.models.Product
 
 class ProductAdapter(private val clickListener: IProductAdapter): ListAdapter<Product, ProductAdapter.ViewHolder?>(DiffCallback) {
@@ -65,12 +66,9 @@ class ProductAdapter(private val clickListener: IProductAdapter): ListAdapter<Pr
         }
     }
 
-    private var onItemClickListener: ((Product) -> Unit)? = null
-    fun onItemClicked(listner: (Product) -> Unit) {
-        onItemClickListener = listner
-    }
 }
 
 interface IProductAdapter{
     fun onProductClicked(product: Product)
+    fun addCommend(order: Order)
 }

@@ -9,19 +9,21 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.ecommerceapp.MainActivity
 import com.example.ecommerceapp.R
 import com.example.ecommerceapp.Utils
+import com.example.ecommerceapp.closeFragment
 import com.example.ecommerceapp.daos.UserDao
 import com.example.ecommerceapp.databinding.AddressFragmentBinding
 import com.example.ecommerceapp.models.Address
 import com.example.ecommerceapp.models.User
 import com.example.ecommerceapp.ui.choose_address.ChooseAddressFragment
 import com.example.ecommerceapp.ui.profile.ProfileFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
-
+@AndroidEntryPoint
 class AddressFragment() : Fragment() {
 
     private lateinit var viewModel: AddressViewModel
@@ -35,8 +37,7 @@ class AddressFragment() : Fragment() {
         binding = AddressFragmentBinding.inflate(inflater)
         viewModel = ViewModelProvider(this).get(AddressViewModel::class.java)
 
-        (activity as MainActivity).supportActionBar?.title = "Add new address"
-        (activity as MainActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
+
         userDao = UserDao()
 
         binding.addAddressButton.setOnClickListener {
@@ -60,7 +61,7 @@ class AddressFragment() : Fragment() {
                 currentUser.addresses.add(address)
                 userDao.updateProfile(currentUser)
                 withContext(Dispatchers.Main) {
-                    //goToPreviousFragment()
+                    closeFragment()
                 }
             }
         } else {
@@ -69,46 +70,12 @@ class AddressFragment() : Fragment() {
         }
     }
 
-    /*private fun goToPreviousFragment() {
-        val profileFragment = (activity as MainActivity).activeFragment
-        val currentFragment = this@AddressFragment
-        if (previousFragment==profileFragment){
-            requireActivity().supportFragmentManager.beginTransaction().remove(currentFragment)
-                .show(profileFragment).commit()
-            (previousFragment as ProfileFragment).setupRecyclerView()
-            (activity as MainActivity).supportActionBar?.title = "Your Profile"
-            (activity as MainActivity).setDrawerLocked(false)
-            (activity as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
-            Toast.makeText(requireContext(), "Address added successfully", Toast.LENGTH_LONG).show()
-        }else{
-            requireActivity().supportFragmentManager.beginTransaction().remove(currentFragment)
-                .show(previousFragment).commit()
-            (previousFragment as ChooseAddressFragment).setupRecyclerView()
-            (activity as MainActivity).supportActionBar?.title = "Choose an address"
-            Toast.makeText(requireContext(), "Address added successfully", Toast.LENGTH_LONG).show()
-        }
-    }*/
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        /*requireActivity().onBackPressedDispatcher.addCallback(this,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    val profileFragment = (activity as MainActivity).activeFragment
-                    val currentFragment = this@AddressFragment
-                    if (previousFragment==profileFragment){
-                        requireActivity().supportFragmentManager.beginTransaction()
-                            .remove(currentFragment).show(profileFragment).commit()
-                        (activity as MainActivity).supportActionBar?.title = "Your Profile"
-                        (activity as MainActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
-                        (activity as MainActivity).setDrawerLocked(false)
-                    }else{
-                        requireActivity().supportFragmentManager.beginTransaction().remove(currentFragment).show(previousFragment).commit()
-                        (activity as MainActivity).supportActionBar?.title = "Choose an Address"
-                    }
-                }
-            })*/
+        (activity as MainActivity).supportActionBar?.title = "Add new address"
+        (activity as MainActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
+
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {

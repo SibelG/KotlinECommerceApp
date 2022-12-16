@@ -19,8 +19,9 @@ import com.example.ecommerceapp.models.Product
 import com.example.ecommerceapp.ui.detail.DetailFragment
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class AllProductFragment() : Fragment(), IFilterProductAdapter {
 
     private lateinit var binding: FragmentAllProductBinding
@@ -130,8 +131,6 @@ class AllProductFragment() : Fragment(), IFilterProductAdapter {
                 binding.productsRecyclerView.layoutManager = GridLayoutManager(requireContext(),2)
 
             })
-
-
     }
     private fun filterProduct(){
         val filtering = resources.getStringArray(R.array.filtering)
@@ -175,13 +174,6 @@ class AllProductFragment() : Fragment(), IFilterProductAdapter {
         //navigate to the product detail fragment
         val action = AllProductFragmentDirections.actionAllProductFragmentToDetailFragment(product)
         findNavController().navigate(action)
-        /*val bundle = Bundle()
-        bundle.putParcelable("productDetails", productId)
-        findNavController().navigate(
-            R.id.action_nav_home_to_detailFragment,
-            bundle
-        )*/
-
 
     }
 

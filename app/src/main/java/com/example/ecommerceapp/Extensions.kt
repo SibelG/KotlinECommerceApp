@@ -20,10 +20,19 @@ import com.bumptech.glide.load.resource.gif.GifDrawable
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import java.text.SimpleDateFormat
 
 
 fun Fragment.showToast(msg: String) {
     Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+}
+
+fun View.hide() {
+    visibility = View.GONE
+}
+
+fun View.show() {
+    visibility = View.VISIBLE
 }
 
 fun MainActivity.showBottomNav(){
@@ -50,6 +59,7 @@ fun Activity.hideKeyboard(editText: EditText){
         getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
     inputMethodManager?.hideSoftInputFromWindow(editText.windowToken, 0)
 }
+
 fun ImageView.loadGif(gifImage: Int){
     Glide.with(this.context).asGif().load(gifImage).into(this)
 }
@@ -79,4 +89,6 @@ fun ImageView.loadTimerGif(gifImage: Int){
             return false
         }
     }).into(this)
+
+
 }

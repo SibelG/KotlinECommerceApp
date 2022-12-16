@@ -20,7 +20,6 @@ data class Product(
     var availability: Boolean = true,
     var productBrand: String = "",
     var productCategory: String = "",
-    @TypeConverters(Converters::class)
     val reviews: ArrayList<Review> = ArrayList(),
     var description: String = "",
     var quantity: Int = 0

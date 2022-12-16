@@ -22,13 +22,14 @@ import com.example.ecommerceapp.models.User
 import com.example.ecommerceapp.ui.address.AddressFragment
 import com.example.ecommerceapp.ui.address.AddressViewModel
 import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
-
+@AndroidEntryPoint
 class CredidCardFragment : Fragment() ,ICredidCardAdapter{
 
     private lateinit var viewModel: CredidCardViewModel

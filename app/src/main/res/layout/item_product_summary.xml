@@ -7,12 +7,12 @@
 
     <ImageView
         android:id="@+id/product_image_item_summary"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="115dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        tools:srcCompat="@tools:sample/avatars"/>
+        tools:srcCompat="@tools:sample/avatars" />
 
 
     <LinearLayout
@@ -24,7 +24,7 @@
 
         <TextView
             android:id="@+id/product_name_item_summary"
-            android:layout_width="250dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:ellipsize="end"
@@ -38,17 +38,23 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:textSize="20sp"
+            android:textSize="16sp"
             tools:text="₹1000" />
 
         <TextView
             android:id="@+id/product_qty_item_summary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
             android:text="Qty - "
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/reviewButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#FF5722"
+            android:text="Add Comment"
+            tools:ignore="TouchTargetSizeCheck" />
 
     </LinearLayout>
 

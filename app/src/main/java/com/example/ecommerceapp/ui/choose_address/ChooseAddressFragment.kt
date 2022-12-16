@@ -23,12 +23,14 @@ import com.example.ecommerceapp.ui.detail.DetailFragmentArgs
 import com.example.ecommerceapp.ui.detail.DetailFragmentDirections
 import com.example.ecommerceapp.ui.summary.SummaryFragment
 import com.example.ecommerceapp.ui.tracking.LocateUserLocationFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
+@AndroidEntryPoint
 class ChooseAddressFragment() : Fragment(),
     IChooseAddressAdapter {
 
@@ -44,7 +46,6 @@ class ChooseAddressFragment() : Fragment(),
         savedInstanceState: Bundle?
     ): View? {
         binding = ChooseAddressFragmentBinding.inflate(inflater)
-        (activity as MainActivity).supportActionBar?.title = "Choose Address"
         userDao = UserDao()
         setupRecyclerView()
 
@@ -87,19 +88,9 @@ class ChooseAddressFragment() : Fragment(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        /*requireActivity().onBackPressedDispatcher.addCallback(this,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    val currentFragment = this@ChooseAddressFragment
-                    requireActivity().supportFragmentManager.beginTransaction()
-                        .remove(currentFragment).show(previousFragment).commit()
-                    if (previousFragment is DetailFragment) {
-                        (activity as MainActivity).supportActionBar?.title = "Product Details"
-                    } else {
-                        (activity as MainActivity).supportActionBar?.title = "Cart"
-                    }
-                }
-            })*/
+        (activity as MainActivity).supportActionBar?.title = "Choose Address"
+        (activity as MainActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
+
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {

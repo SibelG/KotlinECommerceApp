@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.ecommerceapp.R
 import com.example.ecommerceapp.closeFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TrackingFragment : Fragment() {
 
 

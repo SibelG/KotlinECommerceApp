@@ -2,29 +2,36 @@ package com.example.ecommerceapp.ui.summary
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.activity.OnBackPressedCallback
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.ecommerceapp.MainActivity
 import com.example.ecommerceapp.R
 import com.example.ecommerceapp.Utils
+import com.example.ecommerceapp.adapters.ClickListener
 import com.example.ecommerceapp.adapters.SummaryProductAdapter
 import com.example.ecommerceapp.daos.ProductDao
 import com.example.ecommerceapp.daos.UserDao
 import com.example.ecommerceapp.databinding.SummaryFragmentBinding
+import com.example.ecommerceapp.generated.callback.OnClickListener
 import com.example.ecommerceapp.models.*
 import com.example.ecommerceapp.ui.detail.DetailFragmentArgs
+import com.example.ecommerceapp.ui.home.HomeFragmentDirections
 import com.example.ecommerceapp.ui.payment.PaymentFragment
 import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
+@AndroidEntryPoint
 class SummaryFragment(
-) : Fragment() {
+) : Fragment(){
 
     private lateinit var viewModel: SummaryViewModel
     private lateinit var binding: SummaryFragmentBinding
@@ -32,7 +39,7 @@ class SummaryFragment(
     private lateinit var adapter: SummaryProductAdapter
     private lateinit var cartItemsOffline: ArrayList<CartItemOffline>
     private val args by navArgs<SummaryFragmentArgs>()
-    private val cart by lazy { args.cartDetails}
+    private val cart by lazy { args.cartSummary}
     private val address by lazy { args.addressDetails}
     private lateinit var currentUser : User
 
@@ -42,10 +49,11 @@ class SummaryFragment(
     ): View? {
         viewModel = ViewModelProvider(this).get(SummaryViewModel::class.java)
         binding = SummaryFragmentBinding.inflate(inflater)
-        (activity as MainActivity).supportActionBar?.title = "Order Summary"
+
+        initializeCurrentUser()
         setUpAddress()
         setupRecyclerView()
-        initializeCurrentUser()
+
 
         binding.continueButtonSummary.setOnClickListener {
             //go to payment screen
@@ -56,10 +64,21 @@ class SummaryFragment(
     }
 
     private fun goToPaymentFragment() {
-        val currentFragment = this
+
+        val bundle = Bundle()
+        bundle.putParcelableArrayList(
+            "itemAddress",
+            cartItemsOffline as ArrayList<out Parcelable?>?
+        )
+        bundle.putParcelable("cart",cart)
+        bundle.putParcelable("address",address)
+        findNavController().navigate(R.id.action_summaryFragment_to_paymentFragment, bundle)
+        /*val currentFragment = this
         val paymentFragment = PaymentFragment(currentFragment,currentUser,address,cart,cartItemsOffline)
-        requireActivity().supportFragmentManager.beginTransaction().add(R.id.nav_host_fragment,paymentFragment,getString(R.string.title_payment_fragment)).hide(currentFragment).commit()
+        requireActivity().supportFragmentManager.beginTransaction().add(R.id.nav_host_fragment,paymentFragment,getString(R.string.title_payment_fragment)).hide(currentFragment).commit()*/
     }
+
+
 
     private fun setupRecyclerView() {
         GlobalScope.launch {
@@ -95,7 +114,7 @@ class SummaryFragment(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        (activity as MainActivity).supportActionBar?.title = "Choose an address"
+        (activity as MainActivity).supportActionBar?.title = "Order Summary"
 
     }
 
@@ -110,5 +129,11 @@ class SummaryFragment(
         }
         return super.onOptionsItemSelected(item)
     }
+
+
+    /*override fun onProductClicked(product: Product) {
+        val action = SummaryFragmentDirections.actionSummaryFragmentToAddReviewFragment(product)
+        findNavController().navigate(action)
+    }*/
 
 }

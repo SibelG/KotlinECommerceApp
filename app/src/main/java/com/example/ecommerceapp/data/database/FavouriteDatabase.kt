@@ -15,27 +15,4 @@ abstract class FavouriteDatabase: RoomDatabase() {
 
     abstract fun getFavouriteDao(): FavouriteDao
 
-
-    companion object {
-        // Singleton prevents multiple instances of database opening at the
-        // same time.
-        @Volatile
-        private var INSTANCE: FavouriteDatabase? = null
-
-        fun getDatabase(context: Context): FavouriteDatabase {
-            val tempInstance = INSTANCE
-            if (tempInstance != null) {
-                return tempInstance
-            }
-            synchronized(this) {
-                val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    FavouriteDatabase::class.java,
-                    "fav_database"
-                ).build()
-                INSTANCE = instance
-                return instance
-            }
-        }
-    }
 }

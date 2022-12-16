@@ -10,8 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.GravityCompat
 import com.example.ecommerceapp.databinding.FragmentHelplineBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class HelplineFragment : Fragment() {
 
     private lateinit var binding: FragmentHelplineBinding

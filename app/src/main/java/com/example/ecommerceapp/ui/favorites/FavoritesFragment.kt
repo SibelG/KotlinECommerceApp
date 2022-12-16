@@ -11,37 +11,42 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ecommerceapp.R
+import com.example.ecommerceapp.Resource
 import com.example.ecommerceapp.Utils.currentUserId
+import com.example.ecommerceapp.adapters.BrandAdapter
 import com.example.ecommerceapp.adapters.FavoriteAdapter
+import com.example.ecommerceapp.adapters.ProductAdapter
 import com.example.ecommerceapp.daos.UserDao
 import com.example.ecommerceapp.databinding.FragmentFavoritesBinding
 import com.example.ecommerceapp.models.Order
 import com.example.ecommerceapp.models.Product
 import com.example.ecommerceapp.models.User
 import com.example.ecommerceapp.showToast
+import com.example.ecommerceapp.ui.cart.CartViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class FavoritesFragment : Fragment(R.layout.fragment_favorites),
     FavoriteAdapter.FavoriteProductListener {
 
-    lateinit var favoriteAdapter: FavoriteAdapter
-    private lateinit var currentUser: User
-    private var userDao = UserDao()
+    private var adapter = FavoriteAdapter()
 
     lateinit var loadingDialog: Dialog
 
     private lateinit var binding: FragmentFavoritesBinding
-    private val favoriteViewModel by viewModels<FavoriteViewModel>()
+    private lateinit var viewModel: FavoriteViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        favoriteViewModel.getFavoriteProducts()
     }
 
     override fun onCreateView(
@@ -50,60 +55,64 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites),
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_favorites, container, false)
-        binding.adapter = favoriteAdapter
+        viewModel = ViewModelProvider(this).get(FavoriteViewModel::class.java)
+        binding.viewModel = viewModel
         binding.fragment = this
+        binding.favoriteRV.adapter = adapter
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.getFavoriteProducts()
         observeListener()
+
     }
 
     private fun observeListener() {
-        favoriteViewModel.favoriteProductsLiveData.observe(viewLifecycleOwner, {
+        viewModel.favoriteProductsLiveData.observe(viewLifecycleOwner, {
             if (it.isEmpty()) {
                 binding.emptyProducts.visibility = View.VISIBLE
                 binding.favoriteContainer.visibility = View.GONE
             } else {
-                favoriteAdapter.addProducts(it, this)
+                adapter.addProducts(it, this)
                 binding.emptyProducts.visibility = View.GONE
                 binding.favoriteContainer.visibility = View.VISIBLE
+                /*adapter.notifyDataSetChanged()
+                binding.favoriteRV.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)*/
+            }
+        })
+        viewModel.cartProductsLiveData.observe(viewLifecycleOwner, {
+            when (it) {
+                is Resource.Success -> {
+                    showToast(getString(R.string.savedToCart))
+                }
+                is Resource.Error -> {
+                    showToast(it.msg!!)
+                }
+                else -> {}
             }
         })
     }
 
     fun addAllToCart() {
-        /*val favList = favoriteAdapter.getAllFavoriteProducts()
-        addProductsToCart(favList)*/
+        val favList = adapter.getAllFavoriteProducts()
+        viewModel.addProductsToCart(favList)
     }
 
-    fun addProductsToCart(favList: List<Product>){
-
-        GlobalScope.launch {
-            currentUser =
-                userDao.getUserById(currentUserId).await().toObject(User::class.java)!!
-            val favs = currentUser.favProduct
-
-
-        }
+    override fun onFavProductClick(productModel: Product) {
+        navigateToSpecificProductFragment(productModel)
     }
 
-    override fun onFavProductClick(productModel: Product, favProductImage: ImageView) {
-        navigateToSpecificProductFragment(productModel, favProductImage)
-    }
-
+    
     private fun navigateToSpecificProductFragment(
-        productModel: Product,
-        transitionImageView: ImageView
+        productModel: Product
     ) {
         // add transition to image view wh en open specific product fragment.
-        val extras = FragmentNavigatorExtras(
-            transitionImageView to productModel.productImage
-        )
-        /*val action =
-            FavoriteFragmentDirections.actionFavoriteFragmentToSpecificProductFragment(productModel)
-        findNavController().navigate(action, extras)*/
+
+        val action =
+            FavoritesFragmentDirections.actionNavFavoriteToDetailFragment(productModel)
+        findNavController().navigate(action)
     }
 
 }

@@ -1,10 +1,12 @@
-package com.example.rshlnapp.ui.edit_address
+package com.example.ecommerceapp.ui.edit_address
 
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.ecommerceapp.MainActivity
 import com.example.ecommerceapp.R
 import com.example.ecommerceapp.Utils
@@ -12,27 +14,29 @@ import com.example.ecommerceapp.daos.UserDao
 import com.example.ecommerceapp.databinding.FragmentEditAddressBinding
 import com.example.ecommerceapp.models.Address
 import com.example.ecommerceapp.models.User
+import com.example.ecommerceapp.ui.detail.DetailFragmentArgs
 import com.example.ecommerceapp.ui.profile.ProfileFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
-class EditAddressFragment(val previousFragment: Fragment, val address: Address) : Fragment() {
+@AndroidEntryPoint
+class EditAddressFragment() : Fragment() {
 
     private lateinit var binding: FragmentEditAddressBinding
     private lateinit var userDao: UserDao
     private lateinit var currentUser: User
+    private val args by navArgs<EditAddressFragmentArgs>()
+    private val address by lazy { args.editAddress }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentEditAddressBinding.inflate(inflater)
-
-        (activity as MainActivity).supportActionBar?.title = "Edit Address"
-        (activity as MainActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
         userDao = UserDao()
 
         binding.editAddressButton.setOnClickListener {
@@ -84,32 +88,19 @@ class EditAddressFragment(val previousFragment: Fragment, val address: Address) 
     }
 
     private fun goToProfileFragment() {
-        val profileFragment = (activity as MainActivity).activeFragment
-        val currentFragment = this
-        requireActivity().supportFragmentManager.beginTransaction().remove(currentFragment)
-            .show(profileFragment).commit()
-        (previousFragment as ProfileFragment).setupRecyclerView()
-        (activity as MainActivity).supportActionBar?.title = "Your Profile"
+        val action = EditAddressFragmentDirections.actionEditAddressFragmentToNavProfile()
+        findNavController().navigate(action)
         (activity as MainActivity).setDrawerLocked(false)
-        (activity as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         Toast.makeText(requireContext(), "Address Edited successfully", Toast.LENGTH_LONG).show()
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        requireActivity().onBackPressedDispatcher.addCallback(this,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    val profileFragment = (activity as MainActivity).activeFragment
-                    val currentFragment = this@EditAddressFragment
-                    requireActivity().supportFragmentManager.beginTransaction()
-                        .remove(currentFragment).show(profileFragment).commit()
-                    (activity as MainActivity).supportActionBar?.title = "Your Profile"
-                    (activity as MainActivity).setDrawerLocked(false)
-                    (activity as MainActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
-                }
-            })
+        (activity as MainActivity).supportActionBar?.title = "Edit Address"
+        (activity as MainActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
+
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {

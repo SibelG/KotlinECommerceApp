@@ -8,12 +8,15 @@ import com.example.ecommerceapp.Utils
 import com.example.ecommerceapp.daos.UserDao
 import com.example.ecommerceapp.models.Address
 import com.example.ecommerceapp.models.User
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class ProfileViewModel : ViewModel() {
+@HiltViewModel
+class ProfileViewModel @Inject constructor() : ViewModel() {
 
     private val _addresses = MutableLiveData<List<Address>>()
     val addresses: LiveData<List<Address>>

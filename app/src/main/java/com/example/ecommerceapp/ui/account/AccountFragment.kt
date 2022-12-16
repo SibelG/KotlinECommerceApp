@@ -22,16 +22,18 @@ import com.example.ecommerceapp.ui.credid_card.CredidCardFragment
 import com.example.ecommerceapp.ui.orders.OrdersFragment
 import com.example.ecommerceapp.ui.product_request.ProductRequestFragment
 import com.example.ecommerceapp.ui.profile.ProfileFragment
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
-
+@AndroidEntryPoint
 class AccountFragment : Fragment(R.layout.fragment_account) {
 
     private lateinit var viewModel: AccountViewModel
@@ -45,6 +47,8 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
        // (activity as MainActivity).hideBottomNav()
+        (activity as MainActivity).supportActionBar?.title = "Account Settings"
+        (activity as MainActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
 
     }
 
@@ -59,8 +63,6 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
 
         setupRecyclerView()
 
-        (activity as MainActivity).supportActionBar?.title = "Account Settings"
-        (activity as MainActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
 
 
         binding.cardSection.setOnClickListener{
@@ -73,7 +75,7 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
             openOrdersFragment()
         }
         binding.logoutSection.setOnClickListener{
-            logout()
+            showSignOutDialog()
         }
         binding.requestSection.setOnClickListener{
             openProductRequestFragment()
@@ -204,5 +206,21 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
         if (mImageUri != null)
             binding.accountImageProfile.setImageURI(mImageUri)
     }
+    private fun showSignOutDialog() {
+        context?.let {
+            MaterialAlertDialogBuilder(it)
+                .setTitle(getString(R.string.sign_out_dialog_title_text))
+                .setMessage(getString(R.string.sign_out_dialog_message_text))
+                .setNegativeButton(getString(R.string.pro_cat_dialog_cancel_btn)) { dialog, _ ->
+                    dialog.cancel()
+                }
+                .setPositiveButton(getString(R.string.dialog_sign_out_btn_text)) { dialog, _ ->
+                    logout()
+                    dialog.cancel()
+                }
+                .show()
+        }
+    }
+
 
 }

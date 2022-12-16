@@ -7,8 +7,9 @@ import androidx.constraintlayout.motion.widget.MotionLayout
 import com.example.ecommerceapp.AuthenticationActivity
 import com.example.ecommerceapp.MainActivity
 import com.example.ecommerceapp.databinding.ActivitySplashScreenBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class ActivitySplashScreen : AppCompatActivity() {
 
     private var _binding: ActivitySplashScreenBinding? = null

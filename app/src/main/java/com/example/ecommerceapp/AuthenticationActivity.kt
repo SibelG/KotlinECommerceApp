@@ -24,9 +24,10 @@ import com.google.firebase.auth.*
 import com.google.firebase.auth.PhoneAuthProvider.ForceResendingToken
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.TimeUnit
 
-
+@AndroidEntryPoint
 class AuthenticationActivity : AppCompatActivity() {
 
     private lateinit var googleSignInClient: GoogleSignInClient

@@ -16,4 +16,6 @@
     <color name="filledBlack">#000</color>
     <color name="textColorPrimary">#222121</color>
     <color name="gray">#7C7C7C</color>
+    <color name="orange">#FF5722</color>
+    <color name="buttonColor">#B85851</color>
 </resources>

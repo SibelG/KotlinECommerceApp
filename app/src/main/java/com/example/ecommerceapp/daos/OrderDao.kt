@@ -2,6 +2,8 @@ package com.example.ecommerceapp.daos
 
 import com.example.ecommerceapp.Utils
 import com.example.ecommerceapp.models.Order
+import com.example.ecommerceapp.models.Product
+import com.example.ecommerceapp.models.Review
 import com.example.ecommerceapp.models.User
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentSnapshot

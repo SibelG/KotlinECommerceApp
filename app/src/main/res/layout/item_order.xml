@@ -16,24 +16,23 @@
 
             <TextView
                 android:id="@+id/products_name_item_order"
-                android:layout_width="270dp"
-                android:layout_height="53dp"
+                android:layout_width="261dp"
+                android:layout_height="46dp"
                 android:layout_marginHorizontal="32dp"
-                android:layout_marginEnd="32dp"
+                android:layout_marginStart="8dp"
                 android:ellipsize="end"
                 android:maxLines="3"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView6"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="The Great Khali, mi charger, maticdo, wazirx ki website, colgate super flexi" />
+                tools:text="The Great Khali, mi charger, maticdo, wazirx " />
 
             <TextView
                 android:id="@+id/order_status_item_order"
-                android:layout_width="188dp"
+                android:layout_width="wrap_content"
                 android:layout_height="28dp"
                 android:layout_marginTop="8dp"
-                android:gravity="center_horizontal"
                 android:textColor="#9FE318"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="@+id/products_name_item_order"
@@ -41,21 +40,12 @@
                 tools:text="Order Placed" />
 
             <ImageView
-                android:id="@+id/orderImage"
-                android:layout_width="88dp"
-                android:layout_height="91dp"
+                android:id="@+id/imageView6"
+                android:layout_width="77dp"
+                android:layout_height="88dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/basket" />
-
-            <ImageView
-                android:id="@+id/addComment"
-                android:layout_width="35dp"
-                android:layout_height="25dp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintEnd_toEndOf="@+id/products_name_item_order"
-                app:layout_constraintTop_toBottomOf="@+id/products_name_item_order"
-                app:srcCompat="@drawable/ic_baseline_add_comment_24" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

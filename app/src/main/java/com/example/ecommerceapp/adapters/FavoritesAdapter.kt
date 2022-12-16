@@ -10,16 +10,18 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.RoundedCornersTransformation
 import com.example.ecommerceapp.R
 import com.example.ecommerceapp.databinding.ItemFavBinding
+import com.example.ecommerceapp.databinding.ItemProductBinding
 import com.example.ecommerceapp.models.Product
 import javax.inject.Inject
 
-class FavoriteAdapter
-constructor() : RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder>() {
+class FavoriteAdapter (): ListAdapter<Product, FavoriteAdapter.ViewHolder?>(DiffCallback){
 
     private val productList = mutableListOf<Product>()
     private lateinit var favListener: FavoriteProductListener
@@ -34,29 +36,25 @@ constructor() : RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder>() {
         notifyDataSetChanged()
     }
 
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val product = getItem(position)
+        holder.bind(product)
+    }
+
     fun getAllFavoriteProducts() = productList
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): FavoriteAdapter.FavoriteViewHolder =
-        FavoriteViewHolder(
-            DataBindingUtil.inflate(
-                LayoutInflater.from(parent.context),
-                R.layout.item_fav,
-                parent,
-                false
-            )
-        )
-
-    override fun onBindViewHolder(holder: FavoriteAdapter.FavoriteViewHolder, position: Int) {
-        holder.bind(productList[position])
+    ):ViewHolder {
+        return ViewHolder(ItemFavBinding.inflate(LayoutInflater.from(parent.context)))
     }
+
+
 
     override fun getItemCount(): Int = productList.size
 
-    inner class FavoriteViewHolder(private val binding: ItemFavBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(private val binding: ItemFavBinding) : RecyclerView.ViewHolder(binding.root) {
 
         val productImage: ImageView = binding.fabProductImage
         val productName: TextView = binding.favProductName
@@ -84,8 +82,19 @@ constructor() : RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder>() {
         }
     }
 
+    companion object DiffCallback: DiffUtil.ItemCallback<Product>(){
+        override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean {
+            return oldItem.productId == newItem.productId
+        }
+
+        override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean {
+            return oldItem == newItem
+        }
+    }
+
+
     interface FavoriteProductListener {
-        fun onFavProductClick(productModel: Product, favProductImage: ImageView)
+        fun onFavProductClick(productModel: Product)
     }
 
 }

@@ -5,14 +5,17 @@ import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.view.menu.MenuView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ecommerceapp.R
 import com.example.ecommerceapp.loadImage
 import com.example.ecommerceapp.models.Order
 import com.example.ecommerceapp.models.OrderStatus
+import com.example.ecommerceapp.models.Product
 
 
 class OrderAdapter(private val clickListener: IOrderAdapter,val orders: List<Order>): RecyclerView.Adapter<OrderAdapter.ViewHolder>(){
@@ -28,9 +31,12 @@ class OrderAdapter(private val clickListener: IOrderAdapter,val orders: List<Ord
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val order = orders[n - position]
         holder.bind(order,context)
+        val cartItems = order.cart.items
         holder.itemOrder.setOnClickListener {
             clickListener.onOrderClicked(order)
         }
+
+
     }
 
     override fun getItemCount(): Int {
@@ -41,17 +47,14 @@ class OrderAdapter(private val clickListener: IOrderAdapter,val orders: List<Ord
         val itemOrder: CardView = itemView.findViewById(R.id.item_order_view)
         val productsName: TextView = itemView.findViewById(R.id.products_name_item_order)
         val orderStatus: TextView = itemView.findViewById(R.id.order_status_item_order)
-        val orderImage: ImageView = itemView.findViewById(R.id.orderImage)
 
         fun bind(order: Order, context: Context){
             val cartItems = order.cart.items
             var name = cartItems[0].productName
-            var image = cartItems[0].productImage
             for(i in 1..(cartItems.size-1)){
                 name += ", " + cartItems[i].productName
-                image += cartItems[i].productImage
+
             }
-            orderImage.loadImage(image)
             productsName.text = name
             val status = order.orderStatus
             var statusString = ""

@@ -12,17 +12,18 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ecommerceapp.MainActivity
 import com.example.ecommerceapp.R
-import com.example.ecommerceapp.adapters.BrandAdapter
-import com.example.ecommerceapp.adapters.CategoryAdapter
-import com.example.ecommerceapp.adapters.IProductAdapter
-import com.example.ecommerceapp.adapters.ProductAdapter
+import com.example.ecommerceapp.adapters.*
 import com.example.ecommerceapp.databinding.FragmentHomeBinding
+import com.example.ecommerceapp.models.Brand
+import com.example.ecommerceapp.models.Category
+import com.example.ecommerceapp.models.Order
 import com.example.ecommerceapp.models.Product
 import com.example.ecommerceapp.ui.account.AccountFragmentDirections
 import com.example.ecommerceapp.ui.detail.DetailFragment
+import dagger.hilt.android.AndroidEntryPoint
 
 
-
+@AndroidEntryPoint
 class HomeFragment : Fragment(), IProductAdapter {
 
     private lateinit var homeViewModel: HomeViewModel
@@ -42,6 +43,18 @@ class HomeFragment : Fragment(), IProductAdapter {
         binding = FragmentHomeBinding.inflate(inflater)
 
         binding.viewModel = homeViewModel
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        navController = Navigation.findNavController(view)
+        initRecycler()
+
+    }
+
+    private fun initRecycler(){
         adapter = ProductAdapter(this)
         binding.productsRecyclerView.adapter = adapter
 
@@ -80,14 +93,7 @@ class HomeFragment : Fragment(), IProductAdapter {
         binding.seeMoreHeadLineText.setOnClickListener {
             seeAllProduct()
         }
-        return binding.root
     }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        navController = Navigation.findNavController(view)
-    }
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
@@ -109,22 +115,12 @@ class HomeFragment : Fragment(), IProductAdapter {
 
         val action = HomeFragmentDirections.actionNavHomeToDetailFragment(product)
         findNavController().navigate(action)
-        /*val currentFragment = this
-        val productDetailFragment = DetailFragment(productId)
-        requireActivity().supportFragmentManager.beginTransaction().add(
-            R.id.nav_host_fragment,
-            productDetailFragment,
-            getString(R.string.title_detail_fragment)
-        ).commit()*/
-        /*val action= HomeFragmentDirections.actionNavHomeToDetailFragment()
-        navController.navigate(action)*/
-        //(activity as MainActivity).setDrawerLocked(true)
-        /*val bundle = Bundle()
-        bundle.putParcelable("productDetails", productId)
-        findNavController().navigate(
-            R.id.action_nav_home_to_detailFragment,
-            bundle
-        )*/
+
 
     }
+
+    override fun addCommend(order: Order) {
+        TODO("Not yet implemented")
+    }
+
 }

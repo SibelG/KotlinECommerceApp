@@ -24,21 +24,17 @@ import com.example.ecommerceapp.daos.UserDao
 import com.example.ecommerceapp.databinding.FragmentProfileBinding
 import com.example.ecommerceapp.models.Address
 import com.example.ecommerceapp.models.User
-import com.example.ecommerceapp.ui.account.AccountFragment
-import com.example.ecommerceapp.ui.account.AccountFragmentDirections
-import com.example.ecommerceapp.ui.address.AddressFragment
-import com.example.ecommerceapp.ui.orders.OrdersFragment
-import com.example.rshlnapp.ui.edit_address.EditAddressFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
-
+@AndroidEntryPoint
 class ProfileFragment() : Fragment(), IAddressAdapter {
 
     private lateinit var binding: FragmentProfileBinding
@@ -121,21 +117,25 @@ class ProfileFragment() : Fragment(), IAddressAdapter {
     }
 
     private fun openAddressFragment() {
-        val addressFragment = AddressFragment()
+        /*val addressFragment = AddressFragment()
         val currentFragment = this
         requireActivity().supportFragmentManager.beginTransaction().add(
             R.id.nav_host_fragment,
             addressFragment,
             getString(R.string.title_address_fragment)
-        ).hide(currentFragment).commit()
+        ).hide(currentFragment).commit()*/
+        val action = ProfileFragmentDirections.actionNavProfileToAddressFragment()
+        findNavController().navigate(action)
         (activity as MainActivity).setDrawerLocked(true)
 
     }
 
     override fun onEditClicked(address: Address) {
-        val currentFragment = this
+        val action = ProfileFragmentDirections.actionNavProfileToEditAddressFragment(address)
+        findNavController().navigate(action)
+        /*val currentFragment = this
         val editAddressFragment = EditAddressFragment(this,address)
-        requireActivity().supportFragmentManager.beginTransaction().add(R.id.nav_host_fragment,editAddressFragment,getString(R.string.title_edit_address_fragment)).hide(currentFragment).commit()
+        requireActivity().supportFragmentManager.beginTransaction().add(R.id.nav_host_fragment,editAddressFragment,getString(R.string.title_edit_address_fragment)).hide(currentFragment).commit()*/
         (activity as MainActivity).setDrawerLocked(true)
     }
 

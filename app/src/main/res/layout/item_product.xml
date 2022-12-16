@@ -46,11 +46,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <RatingBar
+                android:id="@+id/ratingBar"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:numStars="5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
                 android:id="@+id/product_name_in_product_fragment"
                 android:layout_width="172dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="16dp"
                 android:maxLines="2"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"

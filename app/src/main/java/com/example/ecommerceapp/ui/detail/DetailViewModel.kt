@@ -6,11 +6,16 @@ import com.example.ecommerceapp.daos.DBRepository
 import com.example.ecommerceapp.daos.ProductDao
 import com.example.ecommerceapp.daos.UserDao
 import com.example.ecommerceapp.models.Product
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class DetailViewModel constructor(private val dbRepository : DBRepository) : ViewModel() {
+@HiltViewModel
+class DetailViewModel @Inject
+constructor(private val dbRepository : DBRepository
+) : ViewModel() {
 
     fun favoriteLiveData(id: String) = dbRepository.getProductFromFavoriteLiveData(id)
 

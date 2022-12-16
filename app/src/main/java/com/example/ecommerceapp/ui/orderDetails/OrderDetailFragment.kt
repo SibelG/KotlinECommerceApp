@@ -1,4 +1,4 @@
-package com.example.rshlnapp.ui.orderDetails
+package com.example.ecommerceapp.ui.orderDetails
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
@@ -10,27 +10,37 @@ import android.widget.EditText
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.ecommerceapp.MainActivity
 import com.example.ecommerceapp.R
+import com.example.ecommerceapp.adapters.ClickListener
+import com.example.ecommerceapp.adapters.OrderItemAdapter
 import com.example.ecommerceapp.adapters.SummaryProductAdapter
 import com.example.ecommerceapp.daos.OrderDao
+import com.example.ecommerceapp.daos.ProductDao
 import com.example.ecommerceapp.databinding.OrderDetailFragmentBinding
 import com.example.ecommerceapp.models.CartItemOffline
 import com.example.ecommerceapp.models.Order
 import com.example.ecommerceapp.models.OrderStatus
+import com.example.ecommerceapp.models.Product
+import com.example.ecommerceapp.ui.detail.DetailFragmentDirections
 import com.example.ecommerceapp.ui.orderDetails.OrderDetailViewModel
 import com.example.ecommerceapp.ui.orders.OrdersFragment
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
-
+@AndroidEntryPoint
 class OrderDetailFragment(
-    val previousFragment: Fragment,
-    val order: Order,
-    val cartItemsOffline: ArrayList<CartItemOffline>
-) : Fragment() {
+) : Fragment(),ClickListener {
 
     private lateinit var viewModel: OrderDetailViewModel
     private lateinit var binding: OrderDetailFragmentBinding
     private lateinit var adapter: SummaryProductAdapter
+    private var productDao = ProductDao()
+    lateinit var cartItemsOffline: ArrayList<CartItemOffline>
+    lateinit var order:Order
 
     @SuppressLint("ResourceAsColor")
     override fun onCreateView(
@@ -39,9 +49,13 @@ class OrderDetailFragment(
     ): View? {
         viewModel = ViewModelProvider(this).get(OrderDetailViewModel::class.java)
         binding = OrderDetailFragmentBinding.inflate(inflater)
+
+        arguments?.let {
+            cartItemsOffline = it.getParcelableArrayList<CartItemOffline>("itemAddress") as ArrayList<CartItemOffline>
+            order = it.getParcelable<Order>("order") as Order
+        }
+
         setupRecyclerView()
-        (activity as MainActivity).supportActionBar?.title = "Order Details"
-        (activity as MainActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
 
         if (order.orderStatus== OrderStatus.PLACED || order.orderStatus== OrderStatus.APPROVED || order.orderStatus== OrderStatus.PACKED || order.orderStatus== OrderStatus.SHIPPED) {
             binding.cancelOrderButton.isEnabled = true
@@ -51,12 +65,13 @@ class OrderDetailFragment(
             cancelOrder()
         }
 
+
         return binding.root
     }
 
     private fun setupRecyclerView() {
         val cart = order.cart
-        val adapter = SummaryProductAdapter(cartItemsOffline)
+        val adapter = OrderItemAdapter(cartItemsOffline,this@OrderDetailFragment)
         binding.productsRecyclerViewOrder.adapter = adapter
         binding.orderIdOrderDetails.text = "ORDER ID - " + order.orderId
         binding.orderedOnOrder.text = "Ordered " + order.orderDate
@@ -70,26 +85,25 @@ class OrderDetailFragment(
         binding.totalAmountOrder.text = "₹" + cart.price
     }
 
+    private  fun navigateToReview() {
+        GlobalScope.launch {
+            val items = order.cart.items
+            for (i in 0..(cartItemsOffline.size - 1)) {
+                val item = items[i]
+                val product = productDao.getProductById(item.productId).await()
+                    .toObject(Product::class.java)!!
+
+
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        requireActivity().onBackPressedDispatcher.addCallback(this,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    val currentFragment = this@OrderDetailFragment
-                    if (previousFragment is OrdersFragment) {
-                        requireActivity().supportFragmentManager.beginTransaction()
-                            .remove(currentFragment).show(previousFragment).commit()
-                        (activity as MainActivity).supportActionBar?.title = "Your Profile"
-                        (activity as MainActivity).setDrawerLocked(false)
-                        (activity as MainActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
-                    } else {
-                        requireActivity().supportFragmentManager.beginTransaction()
-                            .remove(currentFragment).show(previousFragment).commit()
-                        (activity as MainActivity).supportActionBar?.title = "Choose Payment Option"
-                    }
-                }
-            })
+        (activity as MainActivity).supportActionBar?.title = "Order Details"
+        (activity as MainActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
+
     }
 
     private fun cancelOrder() {
@@ -128,6 +142,11 @@ class OrderDetailFragment(
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun addReview(product: Product) {
+        val action = OrderDetailFragmentDirections.actionOrderDetailFragmentToAddReviewFragment(product)
+        findNavController().navigate(action)
     }
 
 }

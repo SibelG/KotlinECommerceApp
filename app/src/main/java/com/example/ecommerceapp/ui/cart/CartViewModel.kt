@@ -11,13 +11,15 @@ import com.example.ecommerceapp.models.CartItem
 import com.example.ecommerceapp.models.CartItemOffline
 import com.example.ecommerceapp.models.Product
 import com.example.ecommerceapp.models.User
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-
-class CartViewModel : ViewModel() {
+@HiltViewModel
+class CartViewModel @Inject constructor(): ViewModel() {
     private val _items = MutableLiveData<List<CartItemOffline>>()
     val items: LiveData<List<CartItemOffline>>
         get() = _items

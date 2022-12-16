@@ -1,11 +1,13 @@
 package com.example.ecommerceapp.ui.payment
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.*
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.ecommerceapp.MainActivity
 import com.example.ecommerceapp.R
 import com.example.ecommerceapp.Utils
@@ -13,28 +15,30 @@ import com.example.ecommerceapp.daos.OrderDao
 import com.example.ecommerceapp.daos.UserDao
 import com.example.ecommerceapp.databinding.PaymentFragmentBinding
 import com.example.ecommerceapp.models.*
-import com.example.ecommerceapp.ui.payment.PaymentViewModel
-import com.example.rshlnapp.ui.orderDetails.OrderDetailFragment
+import com.google.android.gms.location.CurrentLocationRequest
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
+@AndroidEntryPoint
 class PaymentFragment(
-    val previousFragment: Fragment,
-    val currentUser: User,
-    val address: Address,
-    val cart: Cart,
-    private val cartItemsOffline: ArrayList<CartItemOffline>
+
 ) : Fragment() {
 
     private lateinit var viewModel: PaymentViewModel
     private lateinit var binding: PaymentFragmentBinding
-    private lateinit var orderDao: OrderDao
-    private lateinit var userDao: UserDao
+    private var orderDao = OrderDao()
+    private var userDao = UserDao()
+    private lateinit var cartItemsOffline:ArrayList<CartItemOffline>
+    private lateinit var cart:Cart
+    private lateinit var address:Address
+    private lateinit var currentUser:User
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,8 +47,7 @@ class PaymentFragment(
         binding = PaymentFragmentBinding.inflate(inflater)
         viewModel = ViewModelProvider(this).get(PaymentViewModel::class.java)
 
-        orderDao = OrderDao()
-        userDao = UserDao()
+        initializeCurrentUser()
 
         binding.placeOrderButton.setOnClickListener {
             if (binding.codRadioButton.isChecked) {
@@ -56,13 +59,24 @@ class PaymentFragment(
                     Toast.LENGTH_SHORT
                 ).show()
             }
+
+        }
+        arguments?.let {
+            cartItemsOffline = it.getParcelableArrayList<CartItemOffline>("itemAddress") as ArrayList<CartItemOffline>
+            cart = it.getParcelable<Cart>("cart") as Cart
+            address = it.getParcelable<Address>("address") as Address
         }
 
-        (activity as MainActivity).supportActionBar?.title = "Choose Payment Option"
+
 
         return binding.root
     }
-
+    private fun initializeCurrentUser() {
+        GlobalScope.launch {
+            currentUser =
+                userDao.getUserById(Utils.currentUserId).await().toObject(User::class.java)!!
+        }
+    }
     private fun placeTheOrder() {
         val simpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
         val simpleTimeFormat = SimpleDateFormat("hh:mm aa")
@@ -83,9 +97,15 @@ class PaymentFragment(
             val orderId = orderDao.placeOrder(order)
             withContext(Dispatchers.Main){
                 order.orderId = orderId
-                val currentFragment = this@PaymentFragment
-                val orderDetailsFragment = OrderDetailFragment(currentFragment,order,cartItemsOffline)
-                requireActivity().supportFragmentManager.beginTransaction().add(R.id.nav_host_fragment,orderDetailsFragment,getString(R.string.title_order_details)).hide(currentFragment).commit()
+
+                val bundle = Bundle()
+                bundle.putParcelableArrayList(
+                    "itemAddress",
+                    cartItemsOffline as ArrayList<out Parcelable?>?
+                )
+                bundle.putParcelable("order",order)
+                findNavController().navigate(R.id.action_paymentFragment_to_orderDetailFragment, bundle)
+
             }
         }
     }
@@ -93,15 +113,8 @@ class PaymentFragment(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        requireActivity().onBackPressedDispatcher.addCallback(this,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    val currentFragment = this@PaymentFragment
-                    requireActivity().supportFragmentManager.beginTransaction()
-                        .remove(currentFragment).show(previousFragment).commit()
-                    (activity as MainActivity).supportActionBar?.title = "Order Summary"
-                }
-            })
+        (activity as MainActivity).supportActionBar?.title = "Choose Payment Option"
+
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {

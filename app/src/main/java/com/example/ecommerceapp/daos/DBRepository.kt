@@ -1,28 +1,30 @@
 package com.example.ecommerceapp.daos
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.ecommerceapp.R
+import com.example.ecommerceapp.Resource
+import com.example.ecommerceapp.Utils
 import com.example.ecommerceapp.data.database.FavouriteDatabase
+import com.example.ecommerceapp.models.CartItem
 import com.example.ecommerceapp.models.Product
+import com.example.ecommerceapp.models.User
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.android.scopes.ViewModelScoped
+import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
-class DBRepository constructor(val appDatabase: FavouriteDatabase) {
+@ViewModelScoped
+class DBRepository @Inject constructor(
+    @ApplicationContext private val context: Context,
+    val userDao: UserDao,
+    val productDao: ProductDao,
+    val appDatabase: FavouriteDatabase) {
 
-    /*suspend fun insertFavourite(favourite: Product) {
-        return appDatabase.getFavouriteDao().saveFavourite(favourite)
-
-    }
-
-    suspend fun delete(favourite: Product) {
-        appDatabase.getFavouriteDao().removeFavouriteFromFavorites(favourite)
-    }
-
-    fun getAllFavourites(): MutableLiveData<List<Product>> {
-        return appDatabase.getFavouriteDao().getAllFavoriteFavourites()
-    }
-    fun searchDatabase(searchQuery: String): LiveData<Product?> {
-        return appDatabase.getFavouriteDao().getSpecificFavoriteFavouriteLiveData(searchQuery)
-    }*/
-    // change product in database (save or remove) by check if it saved before or not.
+    private val errorMessage by lazy { context.getString(R.string.errorMessage) }
     suspend fun saveOrRemoveProductFromFavorite(productModel: Product) {
         val isSavedBefore = getProductFromFavorite(productModel.productId)
         return if (isSavedBefore) {
@@ -44,4 +46,39 @@ class DBRepository constructor(val appDatabase: FavouriteDatabase) {
 
     fun getFavoriteProductsLiveData(): LiveData<List<Product>> =
         appDatabase.getFavouriteDao().getAllFavoriteProducts()
+
+
+    suspend fun addProductsToCart(
+        list: List<Product>,
+        deleteFavoriteProducts: Boolean
+    ):Resource<Any> {
+        return try {
+            /*val collection: Query = FirebaseFirestore.getInstance().collection("products")
+            val cartProductsList = productDao.retrieveAll(collection)*/
+            val currentUser =
+                userDao.getUserById(Utils.currentUserId).await().toObject(User::class.java)!!
+            var items = currentUser.cart.items
+
+            list.forEach { product ->
+                // check if same item saved to cart before and if it saved before here we will get last quantity saved of item and
+                // added to new product quantity.
+                if (items != null && items.any { it.productId == product.productId }) {
+                    val selectedProduct = items.last { it.productId == product.productId }
+
+                    selectedProduct.quantity +=1
+                }
+
+                //update the price of the user cart
+                currentUser.cart.price = product.productPrice
+                //update the user in database
+                userDao.usersCollection.document(Utils.currentUserId).set(currentUser)
+            }
+            if (deleteFavoriteProducts)
+                appDatabase.getFavouriteDao().deleteAllProducts()
+            Resource.Success(Any())
+        } catch (e: Exception) {
+            Resource.Error(errorMessage)
+        }
+
+    }
 }

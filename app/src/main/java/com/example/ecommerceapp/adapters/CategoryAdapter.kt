@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -14,9 +15,11 @@ import coil.load
 import coil.transform.RoundedCornersTransformation
 import com.example.ecommerceapp.databinding.ItemCategoryBinding
 import com.example.ecommerceapp.databinding.ItemProductBinding
+import com.example.ecommerceapp.generated.callback.OnClickListener
 import com.example.ecommerceapp.loadImage
 import com.example.ecommerceapp.models.Category
 import com.example.ecommerceapp.models.Product
+import javax.inject.Inject
 
 class CategoryAdapter(): ListAdapter<Category, CategoryAdapter.ViewHolder?>(DiffCallback) {
 
@@ -28,14 +31,16 @@ class CategoryAdapter(): ListAdapter<Category, CategoryAdapter.ViewHolder?>(Diff
         val category = getItem(position)
         holder.bind(category)
         holder.itemView.setOnClickListener { onItemClickListener?.let { it(category) } }
-        /*holder.productItem.setOnClickListener{
-            clickListener.onProductClicked(product.productId)
+        /*holder.categoryItem.setOnClickListener{
+            clickListener.onCategoryClicked(category)
         }*/
     }
 
     class ViewHolder(private var binding: ItemCategoryBinding): RecyclerView.ViewHolder(binding.root){
         val categoryImage: ImageView = binding.itemImage
         val categoryName: TextView = binding.itemText
+        val categoryItem: ConstraintLayout = binding.categoryItem
+
 
 
         @SuppressLint("ResourceAsColor")
@@ -60,4 +65,7 @@ class CategoryAdapter(): ListAdapter<Category, CategoryAdapter.ViewHolder?>(Diff
     fun onItemClicked(listner: (Category) -> Unit) {
         onItemClickListener = listner
     }
+}
+interface ICategoryAdapter{
+    fun onCategoryClicked(category: Category)
 }

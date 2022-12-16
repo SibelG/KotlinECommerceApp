@@ -1,12 +1,11 @@
 package com.example.ecommerceapp
 
+import android.graphics.drawable.Drawable
+import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ecommerceapp.adapters.*
-import com.example.ecommerceapp.models.Brand
-import com.example.ecommerceapp.models.CartItemOffline
-import com.example.ecommerceapp.models.Category
-import com.example.ecommerceapp.models.Product
+import com.example.ecommerceapp.models.*
 
 
 @BindingAdapter("productListData")
@@ -27,14 +26,18 @@ fun bindBrandRecyclerView(recyclerView: RecyclerView, data: List<Brand>?){
     adapter?.submitList(data)
 }
 
-@BindingAdapter("cartListData")
-fun bindCartRecyclerView(recyclerView: RecyclerView, data: List<CartItemOffline>?){
-    val adapter = recyclerView.adapter as CartAdapter
-    adapter.submitList(data)
+@BindingAdapter("loadGif")
+fun loadGifIntoImageView(imageView: ImageView, imageGif: Drawable) {
+    imageView.loadGif(R.drawable.out_of_stock)
 }
 
-/*@BindingAdapter("favListData")
+@BindingAdapter("cartListData")
+fun bindCartRecyclerView(recyclerView: RecyclerView, data: List<CartItemOffline>?){
+    val adapter = recyclerView.adapter as? CartAdapter
+    adapter?.submitList(data)
+}
+@BindingAdapter("favListData")
 fun bindFavRecyclerView(recyclerView: RecyclerView, data: List<Product>?){
-    val adapter = recyclerView.adapter as FavoritesAdapter
-    adapter.submitList(data)
-}*/
+    val adapter = recyclerView.adapter as? FavoriteAdapter
+    adapter?.submitList(data)
+}

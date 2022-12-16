@@ -9,6 +9,8 @@ import android.net.Uri
 import android.widget.Toast
 import com.example.ecommerceapp.R
 import com.example.ecommerceapp.Utils
+import com.example.ecommerceapp.models.Product
+import com.example.ecommerceapp.models.Review
 import com.example.ecommerceapp.models.User
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
@@ -18,13 +20,15 @@ import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
-class UserDao() {
+class UserDao @Inject constructor() {
 
     //create instance of the database
     private val db  by lazy { FirebaseFirestore.getInstance()}
     private val firebaseStorage by lazy { FirebaseStorage.getInstance()}
     private val userUid by lazy { FirebaseAuth.getInstance().uid!! }
+    val productsCollection = db.collection("products")
     //choose the collection
     val usersCollection = db.collection("users")
 
@@ -45,6 +49,13 @@ class UserDao() {
         }
     }
 
+    /*fun addAddress(productId: String,review: Review){
+        GlobalScope.launch {
+            val product = getProductById(productId).await().toObject(Product::class.java)!!
+            product.reviews.add(review)
+            productsCollection.document(productId).set(product)
+        }
+    }*/
      suspend fun uploadUserInformation(
         userName: String,
         imageUri: Uri?,
@@ -90,22 +101,6 @@ class UserDao() {
         }
     }
 
-//    fun addProductToCart(productId: String) {
-//        //do this work in background
-//        GlobalScope.launch {
-//            //create instance of product dao
-//            val productDao = ProductDao()
-//            //get the product using product id
-//            val product =
-//                productDao.getProductById(productId).await().toObject(Product::class.java)!!
-//            //get the user
-//            val user = getUserById(Utils.currentUserId).await().toObject(User::class.java)!!
-//            //add the product id to the user cart
-//            user.cart.products.add(productId)
-//            //update the price of the user cart
-//            user.cart.price = product.productPrice
-//            //update the user in database
-//            usersCollection.document(Utils.currentUserId).set(user)
-//        }
-//    }
+
+
 }

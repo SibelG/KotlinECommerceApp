@@ -1,6 +1,9 @@
 package com.example.ecommerceapp.ui.orderDetails
 
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class OrderDetailViewModel : ViewModel() {
+@HiltViewModel
+class OrderDetailViewModel @Inject constructor(): ViewModel() {
 }

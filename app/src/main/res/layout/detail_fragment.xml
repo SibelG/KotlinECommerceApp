@@ -3,6 +3,18 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+    <data>
+
+        <variable
+            name="fragment"
+            type="com.example.ecommerceapp.ui.detail.DetailFragment" />
+
+        <variable
+            name="product"
+            type="com.example.ecommerceapp.models.Product" />
+
+        <import type="android.view.View" />
+    </data>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -39,14 +51,29 @@
                 app:layout_constraintTop_toBottomOf="@+id/product_image_in_detail"
                 tools:text="Mi Power Bank" />
 
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@color/white"
+                android:numStars="5"
+                app:layout_constraintBottom_toTopOf="@+id/product_price_in_detail"
+                app:layout_constraintStart_toStartOf="@+id/product_name_in_detail"
+                app:layout_constraintTop_toBottomOf="@+id/product_name_in_detail" />
+
             <TextView
                 android:id="@+id/product_price_in_detail"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:textSize="26sp"
+                android:layout_marginTop="36dp"
+                android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@id/product_image_in_detail"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@id/product_name_in_detail"
                 app:layout_constraintTop_toBottomOf="@id/product_name_in_detail"
                 tools:text="₹534" />
@@ -66,10 +93,11 @@
                 android:id="@+id/add_to_cart_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="24dp"
                 android:layout_marginEnd="4dp"
                 android:backgroundTint="@android:color/holo_orange_light"
-                android:text="Add to cart"
+                android:text="Add to basket"
+                android:textSize="10sp"
                 app:layout_constraintEnd_toStartOf="@id/product_detail_guideline"
                 app:layout_constraintStart_toStartOf="@id/product_description_in_detail"
                 app:layout_constraintTop_toBottomOf="@id/product_description_in_detail" />
@@ -79,9 +107,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="24dp"
                 android:backgroundTint="@android:color/holo_green_light"
                 android:text="Buy Now"
+                android:onClick="@{()-> fragment.startCheckoutProcess()}"
                 app:layout_constraintEnd_toEndOf="@id/product_description_in_detail"
                 app:layout_constraintStart_toStartOf="@id/product_detail_guideline"
                 app:layout_constraintTop_toBottomOf="@id/product_description_in_detail" />
@@ -110,6 +139,7 @@
                 android:layout_height="30dp"
                 android:layout_marginTop="41dp"
                 android:layout_marginEnd="27dp"
+                android:onClick="@{()-> fragment.shareProduct()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_baseline_share_24" />
@@ -120,15 +150,17 @@
                 android:layout_height="30dp"
                 android:layout_marginStart="27dp"
                 android:layout_marginTop="41dp"
+                android:onClick="@{()-> fragment.backPressFragment()}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_arrow_back" />
 
             <ImageView
                 android:id="@+id/favImage"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="28dp"
+                android:layout_height="35dp"
                 android:layout_marginTop="16dp"
+                android:onClick="@{()-> fragment.saveProductInFavorite()}"
                 app:layout_constraintEnd_toEndOf="@+id/product_image_in_detail"
                 app:layout_constraintTop_toBottomOf="@+id/product_image_in_detail"
                 app:srcCompat="@drawable/ic_favorite_border" />
