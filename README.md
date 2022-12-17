@@ -2,6 +2,7 @@
 Firestore-Firebase-Google Authentication-Mvvm-Navigation Component-Dagger  Hilt
 
 # Assets
+![Ekran görüntüsü_20221217_191150](https://user-images.githubusercontent.com/46397935/208251124-d3d14aa6-17aa-4982-a0bc-92cb0c8716c2.png)
 ![image](https://user-images.githubusercontent.com/46397935/202904789-5841ed8e-873d-4b52-8853-b509b82be5fc.png)
 ![image](https://user-images.githubusercontent.com/46397935/202049985-ac04ba8c-0278-4767-b6d1-34d2a5b6e945.png)
 ![image](https://user-images.githubusercontent.com/46397935/202050076-9627438b-e7dd-4707-a9da-e63ca21b7478.png)
