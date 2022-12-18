@@ -41,8 +41,6 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites),
 
     private lateinit var adapter:FavoriteAdapter
 
-    lateinit var loadingDialog: Dialog
-
     private lateinit var binding: FragmentFavoritesBinding
     private lateinit var viewModel: FavoriteViewModel
 

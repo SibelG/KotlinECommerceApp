@@ -58,12 +58,10 @@ class FavoriteAdapter @Inject constructor (): RecyclerView.Adapter<FavoriteAdapt
 
     class ViewHolder(private val binding: ItemFavBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        val productImage: ImageView = binding.fabProductImage
+        val productImage: ImageView = binding.favProductImage
         val productName: TextView = binding.favProductName
         val productDescription: TextView = binding.favProductDescription
         val productPrice: TextView = binding.favProductPrice
-        val availabilityLabel: TextView = binding.availabilityLabelFav
-        val productItem: LinearLayout = binding.productItemFav
 
         @SuppressLint("ResourceAsColor")
         fun bind(product: Product){
@@ -71,13 +69,8 @@ class FavoriteAdapter @Inject constructor (): RecyclerView.Adapter<FavoriteAdapt
             productName.text = product.productName
             productDescription.text = product.description
             val price = product.productPrice.toString()
-            if (product.availability){
-                productPrice.text = "Price - ₹$price"
-            }else{
-                availabilityLabel.visibility = View.VISIBLE
-                productPrice.visibility = View.GONE
-                availabilityLabel.text = "Currently Not Available"
-            }
+            productPrice.text = "Price - ₹$price"
+
             binding.executePendingBindings()
         }
     }

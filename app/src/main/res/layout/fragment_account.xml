@@ -211,9 +211,9 @@
                     android:layout_width="39dp"
                     android:layout_height="35dp"
                     android:layout_gravity="center"
-                    android:background="@color/greenTrans"
+                    android:background="@color/green2"
                     android:foregroundGravity="center"
-                    app:srcCompat="@drawable/icon_language" />
+                    app:srcCompat="@drawable/ic_world" />
 
                 <TextView
                     style="@style/TextViewRegular"

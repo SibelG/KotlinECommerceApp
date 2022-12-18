@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ecommerceapp.R
@@ -34,8 +35,8 @@ class AddressAdapter(val addresses: List<Address>, private val clickListener: IA
         val streetName: TextView = itemView.findViewById(R.id.street_name_address)
         val cityPincode: TextView = itemView.findViewById(R.id.city_pincode_address)
         val phoneNumber: TextView = itemView.findViewById(R.id.phone_number_address)
-        val editButton: ImageButton = itemView.findViewById(R.id.edit_button)
-        val deleteButton: ImageButton = itemView.findViewById(R.id.delete_address_button)
+        val editButton: ImageView = itemView.findViewById(R.id.edit_button)
+        val deleteButton: ImageView = itemView.findViewById(R.id.delete_address_button)
 
 
         fun bind(address: Address){

@@ -74,28 +74,24 @@
                 app:layout_constraintTop_toBottomOf="@id/city_pincode_address"
                 tools:text="Phone number - 7822888840" />
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/delete_address_button"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_marginEnd="8dp"
-                android:background="@drawable/ic_baseline_delete_24"
-                app:layout_constraintBottom_toTopOf="@+id/house_number_address"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0"
-                app:srcCompat="@drawable/ic_delete_product"
-                tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+                app:srcCompat="@drawable/ic_baseline_delete_24" />
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/edit_button"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:backgroundTint="#FFFDFD"
-                app:layout_constraintBottom_toTopOf="@+id/house_number_address"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="3dp"
                 app:layout_constraintEnd_toStartOf="@+id/delete_address_button"
-                app:srcCompat="@drawable/ic_baseline_mode_edit_outline_24"
-                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck,TouchTargetSizeCheck" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_baseline_mode_edit_outline_24" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
