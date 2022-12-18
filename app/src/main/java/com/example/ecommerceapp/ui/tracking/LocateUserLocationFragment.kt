@@ -40,7 +40,7 @@ import kotlinx.coroutines.tasks.await
 import java.io.IOException
 
 @AndroidEntryPoint
-class LocateUserLocationFragment( private val previosFragment:Fragment) : Fragment(),
+class LocateUserLocationFragment() : Fragment(),
     OnMapReadyCallback, LocationListener,
     GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
 
@@ -57,18 +57,7 @@ class LocateUserLocationFragment( private val previosFragment:Fragment) : Fragme
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requireActivity().onBackPressedDispatcher.addCallback(this,
-                object : OnBackPressedCallback(true) {
-                    override fun handleOnBackPressed() {
-                        val currentFragment = this@LocateUserLocationFragment
-                        requireActivity().supportFragmentManager.beginTransaction()
-                                .remove(currentFragment).show(previosFragment).commit()
-                            (activity as MainActivity).supportActionBar?.title = "Account Settings"
-                            (activity as MainActivity).setDrawerLocked(false)
-                            (activity as MainActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
 
-                    }
-                })
     }
 
     override fun onCreateView(

@@ -131,9 +131,4 @@ class SummaryFragment(
     }
 
 
-    /*override fun onProductClicked(product: Product) {
-        val action = SummaryFragmentDirections.actionSummaryFragmentToAddReviewFragment(product)
-        findNavController().navigate(action)
-    }*/
-
 }

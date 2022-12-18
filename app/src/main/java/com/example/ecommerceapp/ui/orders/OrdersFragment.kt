@@ -55,17 +55,19 @@ class OrdersFragment : Fragment(), IOrderAdapter {
         productDao = ProductDao()
         currentUserId=Firebase.auth.currentUser!!.uid
 
-
-        setupRecyclerView()
-
         return binding.root
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupRecyclerView()
+    }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId==android.R.id.home){
             (activity as MainActivity).drawerLayout.openDrawer(GravityCompat.START)

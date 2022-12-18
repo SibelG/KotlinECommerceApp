@@ -14,6 +14,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ecommerceapp.R
 import com.example.ecommerceapp.Resource
@@ -38,7 +39,7 @@ import javax.inject.Inject
 class FavoritesFragment : Fragment(R.layout.fragment_favorites),
     FavoriteAdapter.FavoriteProductListener {
 
-    private var adapter = FavoriteAdapter()
+    private lateinit var adapter:FavoriteAdapter
 
     lateinit var loadingDialog: Dialog
 
@@ -47,6 +48,7 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
     }
 
     override fun onCreateView(
@@ -56,15 +58,15 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites),
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_favorites, container, false)
         viewModel = ViewModelProvider(this).get(FavoriteViewModel::class.java)
-        binding.viewModel = viewModel
+        adapter= FavoriteAdapter()
+        binding.adapter = adapter
         binding.fragment = this
-        binding.favoriteRV.adapter = adapter
+        viewModel.getFavoriteProducts()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getFavoriteProducts()
         observeListener()
 
     }
@@ -78,6 +80,7 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites),
                 adapter.addProducts(it, this)
                 binding.emptyProducts.visibility = View.GONE
                 binding.favoriteContainer.visibility = View.VISIBLE
+
                 /*adapter.notifyDataSetChanged()
                 binding.favoriteRV.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)*/
             }

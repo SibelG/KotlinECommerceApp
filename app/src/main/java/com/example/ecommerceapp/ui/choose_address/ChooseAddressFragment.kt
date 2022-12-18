@@ -74,15 +74,9 @@ class ChooseAddressFragment() : Fragment(),
 
     private fun goToSummaryFragment(position: Int) {
         val address = currentUser.addresses[position]
-       /* val currentFragment = this
-        val summaryFragment = SummaryFragment(currentFragment, currentUser, address, cartModel)*/
         val action = ChooseAddressFragmentDirections.actionChooseAddressFragmentToSummaryFragment(address,cartModel)
         findNavController().navigate(action)
-        /*requireActivity().supportFragmentManager.beginTransaction().replace(
-            R.id.nav_host_fragment,
-            summaryFragment,
-            getString(R.string.title_summary_fragment)
-        ).commit()*/
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -106,13 +100,9 @@ class ChooseAddressFragment() : Fragment(),
     }
     fun selectUserLocation() {
 
-        val currentFragment = this
-        val locationFragment= LocateUserLocationFragment(currentFragment)
-        requireActivity().supportFragmentManager.beginTransaction().add(
-            R.id.nav_host_fragment,
-            locationFragment,
-            getString(R.string.title_locate)
-        ).hide(currentFragment).commit()
+        val action = ChooseAddressFragmentDirections.actionChooseAddressFragmentToLocateUserLocationFragment()
+        findNavController().navigate(action)
+
     }
 
     fun setupRecyclerView() {

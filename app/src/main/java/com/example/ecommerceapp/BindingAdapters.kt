@@ -36,8 +36,4 @@ fun bindCartRecyclerView(recyclerView: RecyclerView, data: List<CartItemOffline>
     val adapter = recyclerView.adapter as? CartAdapter
     adapter?.submitList(data)
 }
-@BindingAdapter("favListData")
-fun bindFavRecyclerView(recyclerView: RecyclerView, data: List<Product>?){
-    val adapter = recyclerView.adapter as? FavoriteAdapter
-    adapter?.submitList(data)
-}
+

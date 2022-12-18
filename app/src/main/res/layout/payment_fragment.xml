@@ -22,13 +22,31 @@
             android:layout_marginStart="16dp"/>
 
         <RadioButton
-            android:id="@+id/cod_radio_button"
+            android:id="@+id/debit_radio_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/title_payment_fragment"
             android:layout_marginTop="32dp"
-            android:text="Cash on Delivery (COD)"
+            android:text="Debit Cart"
             android:textSize="18sp"/>
+
+        <RadioButton
+            android:id="@+id/nfc_radio_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Contactless Payment (NFC)"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@id/debit_radio_button" />
+
+        <RadioButton
+            android:id="@+id/cod_radio_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Cash on Delivery (COD)"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@id/nfc_radio_button" />
 
         <Button
             android:id="@+id/place_order_button"

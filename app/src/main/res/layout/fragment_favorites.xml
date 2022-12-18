@@ -6,8 +6,8 @@
         <data>
 
                 <variable
-                    name="viewModel"
-                    type="com.example.ecommerceapp.ui.favorites.FavoriteViewModel" />
+                    name="adapter"
+                    type="com.example.ecommerceapp.adapters.FavoriteAdapter" />
 
                 <variable
                     name="fragment"
@@ -64,8 +64,8 @@
                             android:layout_width="405dp"
                             android:layout_height="447dp"
                             android:orientation="vertical"
+                            android:adapter="@{adapter}"
                             android:paddingTop="6dp"
-                            app:favListData="@{viewModel.favoriteProductsLiveData}"
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                             app:layout_constraintBottom_toTopOf="@+id/addAllToBasket_Button"
                             app:layout_constraintEnd_toEndOf="parent"

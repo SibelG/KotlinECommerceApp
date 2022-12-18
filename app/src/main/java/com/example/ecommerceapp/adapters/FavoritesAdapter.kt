@@ -18,26 +18,28 @@ import coil.transform.RoundedCornersTransformation
 import com.example.ecommerceapp.R
 import com.example.ecommerceapp.databinding.ItemFavBinding
 import com.example.ecommerceapp.databinding.ItemProductBinding
+import com.example.ecommerceapp.loadImage
 import com.example.ecommerceapp.models.Product
 import javax.inject.Inject
 
-class FavoriteAdapter (): ListAdapter<Product, FavoriteAdapter.ViewHolder?>(DiffCallback){
+class FavoriteAdapter @Inject constructor (): RecyclerView.Adapter<FavoriteAdapter.ViewHolder>(){
 
-    private val productList = mutableListOf<Product>()
+
     private lateinit var favListener: FavoriteProductListener
+    private val productList = mutableListOf<Product>()
     fun addProducts(list: List<Product>, listener: FavoriteProductListener) {
         favListener = listener
         productList.apply {
             clear()
             addAll(list)
-            if (list.isNotEmpty())
-                add(list[0])
+            /*if (list.isNotEmpty())
+                add(list[0])*/
         }
         notifyDataSetChanged()
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val product = getItem(position)
+        val product = productList[position]
         holder.bind(product)
     }
 
@@ -65,9 +67,7 @@ class FavoriteAdapter (): ListAdapter<Product, FavoriteAdapter.ViewHolder?>(Diff
 
         @SuppressLint("ResourceAsColor")
         fun bind(product: Product){
-            productImage.load(product.productImage){
-                transformations(RoundedCornersTransformation())
-            }
+            productImage.loadImage(product.productImage)
             productName.text = product.productName
             productDescription.text = product.description
             val price = product.productPrice.toString()
@@ -82,15 +82,6 @@ class FavoriteAdapter (): ListAdapter<Product, FavoriteAdapter.ViewHolder?>(Diff
         }
     }
 
-    companion object DiffCallback: DiffUtil.ItemCallback<Product>(){
-        override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean {
-            return oldItem.productId == newItem.productId
-        }
-
-        override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean {
-            return oldItem == newItem
-        }
-    }
 
 
     interface FavoriteProductListener {

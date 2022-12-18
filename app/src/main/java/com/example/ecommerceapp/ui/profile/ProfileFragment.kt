@@ -78,20 +78,6 @@ class ProfileFragment() : Fragment(), IAddressAdapter {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        /*requireActivity().onBackPressedDispatcher.addCallback(this,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    val currentFragment = this@ProfileFragment
-                    val accountFragment= AccountFragment()
-                    if (fromWhere=="AccountFragment") {
-                        requireActivity().supportFragmentManager.beginTransaction()
-                            .remove(currentFragment).show(accountFragment).commit()
-                        (activity as MainActivity).supportActionBar?.title = "AccountFragment"
-                        (activity as MainActivity).setDrawerLocked(false)
-                        (activity as MainActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
-                    }
-                }
-            })*/
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -117,13 +103,7 @@ class ProfileFragment() : Fragment(), IAddressAdapter {
     }
 
     private fun openAddressFragment() {
-        /*val addressFragment = AddressFragment()
-        val currentFragment = this
-        requireActivity().supportFragmentManager.beginTransaction().add(
-            R.id.nav_host_fragment,
-            addressFragment,
-            getString(R.string.title_address_fragment)
-        ).hide(currentFragment).commit()*/
+
         val action = ProfileFragmentDirections.actionNavProfileToAddressFragment()
         findNavController().navigate(action)
         (activity as MainActivity).setDrawerLocked(true)
@@ -133,9 +113,6 @@ class ProfileFragment() : Fragment(), IAddressAdapter {
     override fun onEditClicked(address: Address) {
         val action = ProfileFragmentDirections.actionNavProfileToEditAddressFragment(address)
         findNavController().navigate(action)
-        /*val currentFragment = this
-        val editAddressFragment = EditAddressFragment(this,address)
-        requireActivity().supportFragmentManager.beginTransaction().add(R.id.nav_host_fragment,editAddressFragment,getString(R.string.title_edit_address_fragment)).hide(currentFragment).commit()*/
         (activity as MainActivity).setDrawerLocked(true)
     }
 

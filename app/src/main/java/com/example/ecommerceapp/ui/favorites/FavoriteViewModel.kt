@@ -18,11 +18,12 @@ class FavoriteViewModel @Inject constructor(
 private val dbRepository: DBRepository
 ) : ViewModel() {
 
-    private lateinit var _favoriteProductsLiveData: LiveData<List<Product>>
+    private lateinit var  _favoriteProductsLiveData: LiveData<List<Product>>
     val favoriteProductsLiveData get() = _favoriteProductsLiveData
 
     private val _cartProductsLiveData = MutableLiveData<Resource<Any>>()
     val cartProductsLiveData: LiveData<Resource<Any>> = _cartProductsLiveData
+
 
 
     fun getFavoriteProducts() {
