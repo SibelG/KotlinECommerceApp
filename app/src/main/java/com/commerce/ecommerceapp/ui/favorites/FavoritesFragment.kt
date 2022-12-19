@@ -38,10 +38,10 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites),
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_favorites, container, false)
         viewModel = ViewModelProvider(this).get(FavoriteViewModel::class.java)
+        viewModel.getFavoriteProducts()
         adapter= FavoriteAdapter()
         binding.adapter = adapter
         binding.fragment = this
-        viewModel.getFavoriteProducts()
         return binding.root
     }
 
