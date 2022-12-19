@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.ecommerceapp">
+    package="com.commerce.ecommerceapp">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -11,7 +11,7 @@
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
 
     <application
-        android:name=".MainApplication"
+        android:name="com.commerce.ecommerceapp.MainApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -20,7 +20,7 @@
         android:theme="@style/Theme.ECommerceApp"
         tools:targetApi="31">
         <activity
-            android:name=".ui.ActivitySplashScreen"
+            android:name="com.commerce.ecommerceapp.ActivitySplashScreen"
             android:noHistory="true"
             android:exported="true">
             <intent-filter>
@@ -28,10 +28,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".AuthenticationActivity"></activity>
+        <activity android:name="com.commerce.ecommerceapp.MainActivity"></activity>
+        <activity android:name="com.commerce.ecommerceapp.AuthenticationActivity"></activity>
 
-    <service android:name="com.example.ecommerceapp.data.database.fcm.PushNotificationService"
+    <service android:name="com.commerce.ecommerceapp.data.database.fcm.PushNotificationService"
         android:exported="false"
         android:enabled="true"
         android:stopWithTask="false">

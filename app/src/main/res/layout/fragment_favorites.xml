@@ -7,11 +7,11 @@
 
                 <variable
                     name="adapter"
-                    type="com.example.ecommerceapp.adapters.FavoriteAdapter" />
+                    type="com.commerce.ecommerceapp.adapters.FavoriteAdapter" />
 
                 <variable
                     name="fragment"
-                    type="com.example.ecommerceapp.ui.favorites.FavoritesFragment" />
+                    type="com.commerce.ecommerceapp.ui.favorites.FavoritesFragment" />
 
                 <import type="android.view.View" />
         </data>

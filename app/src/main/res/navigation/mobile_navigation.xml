@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.ecommerceapp.ui.home.HomeFragment"
+        android:name="com.commerce.ecommerceapp.ui.home.HomeFragment"
         android:label="@string/app_name"
         tools:layout="@layout/fragment_home">
         <action
@@ -20,7 +20,7 @@
 
     <fragment
         android:id="@+id/nav_orders"
-        android:name="com.example.ecommerceapp.ui.orders.OrdersFragment"
+        android:name="com.commerce.ecommerceapp.ui.orders.OrdersFragment"
         android:label="@string/menu_orders"
         tools:layout="@layout/fragment_orders" >
         <action
@@ -30,7 +30,7 @@
 
     <fragment
         android:id="@+id/nav_profile"
-        android:name="com.example.ecommerceapp.ui.profile.ProfileFragment"
+        android:name="com.commerce.ecommerceapp.ui.profile.ProfileFragment"
         android:label="@string/menu_profile"
         tools:layout="@layout/fragment_profile" >
         <action
@@ -43,24 +43,24 @@
 
     <activity
         android:id="@+id/nav_splash"
-        android:name="com.example.ecommerceapp.ui.ActivitySplashScreen"
+        android:name="com.commerce.ecommerceapp.ActivitySplashScreen"
         android:label="activity_splash_screen"
         tools:layout="@layout/activity_splash_screen" />
 
     <fragment
         android:id="@+id/nav_helpline"
-        android:name="com.example.ecommerceapp.summary.HelplineFragment"
+        android:name="com.commerce.ecommerceapp.summary.HelplineFragment"
         android:label="HelplineFragment"
         tools:layout="@layout/fragment_helpline"/>
     <fragment
         android:id="@+id/detailFragment"
-        android:name="com.example.ecommerceapp.ui.detail.DetailFragment"
+        android:name="com.commerce.ecommerceapp.ui.detail.DetailFragment"
         android:label="DetailFragment"
         tools:layout="@layout/detail_fragment">
 
         <argument
             android:name="productDetails"
-            app:argType="com.example.ecommerceapp.models.Product" />
+            app:argType="com.commerce.ecommerceapp.models.Product" />
         <action
             android:id="@+id/action_detailFragment_to_chooseAddressFragment"
             app:destination="@id/chooseAddressFragment" />
@@ -72,7 +72,7 @@
     </fragment>
     <fragment
         android:id="@+id/nav_account"
-        android:name="com.example.ecommerceapp.ui.account.AccountFragment"
+        android:name="com.commerce.ecommerceapp.ui.account.AccountFragment"
         android:label="AccountFragment"
         tools:layout="@layout/fragment_account">
         <action
@@ -98,7 +98,7 @@
     </fragment>
     <fragment
         android:id="@+id/nav_favorite"
-        android:name="com.example.ecommerceapp.ui.favorites.FavoritesFragment"
+        android:name="com.commerce.ecommerceapp.ui.favorites.FavoritesFragment"
         android:label="fragment_favorites"
         tools:layout="@layout/fragment_favorites" >
         <action
@@ -107,34 +107,34 @@
     </fragment>
     <fragment
         android:id="@+id/credidCardFragment"
-        android:name="com.example.ecommerceapp.ui.credid_card.CredidCardFragment"
+        android:name="com.commerce.ecommerceapp.ui.credid_card.CredidCardFragment"
         android:label="CredidCardFragment"
         tools:layout="@layout/fragment_credid_card"/>
     <activity
         android:id="@+id/authenticationActivity"
-        android:name="com.example.ecommerceapp.AuthenticationActivity"
+        android:name="com.commerce.ecommerceapp.AuthenticationActivity"
         android:label="AuthenticationActivity"
         tools:layout="@layout/activity_authentication"/>
     <fragment
         android:id="@+id/addressFragment"
-        android:name="com.example.ecommerceapp.ui.address.AddressFragment"
+        android:name="com.commerce.ecommerceapp.ui.address.AddressFragment"
         android:label="AddressFragment"
         tools:layout="@layout/address_fragment"/>
 
     <fragment
         android:id="@+id/productRequestFragment"
-        android:name="com.example.ecommerceapp.ui.product_request.ProductRequestFragment"
+        android:name="com.commerce.ecommerceapp.ui.product_request.ProductRequestFragment"
         android:label="fragment_product_request"
         tools:layout="@layout/fragment_product_request" />
 
     <fragment
         android:id="@+id/locateUserLocationFragment"
-        android:name="com.example.ecommerceapp.ui.tracking.LocateUserLocationFragment"
+        android:name="com.commerce.ecommerceapp.ui.tracking.LocateUserLocationFragment"
         android:label="fragment_locate_user_location"
         tools:layout="@layout/fragment_locate_user_location" />
     <fragment
         android:id="@+id/chooseAddressFragment"
-        android:name="com.example.ecommerceapp.ui.choose_address.ChooseAddressFragment"
+        android:name="com.commerce.ecommerceapp.ui.choose_address.ChooseAddressFragment"
         android:label="ChooseAddressFragment" >
 
         <action
@@ -143,7 +143,7 @@
 
         <argument
             android:name="cartDetails"
-            app:argType="com.example.ecommerceapp.models.Cart" />
+            app:argType="com.commerce.ecommerceapp.models.Cart" />
         <action
             android:id="@+id/action_chooseAddressFragment_to_addressFragment"
             app:destination="@id/addressFragment" />
@@ -154,7 +154,7 @@
     </fragment>
     <fragment
         android:id="@+id/allProductFragment"
-        android:name="com.example.ecommerceapp.ui.home.AllProductFragment"
+        android:name="com.commerce.ecommerceapp.ui.home.AllProductFragment"
         android:label="AllProductFragment" >
         <action
             android:id="@+id/action_allProductFragment_to_detailFragment"
@@ -162,11 +162,11 @@
     </fragment>
     <fragment
         android:id="@+id/trackingFragment"
-        android:name="com.example.ecommerceapp.ui.tracking.TrackingFragment"
+        android:name="com.commerce.ecommerceapp.ui.tracking.TrackingFragment"
         android:label="TrackingFragment" />
     <fragment
         android:id="@+id/action_cart"
-        android:name="com.example.ecommerceapp.ui.cart.CartFragment"
+        android:name="com.commerce.ecommerceapp.ui.cart.CartFragment"
         android:label="CartFragment"
         tools:layout="@layout/detail_fragment">
         <action
@@ -181,17 +181,17 @@
     </fragment>
     <fragment
         android:id="@+id/summaryFragment"
-        android:name="com.example.ecommerceapp.ui.summary.SummaryFragment"
+        android:name="com.commerce.ecommerceapp.ui.summary.SummaryFragment"
         android:label="SummaryFragment"
         tools:layout="@layout/summary_fragment">
 
         <argument
             android:name="addressDetails"
-            app:argType="com.example.ecommerceapp.models.Address" />
+            app:argType="com.commerce.ecommerceapp.models.Address" />
 
         <argument
             android:name="cartSummary"
-            app:argType="com.example.ecommerceapp.models.Cart" />
+            app:argType="com.commerce.ecommerceapp.models.Cart" />
         <action
             android:id="@+id/action_summaryFragment_to_paymentFragment"
             app:destination="@id/paymentFragment" />
@@ -199,26 +199,26 @@
     </fragment>
     <fragment
         android:id="@+id/reviewFragment"
-        android:name="com.example.ecommerceapp.ui.review.ReviewFragment"
+        android:name="com.commerce.ecommerceapp.ui.review.ReviewFragment"
         android:label="fragment_review"
         tools:layout="@layout/fragment_review">
 
         <argument
             android:name="productReviews"
-            app:argType="com.example.ecommerceapp.models.Product" />
+            app:argType="com.commerce.ecommerceapp.models.Product" />
     </fragment>
     <fragment
         android:id="@+id/addReviewFragment"
-        android:name="com.example.ecommerceapp.ui.review.AddReviewFragment"
+        android:name="com.commerce.ecommerceapp.ui.review.AddReviewFragment"
         android:label="AddReviewFragment"
         tools:layout="@layout/fragment_add_review">
         <argument
             android:name="productReviews"
-            app:argType="com.example.ecommerceapp.models.Product" />
+            app:argType="com.commerce.ecommerceapp.models.Product" />
     </fragment>
     <fragment
         android:id="@+id/orderDetailFragment"
-        android:name="com.example.ecommerceapp.ui.orderDetails.OrderDetailFragment"
+        android:name="com.commerce.ecommerceapp.ui.orderDetails.OrderDetailFragment"
         android:label="OrderDetailFragment"
         tools:layout="@layout/order_detail_fragment">
 
@@ -228,7 +228,7 @@
     </fragment>
     <fragment
         android:id="@+id/paymentFragment"
-        android:name="com.example.ecommerceapp.ui.payment.PaymentFragment"
+        android:name="com.commerce.ecommerceapp.ui.payment.PaymentFragment"
         android:label="PaymentFragment"
         tools:layout="@layout/payment_fragment">
 
@@ -239,7 +239,7 @@
     </fragment>
     <fragment
         android:id="@+id/editAddressFragment"
-        android:name="com.example.ecommerceapp.ui.edit_address.EditAddressFragment"
+        android:name="com.commerce.ecommerceapp.ui.edit_address.EditAddressFragment"
         android:label="EditAddressFragment"
         tools:layout="@layout/fragment_edit_address">
         <action
@@ -247,7 +247,7 @@
             app:destination="@id/nav_profile" />
         <argument
             android:name="editAddress"
-            app:argType="com.example.ecommerceapp.models.Address" />
+            app:argType="com.commerce.ecommerceapp.models.Address" />
     </fragment>
 
 </navigation>

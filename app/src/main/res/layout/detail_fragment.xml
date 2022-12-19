@@ -7,11 +7,11 @@
 
         <variable
             name="fragment"
-            type="com.example.ecommerceapp.ui.detail.DetailFragment" />
+            type="com.commerce.ecommerceapp.ui.detail.DetailFragment" />
 
         <variable
             name="product"
-            type="com.example.ecommerceapp.models.Product" />
+            type="com.commerce.ecommerceapp.models.Product" />
 
         <import type="android.view.View" />
     </data>

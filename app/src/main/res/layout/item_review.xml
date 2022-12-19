@@ -29,7 +29,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:text="E****T"
-            app:layout_constraintBottom_toTopOf="@+id/products_name_item_review"
+            app:layout_constraintBottom_toTopOf="@+id/reviewDesc"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ratingBar">
 
@@ -43,14 +43,14 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:text="17 kasım 2022"
-            app:layout_constraintBottom_toTopOf="@+id/products_name_item_review"
+            app:layout_constraintBottom_toTopOf="@+id/reviewDesc"
             app:layout_constraintStart_toEndOf="@+id/RVname"
             app:layout_constraintTop_toBottomOf="@+id/ratingBar">
 
         </TextView>
 
         <TextView
-            android:id="@+id/products_name_item_review"
+            android:id="@+id/reviewDesc"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="32dp"

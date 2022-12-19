@@ -8,11 +8,11 @@
 
         <variable
             name="viewModel"
-            type="com.example.ecommerceapp.ui.review.ReviewViewModel" />
+            type="com.commerce.ecommerceapp.ui.review.ReviewViewModel" />
 
         <variable
             name="review"
-            type="com.example.ecommerceapp.models.Review" />
+            type="com.commerce.ecommerceapp.models.Review" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

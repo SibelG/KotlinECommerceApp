@@ -7,11 +7,11 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.ecommerceapp.ui.home.HomeViewModel" />
+            type="com.commerce.ecommerceapp.ui.home.HomeViewModel" />
 
         <variable
             name="fragment"
-            type="com.example.ecommerceapp.ui.home.HomeFragment" />
+            type="com.commerce.ecommerceapp.ui.home.HomeFragment" />
     </data>
 
 

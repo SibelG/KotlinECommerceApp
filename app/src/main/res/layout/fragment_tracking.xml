@@ -5,15 +5,15 @@
 
     <data>
 
-        <import type="com.example.ecommerceapp.models.OrderStatus" />
+        <import type="com.commerce.ecommerceapp.models.OrderStatus" />
 
         <variable
             name="fragment"
-            type="com.example.ecommerceapp.ui.tracking.TrackingFragment" />
+            type="com.commerce.ecommerceapp.ui.tracking.TrackingFragment" />
 
         <variable
             name="order"
-            type="com.example.ecommerceapp.models.Order" />
+            type="com.commerce.ecommerceapp.models.Order" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

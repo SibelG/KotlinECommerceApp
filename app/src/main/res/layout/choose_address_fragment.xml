@@ -7,7 +7,7 @@
 
         <variable
             name="fragment"
-            type="com.example.ecommerceapp.ui.choose_address.ChooseAddressFragment" />
+            type="com.commerce.ecommerceapp.ui.choose_address.ChooseAddressFragment" />
 
     </data>
 
