@@ -8,9 +8,11 @@ import android.content.Context
 import android.net.Uri
 import android.widget.Toast
 import com.commerce.ecommerceapp.R
+import com.commerce.ecommerceapp.Resource
 import com.commerce.ecommerceapp.Utils
 import com.commerce.ecommerceapp.models.User
 import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
@@ -31,17 +33,13 @@ class UserDao @Inject constructor() {
     val usersCollection = db.collection("users")
 
     //this method will add user to the database
-    fun addUser(context:Context, user: User?) {
+    fun addUser(user: User?) {
         user?.let {
             //do this heavy database work in the background thread
             GlobalScope.launch {
                 //change it's id to userId and set it
 
-                usersCollection.document(user.userId).set(it).addOnSuccessListener {
-                    Toast.makeText(context,"Record user successfuly",Toast.LENGTH_SHORT).show()
-                }.addOnFailureListener{
-                    Toast.makeText(context,"Record user error",Toast.LENGTH_SHORT).show()
-                }
+                usersCollection.document(user.userId).set(it)
             }
 
         }

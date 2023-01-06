@@ -41,11 +41,13 @@ class ProductFilterAdapter(val products: List<Product>,private val clickListener
         val productPrice: TextView = binding.productPriceInProductFragment
         val availabilityLabel: TextView = binding.availabilityLabel
         val productItem: LinearLayout = binding.productItem
+        val reviewSize: TextView = binding.reviewSize
 
         @SuppressLint("ResourceAsColor")
         fun bind(product: Product){
             productImage.loadImage(product.productImage)
             productName.text = product.productName
+            reviewSize.text = product.reviews.size.toString()
             productDescription.text = product.description
             val price = product.productPrice.toString()
             if (product.availability){

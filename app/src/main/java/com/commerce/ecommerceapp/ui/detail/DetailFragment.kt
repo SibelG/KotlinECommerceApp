@@ -162,6 +162,7 @@ class DetailFragment() : Fragment() {
             binding.productNameInDetail.text = product.productName
             binding.productDescriptionInDetail.text = product.description
             binding.productPriceInDetail.text = "₹" + product.productPrice.toString()
+            binding.ratingBar.rating = product.reviews.size.toFloat()
             if (!product.availability){
                 binding.buyNowButton.isEnabled = false
                 binding.addToCartButton.isEnabled = false

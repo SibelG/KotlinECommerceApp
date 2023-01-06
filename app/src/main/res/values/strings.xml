@@ -111,6 +111,8 @@
     <string name="addUserName">Please add your name first!</string>
     <string name="addUserImage">Please add an  image to your account!</string>
     <string name="addUserEmail">Please add your email first!</string>
+    <string name="addUserPhone">Please add your phone first!</string>
+    <string name="invalidPhone">Invalid Phone Number Please again!</string>
     <string name="errorCreateAccount">An error occurred when trying to create account, please check your internet connection and try again.</string>
     <string name="accountCreatedSuccessfully">Account created successfully.</string>
     <string name="webClientId">CLIENT ID</string>

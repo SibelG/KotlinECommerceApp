@@ -81,49 +81,14 @@ class MainActivity : AppCompatActivity(), DrawerLocker {
         navView.setupWithNavController(navController)
         bottomNavView.setupWithNavController(navController)
         setupActionBarWithNavController(navController, appBarConfiguration)
-        /*navView.setNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.nav_home -> {
-                    fragmentManager.beginTransaction().hide(activeFragment).show(homeFragment)
-                        .commit()
-                    activeFragment = homeFragment
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    true
-                }
-                R.id.nav_profile -> {
-                    fragmentManager.beginTransaction().hide(activeFragment).show(profileFragment)
-                        .commit()
-                    activeFragment = profileFragment
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    true
-                }
-                R.id.nav_orders -> {
-                    fragmentManager.beginTransaction().hide(activeFragment).show(ordersFragment)
-                        .commit()
-                    activeFragment = ordersFragment
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    true
-                }
-                R.id.nav_helpline->{
-                    fragmentManager.beginTransaction().hide(activeFragment).show(helplineFragment)
-                        .commit()
-                    activeFragment = helplineFragment
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    true
-                }
-                else -> {
-                    false
-                }
 
-            }
-        }*/
 
-        shopViewModel = ViewModelProvider(this).get(CartViewModel::class.java)
+        /*shopViewModel = ViewModelProvider(this).get(CartViewModel::class.java)
         shopViewModel.subQuantity.observe(this, Observer<String> {
             quantity = it
             invalidateOptionsMenu()
 
-        })
+        })*/
 
 
         observeNetworkConnection()

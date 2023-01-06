@@ -37,6 +37,7 @@ class OrderDetailFragment(
     private var productDao = ProductDao()
     lateinit var cartItemsOffline: ArrayList<CartItemOffline>
     lateinit var order:Order
+    private lateinit var orderDao: OrderDao
 
     @SuppressLint("ResourceAsColor")
     override fun onCreateView(
@@ -45,7 +46,7 @@ class OrderDetailFragment(
     ): View? {
         viewModel = ViewModelProvider(this).get(OrderDetailViewModel::class.java)
         binding = OrderDetailFragmentBinding.inflate(inflater)
-
+        orderDao= OrderDao()
         arguments?.let {
             cartItemsOffline = it.getParcelableArrayList<CartItemOffline>("itemAddress") as ArrayList<CartItemOffline>
             order = it.getParcelable<Order>("order") as Order
@@ -117,7 +118,7 @@ class OrderDetailFragment(
         builder.setPositiveButton("Yes", DialogInterface.OnClickListener { dialog, which ->
             val reason = input.text.toString()
             order.orderStatus = OrderStatus.CANCEL_REQUESTED
-            OrderDao().updateStatus(order)
+            orderDao.updateStatus(order)
             binding.orderStatusOrder.text = "Order status - " + order.orderStatus.toString()
         })
 

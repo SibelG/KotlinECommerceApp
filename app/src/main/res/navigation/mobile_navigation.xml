@@ -250,4 +250,46 @@
             app:argType="com.commerce.ecommerceapp.models.Address" />
     </fragment>
 
+    <fragment
+        android:id="@+id/checkPhoneNumberAuthFragment"
+        android:name="com.commerce.ecommerceapp.ui.phone_auth.CheckCodeAuthFragment"
+        android:label="fragment_check_phone_number_auth"
+        tools:layout="@layout/fragment_check_phone_number_auth">
+
+        <argument
+            android:name="verificationModel"
+            app:argType="com.commerce.ecommerceapp.models.PhoneVerificationModel"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_checkPhoneNumberAuthFragment_to_mainFragment"
+            app:destination="@id/nav_home"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
+    <fragment
+        android:id="@+id/phoneNumberAuthFragment"
+        android:name="com.commerce.ecommerceapp.ui.phone_auth.PhoneNumberAuthFragment"
+        android:label="PhoneNumberAuthFragment"
+        tools:layout="@layout/fragment_phone_number_authentication">
+        <action
+            android:id="@+id/action_phoneNumberAuthFragment_to_checkCodeAuthFragment"
+            app:destination="@id/checkPhoneNumberAuthFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_phoneNumberAuthenticationFragment_to_mainFragment"
+            app:destination="@id/nav_home"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
+
 </navigation>

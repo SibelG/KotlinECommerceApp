@@ -1,12 +1,16 @@
 package com.commerce.ecommerceapp.daos
 
+import android.content.Context
 import android.util.Log
+import com.commerce.ecommerceapp.R
+import com.commerce.ecommerceapp.Resource
 import com.commerce.ecommerceapp.models.Product
 import com.commerce.ecommerceapp.models.Review
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
@@ -21,6 +25,7 @@ class ProductDao @Inject constructor() {
     //get/set the collection
     val productsCollection = db.collection("products")
     val reviewsCollection = db.collection("reviews")
+    private val errorMessage= "An error occurred !Please again later"
 
     fun getProductById(productId: String): Task<DocumentSnapshot>{
         return productsCollection.document(productId).get()
@@ -61,6 +66,27 @@ class ProductDao @Inject constructor() {
             }
 
         }
+    }
+
+    // search for products by names contain search value into search bar from firebase.
+    suspend fun getProductsContainName(searchName: String): Resource<List<Product>> {
+
+        val selectedProducts = mutableListOf<Product>()
+        return try {
+            val result =
+                productsCollection.startAt(searchName).endAt("$searchName\uf8ff").get().await()
+            val documents = result.documents
+            for (document in documents) {
+                val products = document.toObject(Product::class.java)!!
+                products.productId = document.id
+                selectedProducts.add(products)
+            }
+
+            Resource.Success(selectedProducts)
+        } catch (e: Exception) {
+            Resource.Error(errorMessage)
+        }
+
     }
     fun getReview(productId: String): List<Review>{
 

@@ -165,6 +165,17 @@
                 app:layout_constraintTop_toBottomOf="@+id/product_image_in_detail"
                 app:srcCompat="@drawable/ic_favorite_border" />
 
+            <TextView
+                android:id="@+id/reviewDetailSize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:text="10"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@+id/ratingBar"
+                app:layout_constraintTop_toBottomOf="@+id/product_name_in_detail" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>

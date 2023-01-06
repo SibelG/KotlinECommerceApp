@@ -9,12 +9,18 @@
         android:id="@+id/product_item"
         android:layout_width="172dp"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/customborder"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <ImageView
                 android:id="@+id/product_image_in_product_fragment"
                 android:layout_width="120dp"
@@ -26,8 +32,10 @@
 
             <ImageView
                 android:id="@+id/favProductView"
-                android:layout_width="21dp"
+                android:layout_width="24dp"
                 android:layout_height="28dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="0dp"
                 app:srcCompat="@drawable/ic_favorite_border" />
         </LinearLayout>
 
@@ -87,6 +95,16 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/product_description_in_product_fragment"
                 tools:text="₹1000" />
+
+            <TextView
+                android:id="@+id/reviewSize"
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"
+                android:layout_marginStart="16dp"
+                android:text="10"
+                app:layout_constraintBottom_toTopOf="@+id/product_name_in_product_fragment"
+                app:layout_constraintStart_toEndOf="@+id/ratingBar"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>

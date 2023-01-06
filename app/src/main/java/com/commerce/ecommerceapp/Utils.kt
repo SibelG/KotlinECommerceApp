@@ -1,7 +1,9 @@
 package com.commerce.ecommerceapp
 
+import android.widget.Toast
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.hbb20.CountryCodePicker
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.regex.Pattern
@@ -13,13 +15,18 @@ object Utils {
     const val BASE_LATITUDE = 26.0
     const val BASE_LONGITUDE = 32.0
     const val LOCATION_ZOOM = 20f
-
+    const val COUNT_DOWN_DELAY = 60000L
+    const val COUNT_DOWN_INTERVAL = 1000L
+    const val FIRST_LOGGED_IN_APP = "FIRST_LOGGED_IN_APP"
     const val MOB_ERROR_TEXT = "Enter valid mobile number!"
     const val EMAIL_ERROR_TEXT = "Enter valid email address!"
     const val ERR_INIT = "ERROR"
     const val ERR_EMAIL = "_EMAIL"
     const val ERR_MOBILE = "_MOBILE"
     const val ERR_UPLOAD = "UploadErrorException"
+    const val PERMISSION_ANNOTATION = "PERMISSION"
+    const val DISPLAY_DIALOG = "ALERT_DIALOG"
+    const val LOADING_ANNOTATION = "LOADING"
 
     internal fun isEmailValid(email: String): Boolean {
         val EMAIL_PATTERN = Pattern.compile(
@@ -39,7 +46,7 @@ object Utils {
     }
 
     internal fun isPhoneValid(phone: String): Boolean {
-        val PHONE_PATTERN = Pattern.compile("^\\s*[6-9]\\d{9}\\s*\$")
+        val PHONE_PATTERN = Pattern.compile("^5(0[5-7]|[3-5]\\d) \\d{3} \\d{4}\$")
         return if (phone.isEmpty()) {
             false
         } else {

@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.commerce.ecommerceapp.Resource
 import com.commerce.ecommerceapp.daos.ProductDao
 import com.commerce.ecommerceapp.models.Brand
 import com.commerce.ecommerceapp.models.Category
@@ -13,6 +14,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
@@ -40,6 +42,8 @@ class HomeViewModel @Inject constructor(): ViewModel() {
 
     var productDao=ProductDao()
 
+    private val _searchedProductsLiveData = MutableLiveData<Resource<List<Product>>>()
+    val searchedProductsLiveData: LiveData<Resource<List<Product>>> = _searchedProductsLiveData
 
     private val _category = MutableLiveData<List<Category>>()
     val categories: LiveData<List<Category>>
@@ -68,6 +72,15 @@ class HomeViewModel @Inject constructor(): ViewModel() {
         retrieveAllCategories()
         retrieveAllBrands()
 
+    }
+
+    fun getProductsHasContainName(searchName: String) {
+        _searchedProductsLiveData.value = Resource.Loading()
+        viewModelScope.launch(Dispatchers.IO) {
+            _searchedProductsLiveData.postValue(productDao.getProductsContainName(searchName))
+            delay(500)
+            _searchedProductsLiveData.postValue(Resource.Idle())
+        }
     }
 
 

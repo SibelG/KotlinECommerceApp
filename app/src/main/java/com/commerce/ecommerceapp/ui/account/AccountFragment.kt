@@ -96,8 +96,10 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
                     }
                 }
 
-                binding.accountProfileName.text = currentUser.userName
-                binding.accountProfileEmail.text = currentUser.userEmail?:currentUser.mobileNumber
+                binding.accountProfileName.text = currentUser.userName.toEditable()
+                binding.accountProfileEmail.text = FirebaseAuth.getInstance().currentUser?.email
+                var phone= currentUser.mobileNumber.substring(3)
+                binding.accountProfilePhone.text = phone.toEditable()
             }
         }
     }
@@ -154,7 +156,8 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
 
     fun submitUserInfo() = with(binding) {
         val userName = accountProfileName.text.toString().trim()
-        val userEmail = accountProfileEmail.text.toString().trim()
+        val userPhone = accountProfilePhone.text.toString().trim()
+        val countryCode = binding.countryCodePicker.selectedCountryCode
         if (userName.isEmpty()) {
             showToast(getString(R.string.addUserName))
             return@with
@@ -163,18 +166,19 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
             showToast(getString(R.string.addUserImage))
             return@with
         }
-        if (userEmail.isEmpty()) {
+        if (userPhone.isEmpty()) {
             showToast(getString(R.string.addUserEmail))
             return@with
         }
+        var validPhoneNumber = "+$countryCode$userPhone"
         GlobalScope.launch {
             userDao.uploadUserInformation(
                 userName,
                 mImageUri,
-                userEmail,
+                validPhoneNumber,
                 requireContext())
         }
-
+        showToast("Account updated successfully")
 
     }
 

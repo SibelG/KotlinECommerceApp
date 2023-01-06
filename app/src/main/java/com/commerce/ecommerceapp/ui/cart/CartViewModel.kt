@@ -40,6 +40,7 @@ class CartViewModel @Inject constructor(): ViewModel() {
     private val productDao = ProductDao()
     private lateinit var currentUser: User
     var productQuantity: Int=0
+    private var userDao = UserDao()
 
     init {
         _subtotal.value = ""
@@ -52,7 +53,7 @@ class CartViewModel @Inject constructor(): ViewModel() {
     private fun retreiveAllProducts() {
         viewModelScope.launch {
             currentUser =
-                UserDao().getUserById(Utils.currentUserId).await().toObject(User::class.java)!!
+                userDao.getUserById(Utils.currentUserId).await().toObject(User::class.java)!!
             val cartItems = currentUser.cart.items
             _subtotal.value = "₹" + currentUser.cart.price.toString()
 

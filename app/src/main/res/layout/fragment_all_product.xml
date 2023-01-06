@@ -7,19 +7,92 @@
         <variable
             name="viewModel"
             type="com.commerce.ecommerceapp.ui.home.HomeViewModel" />
-    </data>
 
+        <variable
+            name="fragment"
+            type="com.commerce.ecommerceapp.ui.home.AllProductFragment" />
+        <variable
+            name="adapter"
+            type="com.commerce.ecommerceapp.adapters.ProductFilterAdapter" />
+
+        <import type="android.view.View" />
+    </data>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+<androidx.drawerlayout.widget.DrawerLayout
+    android:layout_width="match_parent"
+    android:id="@+id/drawerLayout"
+    android:layout_gravity="start"
+    android:fitsSystemWindows="true"
+    android:layout_height="match_parent"
+    tools:openDrawer="end">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.home.AllProductsFragment">
 
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
+            style="@style/Widget.MaterialComponents.Toolbar.Primary"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:background="@color/white"
+            app:buttonGravity="center_vertical"
+            app:contentInsetStartWithNavigation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:titleTextColor="@color/black">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/searchOutlinedTextLayout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:focusable="false"
+                    app:boxStrokeColor="@color/blue_accent_300"
+                    app:endIconMode="clear_text"
+                    app:endIconTint="@color/blue_accent_300"
+                    app:hintEnabled="false"
+                    app:startIconDrawable="@drawable/icon_search"
+                    app:startIconTint="@color/blue_accent_300">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/shopSearchEditText"
+                        android:layout_width="397dp"
+                        android:layout_height="match_parent"
+                        android:hint="Search Product"
+                        android:imeOptions="actionSearch"
+                        android:inputType="text"
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp"
+                        android:textColor="@color/gray"
+                        android:textColorHint="@color/gray" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+            </LinearLayout>
+
+
+        </com.google.android.material.appbar.MaterialToolbar>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/productsRecyclerView"
             android:layout_width="0dp"
-            android:layout_height="632dp"
+            android:layout_height="582dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
+            android:adapter="@{adapter}"
             android:padding="6dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -47,20 +120,15 @@
             app:layout_constraintStart_toStartOf="parent">
 
             <TextView
-                android:id="@+id/textView6"
-                android:layout_width="60dp"
+                android:id="@+id/sortText"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginBottom="5dp"
+                android:gravity="center"
                 android:text="Sort"
+                android:onClick="@{()-> fragment.showBottomSheet()}"
                 android:textSize="20sp" />
-
-            <Spinner
-                android:id="@+id/sortSpinner"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scrollbarSize="10dp"
-                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck,TouchTargetSizeCheck" />
 
         </LinearLayout>
 
@@ -74,21 +142,19 @@
             app:layout_constraintStart_toEndOf="@+id/linearLayoutSort">
 
             <TextView
-                android:id="@+id/textView5"
-                android:layout_width="wrap_content"
+                android:id="@+id/filterText"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginBottom="5dp"
+                android:gravity="center"
                 android:text="Filter"
                 android:textSize="20sp" />
 
-            <Spinner
-                android:id="@+id/filterSpinner"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scrollbarSize="10dp"
-                android:text="Filter"
-                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck"></Spinner>
         </LinearLayout>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.drawerlayout.widget.DrawerLayout>
+    </ScrollView>
 </layout>

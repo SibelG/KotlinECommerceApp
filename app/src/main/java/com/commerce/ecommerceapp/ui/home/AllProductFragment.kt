@@ -6,19 +6,24 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.databinding.DataBindingUtil
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.commerce.ecommerceapp.MainActivity
-import com.commerce.ecommerceapp.R
+import androidx.recyclerview.widget.RecyclerView
+import com.commerce.ecommerceapp.*
 import com.commerce.ecommerceapp.adapters.*
 import com.commerce.ecommerceapp.databinding.FragmentAllProductBinding
+import com.commerce.ecommerceapp.models.MainShopItem
 import com.commerce.ecommerceapp.models.Product
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.stream.Collectors.toList
 
 @AndroidEntryPoint
 class AllProductFragment() : Fragment(), IFilterProductAdapter {
@@ -28,21 +33,21 @@ class AllProductFragment() : Fragment(), IFilterProductAdapter {
     private lateinit var adapter: ProductFilterAdapter
     private lateinit var spinner: Spinner
     private lateinit var linearLayout: LinearLayout
+    private lateinit var dialog:BottomSheetDialog
+    private lateinit var ItemAdapter: ItemAdapter
+    private val list = ArrayList<String>()
+    private lateinit var rvRecycler: RecyclerView
+    var drawerLayout: DrawerLayout? = null
+    var toolbar: Toolbar? = null
+    var actionBarDrawerToggle: ActionBarDrawerToggle? = null
+    private var searchedText = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requireActivity().onBackPressedDispatcher.addCallback(this,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    val homeFragment = (activity as MainActivity).activeFragment
-                    val currentFragment = this@AllProductFragment
-                    requireActivity().supportFragmentManager.beginTransaction()
-                        .remove(currentFragment).show(homeFragment).commit()
-                    (activity as MainActivity).supportActionBar?.title = "Home"
-                    (activity as MainActivity).setDrawerLocked(false)
-                    (activity as MainActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
-                }
-            })
+        val sorting = resources.getStringArray(R.array.sorting)
+        for(i in sorting){
+            list.add(i)
+        }
     }
 
     override fun onCreateView(
@@ -53,13 +58,11 @@ class AllProductFragment() : Fragment(), IFilterProductAdapter {
             ViewModelProvider(this).get(HomeViewModel::class.java)
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_all_product, container, false)
-
         binding.viewModel = homeViewModel
+        binding.fragment = this
 
         setupRecyclerView(FirebaseFirestore.getInstance().collection("products"))
 
-        sortProduct()
-        filterProduct()
 
         homeViewModel.status.observe(viewLifecycleOwner,{
             if (it==ProductStatus.DONE){
@@ -68,56 +71,79 @@ class AllProductFragment() : Fragment(), IFilterProductAdapter {
         })
         return binding.root
     }
+    fun showBottomSheet(){
+        val dialogView= layoutInflater.inflate(R.layout.bottom_sheet,null)
+        dialog= BottomSheetDialog(requireContext(),R.style.BottomSheetDialogTheme)
+        dialog.setContentView(dialogView)
+        rvRecycler = dialogView.findViewById(R.id.rvItem)
 
-
-    private fun sortProduct(){
-        val sorting = resources.getStringArray(R.array.sorting)
-        spinner = binding.sortSpinner
-        spinner.layoutParams = LinearLayout.LayoutParams(
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-
-        linearLayout = binding.linearLayoutSort
-        //add spinner in linear layout
-        if (spinner.getParent() != null) {
-            (spinner.getParent() as ViewGroup).removeView(spinner) // <- fix
-        }
-        linearLayout?.addView(spinner)
-
-        if (spinner != null) {
-            val adapterSort = ArrayAdapter(
-                requireContext(),
-                android.R.layout.simple_spinner_item, sorting
-            )
-            spinner.adapter = adapterSort
-        }
-        spinner.onItemSelectedListener = object :
-            AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>,
-                                        view: View, position: Int, id: Long) {
-
-                var str = parent.getItemAtPosition(position);
-                when(str) {
-                    "Recommended" -> setupRecyclerView(FirebaseFirestore.getInstance().collection("products"))
-                    "Lowest Price" -> setupRecyclerView(FirebaseFirestore.getInstance().collection("products").orderBy("productPrice"))
-                    "Highest Price" -> setupRecyclerView(FirebaseFirestore.getInstance().collection("products").orderBy("productPrice",Query.Direction.DESCENDING))
-                    "Newest" -> setupRecyclerView(FirebaseFirestore.getInstance().collection("products").orderBy("productId", Query.Direction.DESCENDING))
-
-
-
-                    else -> print("I don't know anything about it")
+        ItemAdapter = ItemAdapter(list,object:ItemAdapter.ItemClickListener{
+            override fun onItemClicked(item: String) {
+                var category = item
+                when(category) {
+                    "Recommended" ->
+                        setupRecyclerView(FirebaseFirestore.getInstance().collection("products"))
+                    "Lowest Price" ->
+                        setupRecyclerView(FirebaseFirestore.getInstance().collection("products").orderBy("productPrice",Query.Direction.ASCENDING))
+                    "Highest Price" ->
+                        setupRecyclerView(FirebaseFirestore.getInstance().collection("products").orderBy("productPrice",Query.Direction.DESCENDING))
+                    "Newest" ->
+                        setupRecyclerView(FirebaseFirestore.getInstance().collection("products").orderBy("productId", Query.Direction.DESCENDING))
+                    "Most Evaluated" ->
+                        setupRecyclerView(FirebaseFirestore.getInstance().collection("products").orderBy("reviews", Query.Direction.DESCENDING))
                 }
-                Toast.makeText(requireContext(),
-                    getString(R.string.selected_item) + " " +
-                            "" + sorting[position], Toast.LENGTH_SHORT).show()
+
+
+                Toast.makeText(requireContext(),item,Toast.LENGTH_LONG).show()
+                dialog.cancel()
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>) {
-                // write code to perform some action
+        })
+        rvRecycler.adapter = ItemAdapter
+        dialog.show()
+
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        observeListener()
+    }
+    private fun initViews() {
+
+        binding.apply {
+            // submit search when click on search button on keyboard.
+            shopSearchEditText.searchListener {
+                val search = shopSearchEditText.text.toString().trim()
+                if (search.isNotEmpty()) {
+                    searchedText = search
+                    homeViewModel.getProductsHasContainName(searchedText)
+                    shopSearchEditText.text?.clear()
+                }
             }
         }
     }
+
+    private fun observeListener(){
+        homeViewModel.searchedProductsLiveData.observe(viewLifecycleOwner, { products ->
+            when (products) {
+                is Resource.Success -> {
+                    products.data?.let { newsResponse ->
+                        adapter = ProductFilterAdapter(newsResponse,this@AllProductFragment)
+                        binding.productsRecyclerView.adapter = adapter
+                        binding.productsRecyclerView.layoutManager = GridLayoutManager(requireContext(),2)
+
+                    }
+                }
+                is Resource.Error -> {
+                    showToast(products.msg!!)
+                }
+                else -> {}
+            }
+        })
+
+    }
+
+
 
     private fun setupRecyclerView(collection: Query) {
 
@@ -130,43 +156,6 @@ class AllProductFragment() : Fragment(), IFilterProductAdapter {
                 binding.productsRecyclerView.layoutManager = GridLayoutManager(requireContext(),2)
 
             })
-    }
-    private fun filterProduct(){
-        val filtering = resources.getStringArray(R.array.filtering)
-        spinner = binding.filterSpinner
-        spinner.layoutParams = LinearLayout.LayoutParams(
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-
-        linearLayout = binding.linearLayoutFilter
-        //add spinner in linear layout
-        if (spinner.getParent() != null) {
-            (spinner.getParent() as ViewGroup).removeView(spinner) // <- fix
-        }
-        linearLayout?.addView(spinner)
-
-        if (spinner != null) {
-            val adapterFilter = ArrayAdapter(
-                requireContext(),
-                android.R.layout.simple_spinner_item, filtering
-            )
-            spinner.adapter = adapterFilter
-        }
-        spinner.onItemSelectedListener = object :
-            AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>,
-                                        view: View, position: Int, id: Long) {
-                /*Toast.makeText(requireContext(),
-                    getString(R.string.selected_item) + " " +
-                            "" + languages[position], Toast.LENGTH_SHORT).show()*/
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {
-                // write code to perform some action
-            }
-        }
-
     }
 
     override fun onProductClicked(product: Product) {
