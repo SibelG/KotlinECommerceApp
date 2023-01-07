@@ -17,17 +17,8 @@
 
         <import type="android.view.View" />
     </data>
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-<androidx.drawerlayout.widget.DrawerLayout
-    android:layout_width="match_parent"
-    android:id="@+id/drawerLayout"
-    android:layout_gravity="start"
-    android:fitsSystemWindows="true"
-    android:layout_height="match_parent"
-    tools:openDrawer="end">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -155,6 +146,4 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.drawerlayout.widget.DrawerLayout>
-    </ScrollView>
 </layout>

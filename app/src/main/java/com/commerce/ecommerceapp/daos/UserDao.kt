@@ -38,7 +38,6 @@ class UserDao @Inject constructor() {
             //do this heavy database work in the background thread
             GlobalScope.launch {
                 //change it's id to userId and set it
-
                 usersCollection.document(user.userId).set(it)
             }
 
@@ -49,7 +48,7 @@ class UserDao @Inject constructor() {
      suspend fun uploadUserInformation(
         userName: String,
         imageUri: Uri?,
-        userEmail: String,
+        userPhone: String,
         context: Context
     ){
          GlobalScope.launch {
@@ -58,11 +57,11 @@ class UserDao @Inject constructor() {
                  if (imageUri != null) {
                      val uploadedImagePath = uploadUserImage(imageUri)
                      val userInfoModel =
-                         User(userUid, userName, uploadedImagePath, userEmail)
-                     usersCollection.document(userUid).set(userInfoModel)
+                         User(userId = userUid, userName=userName, userImage = uploadedImagePath, mobileNumber = userPhone)
+                     updateProfile(userInfoModel)
                  } else {
                      val userInfoModel =
-                         User(userUid, userName, "", userEmail)
+                         User(userId=userUid, userName=userName, userImage = "", mobileNumber = userPhone)
                      updateProfile(userInfoModel)
                      accountStatusMessage = context.getString(R.string.accountUpdatedSuccessfully)
                  }

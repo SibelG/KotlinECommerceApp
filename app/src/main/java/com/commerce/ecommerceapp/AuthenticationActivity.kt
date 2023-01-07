@@ -4,11 +4,10 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.startActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.FragmentTransaction
+import com.commerce.ecommerceapp.Utils.currentUserId
 import com.commerce.ecommerceapp.daos.UserDao
 import com.commerce.ecommerceapp.databinding.ActivityAuthenticationBinding
 import com.commerce.ecommerceapp.models.User
@@ -17,14 +16,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.FirebaseApp
-import com.google.firebase.FirebaseException
-import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.appcheck.FirebaseAppCheck
 import com.google.firebase.appcheck.safetynet.SafetyNetAppCheckProviderFactory
 import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class AuthenticationActivity : AppCompatActivity() {
@@ -47,7 +45,9 @@ class AuthenticationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_authentication)
+        binding.activity = this
         auth = Firebase.auth
+
 
 
         FirebaseApp.initializeApp(/*context=*/ this)
@@ -66,6 +66,11 @@ class AuthenticationActivity : AppCompatActivity() {
         binding.googleLoginBtn.setOnClickListener {
             signIn()
 
+        }
+        binding.phoneLoginBtn.setOnClickListener {
+            val intent = Intent(this,OtpSendActivity::class.java)
+            startActivity(intent)
+            finish()
         }
 
 
@@ -114,7 +119,7 @@ class AuthenticationActivity : AppCompatActivity() {
                             val email = profile.email
                             val photoUrl: Uri? = profile.photoUrl
 
-                            val user = User(userId = uid,userName = name.toString(),userEmail= email.toString())
+                            val user = User(userId = currentUserId,userName = name.toString(),userEmail= email.toString())
                             userDao.addUser(user)
                         }
                     }
@@ -145,8 +150,6 @@ class AuthenticationActivity : AppCompatActivity() {
                 }
             }
     }
-
-
     /*private fun signUp(username: String) {
         val user = User(userId = auth.currentUser!!.uid,userName = username,mobileNumber = number)
         UserDao().addUser(this,user)
@@ -154,9 +157,6 @@ class AuthenticationActivity : AppCompatActivity() {
         startActivity(intent)
         finish()
     }*/
-
-
-
 
 
 }

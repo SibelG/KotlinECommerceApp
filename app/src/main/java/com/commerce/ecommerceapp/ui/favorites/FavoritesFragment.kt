@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.commerce.ecommerceapp.R
@@ -24,10 +25,11 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites),
     private lateinit var adapter:FavoriteAdapter
 
     private lateinit var binding: FragmentFavoritesBinding
-    private lateinit var viewModel: FavoriteViewModel
+    private val viewModel by viewModels<FavoriteViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel.getFavoriteProducts()
 
     }
 
@@ -37,8 +39,6 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites),
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_favorites, container, false)
-        viewModel = ViewModelProvider(this).get(FavoriteViewModel::class.java)
-        viewModel.getFavoriteProducts()
         adapter= FavoriteAdapter()
         binding.adapter = adapter
         binding.fragment = this

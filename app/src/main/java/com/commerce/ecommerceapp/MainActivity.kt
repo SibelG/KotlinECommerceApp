@@ -90,7 +90,6 @@ class MainActivity : AppCompatActivity(), DrawerLocker {
 
         })*/
 
-
         observeNetworkConnection()
     }
 
@@ -184,6 +183,8 @@ class MainActivity : AppCompatActivity(), DrawerLocker {
             drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
         }
     }
+
+
 
 }
 

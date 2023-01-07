@@ -5,6 +5,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="activity"
+            type="com.commerce.ecommerceapp.AuthenticationActivity" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -27,143 +34,10 @@
 
         <!--On click of this buttton OTP will be send to phone-->
 
-        <TextView
-            android:id="@+id/phone_number_label_in_authentication"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginBottom="4dp"
-            android:text="Enter Mobile Number"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@id/phone_number_in_authentication"
-            app:layout_constraintStart_toStartOf="@id/phone_number_in_authentication" />
-
-        <EditText
-            android:id="@+id/phone_number_in_authentication"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="268dp"
-            android:layout_marginEnd="20dp"
-            android:hint="@string/enter_phone_number"
-            android:inputType="phone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="TouchTargetSizeCheck" />
-
-        <Button
-            android:id="@+id/send_otp_button"
-            android:layout_width="126dp"
-            android:layout_height="43dp"
-            android:layout_marginStart="124dp"
-            android:layout_marginTop="44dp"
-            android:text="@string/send_otp_button_text"
-            app:layout_constraintStart_toStartOf="@+id/phone_number_in_authentication"
-            app:layout_constraintTop_toBottomOf="@+id/phone_number_in_authentication"
-            tools:ignore="TouchTargetSizeCheck" />
-
-        <TextView
-            android:id="@+id/enter_otp_authentication_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="200dp"
-            android:text="@string/enter_otp_authentication_text"
-            android:textSize="20sp"
-            android:visibility="gone"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <!--We will use it to enter OTP after we receive OTP-->
-        <EditText
-            android:id="@+id/enter_otp_authentication"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:hint="@string/enter_otp_authentication_text"
-            android:inputType="number"
-            android:maxLength="6"
-            android:visibility="gone"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/enter_otp_authentication_label" />
 
         <!--On click of this button final authentication will start-->
-        <Button
-            android:id="@+id/resend_otp_button_authentication"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="4dp"
-            android:text="Resend otp"
-            android:visibility="gone"
-            app:layout_constraintEnd_toStartOf="@id/guideline2"
-            app:layout_constraintStart_toStartOf="@id/enter_otp_authentication"
-            app:layout_constraintTop_toBottomOf="@id/enter_otp_authentication" />
-
-        <TextView
-            android:id="@+id/resend_otp_timer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:textSize="16sp"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="@id/resend_otp_button_authentication"
-            app:layout_constraintStart_toStartOf="@id/resend_otp_button_authentication"
-            app:layout_constraintTop_toBottomOf="@id/resend_otp_button_authentication" />
-
-        <TextView
-            android:id="@+id/signUpLabel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:text="You are a new user\nPlease enter your name"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@id/enter_username"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <EditText
-            android:id="@+id/enter_username"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:hint="Enter Full Name"
-            android:inputType="textPersonName"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.357"
-            tools:ignore="TouchTargetSizeCheck" />
-
-        <Button
-            android:id="@+id/signUpButton"
-            android:layout_width="120dp"
-            android:layout_height="37dp"
-            android:layout_marginTop="53dp"
-            android:text="Sign up"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="@+id/phone_number_in_authentication"
-            app:layout_constraintTop_toBottomOf="@+id/phone_number_in_authentication"
-            tools:ignore="TouchTargetSizeCheck" />
-
-        <Button
-            android:id="@+id/login_button_authentication"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="16dp"
-            android:text="@string/login_button_text"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="@id/enter_otp_authentication"
-            app:layout_constraintStart_toEndOf="@id/guideline2"
-            app:layout_constraintTop_toBottomOf="@id/enter_otp_authentication" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline2"
@@ -177,11 +51,29 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
+            android:id="@+id/phone_login_btn"
+            android:layout_width="342dp"
+            android:layout_height="60dp"
+            android:drawableLeft="@drawable/phone"
+            android:drawablePadding="15dp"
+            android:text="Sign in with Phone"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:backgroundTint="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.492"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.484" />
+
+        <Button
             android:id="@+id/google_login_btn"
             android:layout_width="342dp"
-            android:layout_height="58dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="50dp"
             android:drawableLeft="@drawable/ic_icons_google"
             android:drawablePadding="15dp"
             android:text="Sign in with Google"
@@ -190,12 +82,10 @@
             android:textSize="18sp"
             android:textStyle="bold"
             app:backgroundTint="#FFFFFF"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.482"
+            app:layout_constraintHorizontal_bias="0.492"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.748" />
+            app:layout_constraintTop_toBottomOf="@+id/phone_login_btn" />
 
         <TextView
             android:id="@+id/textView2"

@@ -1,5 +1,6 @@
 package com.commerce.ecommerceapp
 
+import android.text.format.DateUtils
 import android.widget.Toast
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -15,9 +16,6 @@ object Utils {
     const val BASE_LATITUDE = 26.0
     const val BASE_LONGITUDE = 32.0
     const val LOCATION_ZOOM = 20f
-    const val COUNT_DOWN_DELAY = 60000L
-    const val COUNT_DOWN_INTERVAL = 1000L
-    const val FIRST_LOGGED_IN_APP = "FIRST_LOGGED_IN_APP"
     const val MOB_ERROR_TEXT = "Enter valid mobile number!"
     const val EMAIL_ERROR_TEXT = "Enter valid email address!"
     const val ERR_INIT = "ERROR"

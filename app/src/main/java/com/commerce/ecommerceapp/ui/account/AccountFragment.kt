@@ -34,12 +34,13 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
 
     val firebaseAuth= FirebaseAuth.getInstance()
     private var mImageUri: Uri? = null
-    private lateinit var userDao: UserDao
+    private  var userDao = UserDao()
     private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
        // (activity as MainActivity).hideBottomNav()
+        setupRecyclerView()
         (activity as MainActivity).supportActionBar?.title = "Account Settings"
         (activity as MainActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
 
@@ -51,12 +52,7 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
     ): View? {
         binding = FragmentAccountBinding.inflate(inflater)
         viewModel = ViewModelProvider(this).get(AccountViewModel::class.java)
-
-        userDao = UserDao()
-
-        setupRecyclerView()
-
-
+        binding.fragment = this
 
         binding.cardSection.setOnClickListener{
             openUserCredidCardFragment()
@@ -91,9 +87,7 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
                 userDao.getUserById(currentUserId).await().toObject(User::class.java)!!
             withContext(Dispatchers.Main) {
                 if(currentUser.userImage!=null){
-                    binding.accountImageProfile.load(currentUser.userImage){
-                        transformations(RoundedCornersTransformation()).error(R.drawable.ic_baseline_account_circle_24)
-                    }
+                    binding.accountImageProfile.load(currentUser.userImage)
                 }
 
                 binding.accountProfileName.text = currentUser.userName.toEditable()
@@ -177,8 +171,12 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
                 mImageUri,
                 validPhoneNumber,
                 requireContext())
+            withContext(Dispatchers.Main) {
+                showToast("Account updated successfully")
+            }
         }
-        showToast("Account updated successfully")
+
+
 
     }
 

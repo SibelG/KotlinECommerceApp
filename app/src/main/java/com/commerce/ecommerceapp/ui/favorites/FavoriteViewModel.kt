@@ -23,6 +23,9 @@ private val dbRepository: DBRepository
     private val _cartProductsLiveData = MutableLiveData<Resource<Any>>()
     val cartProductsLiveData: LiveData<Resource<Any>> = _cartProductsLiveData
 
+    init {
+        getFavoriteProducts()
+    }
 
 
     fun getFavoriteProducts() {
