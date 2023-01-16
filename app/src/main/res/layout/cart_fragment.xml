@@ -22,7 +22,7 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="64dp"
             android:layout_marginTop="16dp"
-            android:text="Subtotal - "
+            android:text="@string/sub_total"
             android:textSize="24sp"/>
 
         <TextView
@@ -46,7 +46,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginVertical="8dp"
             android:layout_marginHorizontal="16dp"
-            android:text="Proceed to Buy"
+            android:text="@string/proceed"
             android:textAllCaps="false"
             android:textSize="20sp"/>
 

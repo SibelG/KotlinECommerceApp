@@ -48,6 +48,8 @@ class OtpSendActivity : AppCompatActivity() {
 
         mAuth = Firebase.auth
 
+        binding.ccp.setDefaultCountryUsingNameCode("TR")
+
         binding.btnSend.setOnClickListener {
             val number = binding.etPhone.text.toString().trim()
             val countryCode = binding.ccp.selectedCountryCodeWithPlus
@@ -60,12 +62,13 @@ class OtpSendActivity : AppCompatActivity() {
     private fun getPhoneNumber(phone: String): String? {
         if (phone.isEmpty())
             Toast.makeText(this,"Phone number is required!",Toast.LENGTH_LONG).show()
-        else if (!Patterns.PHONE.matcher(phone).matches() || phone.length < 11)
+        else if (!Patterns.PHONE.matcher(phone).matches() || phone.length < 10)
            Toast.makeText(this,"Need valid phone number!",Toast.LENGTH_LONG).show()
         else
-            return if (phone.substring(0, 1) == "0") phone.substring(1) else phone
+            /*return if (phone.substring(0, 1) == "0") phone.substring(1)*/
+            return phone
 
-        return null;
+        return null
     }
 
     private fun otpSend(phoneNumberWithCountryCode: String) {

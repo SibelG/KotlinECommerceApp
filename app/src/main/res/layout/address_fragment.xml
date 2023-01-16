@@ -13,13 +13,13 @@
             android:id="@+id/username_in_address_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="Name"
-            android:layout_marginTop="16dp"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/name"
             android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/username_in_address"
@@ -36,12 +36,12 @@
             android:id="@+id/mobile_number_in_address_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/username_in_address"
-            app:layout_constraintStart_toStartOf="@id/username_in_address"
-            android:text="Mobile Number"
             android:layout_marginTop="16dp"
+            android:text="@string/mobile"
             android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/username_in_address"
+            app:layout_constraintTop_toBottomOf="@id/username_in_address" />
 
         <EditText
             android:id="@+id/mobile_number_in_address"

@@ -13,5 +13,5 @@ data class User(
     var cart: Cart=Cart(),
     var credidCards: ArrayList<CredidCard> = ArrayList(),
     val orders: ArrayList<String> = ArrayList(),
-    val favProduct: List<Product> = ArrayList(),
+    val notifyList: ArrayList<NotificationData> = ArrayList(),
     val addresses: ArrayList<Address> = ArrayList()):Parcelable

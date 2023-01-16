@@ -32,7 +32,7 @@
             android:id="@+id/textView9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Reviews"
+            android:text="@string/reviews"
             android:textStyle="bold"
             android:theme="@style/bigTextTheme"
             app:layout_constraintBottom_toTopOf="@id/guideline7"

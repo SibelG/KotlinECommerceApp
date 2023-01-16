@@ -17,14 +17,14 @@
             android:id="@+id/editText"
             android:layout_weight="0.5"
             android:inputType="textPersonName"
-            android:hint="Search Location" />
+            android:hint="@string/search_location" />
 
         <Button
             android:id="@+id/search_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:text="Search" />
+            android:text="@string/search_hint" />
 
     </LinearLayout>
 

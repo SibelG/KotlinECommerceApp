@@ -21,7 +21,7 @@ class ChooseAddressAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_choose_fragment, parent, false)
+                .inflate(R.layout.item_choose, parent, false)
         )
     }
 

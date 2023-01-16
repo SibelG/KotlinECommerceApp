@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import coil.load
@@ -29,7 +31,7 @@ import kotlinx.coroutines.withContext
 @AndroidEntryPoint
 class AccountFragment : Fragment(R.layout.fragment_account) {
 
-    private lateinit var viewModel: AccountViewModel
+    private val viewModel by viewModels<AccountViewModel>()
     private lateinit var binding: FragmentAccountBinding
 
     val firebaseAuth= FirebaseAuth.getInstance()
@@ -40,7 +42,7 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
        // (activity as MainActivity).hideBottomNav()
-        setupRecyclerView()
+
         (activity as MainActivity).supportActionBar?.title = "Account Settings"
         (activity as MainActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
 
@@ -50,13 +52,10 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentAccountBinding.inflate(inflater)
-        viewModel = ViewModelProvider(this).get(AccountViewModel::class.java)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_account, container, false)
         binding.fragment = this
+        setupRecyclerView()
 
-        binding.cardSection.setOnClickListener{
-            openUserCredidCardFragment()
-        }
         binding.profileSection.setOnClickListener{
             openProfileFragment()
         }
@@ -74,7 +73,13 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
         }
         binding.trackSection.setOnClickListener{
             trackingFragment()
+        }
+        binding.notificationSection.setOnClickListener {
+            openNotifyFragment()
+        }
 
+        binding.languageSection.setOnClickListener {
+            openLanguageFragment()
         }
 
         // Inflate the layout for this fragment
@@ -92,8 +97,11 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
 
                 binding.accountProfileName.text = currentUser.userName.toEditable()
                 binding.accountProfileEmail.text = FirebaseAuth.getInstance().currentUser?.email
-                var phone= currentUser.mobileNumber.substring(3)
-                binding.accountProfilePhone.text = phone.toEditable()
+                var phone= currentUser.mobileNumber
+                if(phone.isNotEmpty()){
+                    binding.accountProfilePhone.text = phone.substring(3).toEditable()
+                }
+
             }
         }
     }
@@ -103,17 +111,23 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
         findNavController().navigate(action)
     }
 
+    fun openLanguageFragment() {
+
+        val action = AccountFragmentDirections.actionNavAccountToChooseCountryActivity()
+        findNavController().navigate(action)
+    }
+
+    fun openNotifyFragment() {
+
+        val action = AccountFragmentDirections.actionNavAccountToNotificationFragment()
+        findNavController().navigate(action)
+    }
     fun openProfileFragment() {
 
         val action = AccountFragmentDirections.actionNavAccountToNavProfile()
         findNavController().navigate(action)
     }
 
-    fun openUserCredidCardFragment() {
-
-        val action = AccountFragmentDirections.actionNavAccountToCredidCardFragment()
-        findNavController().navigate(action)
-    }
 
 
     fun openProductRequestFragment() {

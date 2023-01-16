@@ -34,14 +34,16 @@
         <activity android:name=".AuthenticationActivity" />
         <activity android:name=".OtpVerifyActivity"/>
         <activity android:name=".OtpSendActivity"/>
+        <activity android:name=".ui.choose_country.ChooseCountryActivity"/>
 
-        <service
-            android:name=".data.database.fcm.PushNotificationService"
-            android:enabled="true"
+        <service android:permission="com.google.android.c2dm.permission.SEND"
+            android:name=".data.fcm.PushNotificationService"
             android:exported="false"
+            android:enabled="true"
             android:stopWithTask="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
             </intent-filter>
         </service>
 

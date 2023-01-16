@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentTransaction
@@ -20,6 +21,7 @@ import com.google.firebase.appcheck.FirebaseAppCheck
 import com.google.firebase.appcheck.safetynet.SafetyNetAppCheckProviderFactory
 import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -30,7 +32,7 @@ class AuthenticationActivity : AppCompatActivity() {
 
     private lateinit var googleSignInClient: GoogleSignInClient
     private var userDao = UserDao()
-
+    private val db  by lazy { FirebaseFirestore.getInstance()}
     companion object {
         private const val RC_SIGN_IN = 1
     }
@@ -38,8 +40,9 @@ class AuthenticationActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAuthenticationBinding
     lateinit var auth: FirebaseAuth
-    var user= FirebaseAuth.getInstance().currentUser
     private val TAG = "AuthenticationActivity"
+    var name =""
+    var email =""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,7 +63,6 @@ class AuthenticationActivity : AppCompatActivity() {
             .requestIdToken("1010115632144-l24qee3v5e5ca06dlqgc99tplo2fn5gh.apps.googleusercontent.com")
             .requestEmail()
             .build()
-
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
         binding.googleLoginBtn.setOnClickListener {
@@ -88,6 +90,7 @@ class AuthenticationActivity : AppCompatActivity() {
     private fun signIn() {
         val signInIntent = googleSignInClient.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -102,27 +105,9 @@ class AuthenticationActivity : AppCompatActivity() {
                 try {
                     // Google Sign In was successful, authenticate with Firebase
                     val account = task.getResult(ApiException::class.java)!!
-                    Log.d("SignInActivity", "firebaseAuthWithGoogle:" + account.id)
                     firebaseAuthWithGoogle(account.idToken!!)
+                    Log.d("SignInActivity", "firebaseAuthWithGoogle:" + account.id)
 
-                    /*val email= account.email
-                    val googleFirstName= account.givenName
-                    val picture= account.photoUrl.toString()
-                    val user = User(userId = auth.currentUser!!.uid,userName = googleFirstName.toString(),userEmail= email.toString(), userImage = picture)*/
-
-                    if (user != null) {
-                        for (profile in user!!.getProviderData()) {
-                            // Id of the provider (ex: google.com)
-                            val providerId = profile.providerId
-                            val uid = profile.uid
-                            val name = profile.displayName
-                            val email = profile.email
-                            val photoUrl: Uri? = profile.photoUrl
-
-                            val user = User(userId = currentUserId,userName = name.toString(),userEmail= email.toString())
-                            userDao.addUser(user)
-                        }
-                    }
                 } catch (e: ApiException) {
                     // Google Sign In failed, update UI appropriately
                     Log.w("SignInActivity", "Google sign in failed", e)
@@ -141,7 +126,11 @@ class AuthenticationActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d("SignInActivity", "signInWithCredential:success")
-
+                    name = auth.currentUser?.displayName.toString()
+                    email = auth.currentUser?.email.toString()
+                    val user = User(userId = currentUserId, userName = name, userEmail = email)
+                    userDao.addUser(user)
+                    Log.d("TagLogin", currentUserId)
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                 } else {
@@ -150,13 +139,4 @@ class AuthenticationActivity : AppCompatActivity() {
                 }
             }
     }
-    /*private fun signUp(username: String) {
-        val user = User(userId = auth.currentUser!!.uid,userName = username,mobileNumber = number)
-        UserDao().addUser(this,user)
-        val intent = Intent(this , MainActivity::class.java)
-        startActivity(intent)
-        finish()
-    }*/
-
-
 }

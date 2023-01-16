@@ -1,15 +1,16 @@
 <resources>
-    <string name="app_name">FashionShop</string>
-    <string name="title_activity_main">MainActivity</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
+    <string name="app_name" translatable="false">FashionShop</string>
+    <string name="title_activity_main" translatable="false">MainActivity</string>
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+    <string name="nav_header_title" translatable="false">Android Studio</string>
+    <string name="nav_header_subtitle" translatable="false">android.studio@android.com</string>
+    <string name="nav_header_desc" translatable="false">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="backOnline">Back Online</string>
     <string name="connectionLost">Connection Lost!</string>
     <string name="menu_home">Home</string>
+    <string name="notify">Notifications</string>
     <string name="menu_credid">Credid Card</string>
     <string name="menu_orders">Your Orders</string>
     <string name="menu_profile">Your Profile</string>
@@ -47,9 +48,8 @@
     <string name="title_fragment_helpline">Helpline</string>
     <string name="categories">Categories</string>
     <string name="best_selling">Best Selling</string>
-    <string name="new_tag">New</string>
     <string name="favourite">Favourites</string>
-    <string name="google_maps_api_key">AIzaSyCML0ytjqc4px9hB5_4Lum9AmOhd72OL7o</string>
+    <string name="google_maps_api_key" translatable="false">AIzaSyCML0ytjqc4px9hB5_4Lum9AmOhd72OL7o</string>
     <string name="featured_brands">Featured Brands</string>
     <string name="recommended">Recommended</string>
     <string name="total">Total</string>
@@ -60,8 +60,6 @@
     <string name="cards">Cards</string>
     <string name="notifications">Notifications</string>
     <string name="logout">LogOut</string>
-    <string name="card_holder">Card Holder</string>
-    <string name="expiry">Expiry</string>
     <string name="newButton">New</string>
     <string name="cancelButton">Cancel</string>
     <string name="details">Details</string>
@@ -69,22 +67,11 @@
     <string name="add_to_cart">Add to cart</string>
     <string name="tell_us_your_experience">Tell us your experience</string>
     <string name="send">Send</string>
-    <string name="sign_in_to_continue">Sign in to Continue</string>
-    <string name="email">Email</string>
-    <string name="password">Password</string>
-    <string name="forget_password">Forget Password?</string>
-    <string name="sign_in">Sign in</string>
-    <string name="sign_in_with_facebook">Sign In with Facebook</string>
-    <string name="sign_up">Sign Up</string>
     <string name="name">Name</string>
     <string name="no_reviews">No Reviews</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="welcomeMessage">Welcome \n to our store</string>
-    <string name="welcomeSecondMessage">Get your groceries in as fast as one hour</string>
     <string name="get_started">Get started</string>
-    <string name="authPageMessage">Get your groceries \nwith superest</string>
-    <string name="orConnectWithGoogle">Or connect with Google</string>
     <string name="continue_with_google">Continue with Google</string>
     <string name="enter_your_mobile_number">Enter your mobile number</string>
     <string name="mobile_number">Mobile Number</string>
@@ -98,16 +85,6 @@
     <string name="type_verification_code_first">Please type verification code first.</string>
     <string name="resend_code">Resend Code</string>
     <string name="countDown">00:%1$02d</string>
-    <string name="add_your_name_here">Add your name here.</string>
-    <string name="select_your_location">Select your location</string>
-    <string name="submit">submit</string>
-    <string name="confirm_location">confirm location</string>
-    <string name="location_permission_attention">Attention! Some features can\'t work normally without location permission</string>
-    <string name="go_to_settings">Go to settings</string>
-    <string name="enableGPS">This application requires GPS to work properly, do you want to enable it?</string>
-    <string name="cannotMakeGPSRequest">You can\'t make map requests</string>
-    <string name="enable">Enable</string>
-    <string name="get_my_location">Locate Me</string>
     <string name="addUserName">Please add your name first!</string>
     <string name="addUserImage">Please add an  image to your account!</string>
     <string name="addUserEmail">Please add your email first!</string>
@@ -115,9 +92,8 @@
     <string name="invalidPhone">Invalid Phone Number Please again!</string>
     <string name="errorCreateAccount">An error occurred when trying to create account, please check your internet connection and try again.</string>
     <string name="accountCreatedSuccessfully">Account created successfully.</string>
-    <string name="webClientId">CLIENT ID</string>
+    <string name="webClientId" translatable="false">CLIENT ID</string>
     <string name="welcome">Welcome back,</string>
-    <string name="search_store">Search Store</string>
     <string name="see_all">See all</string>
     <string name="shop">Shop</string>
     <string name="explore">Explore</string>
@@ -127,9 +103,6 @@
     <string name="price">%.2f$</string>
     <string name="shareProduct">Hello bro,\n%1$s product is very awesome and have a very cheap price, it just cost %2$.2f$.\n You can buy it now with Superest
     supermarket app.</string>
-    <string name="product_detail">Product Detail</string>
-    <string name="progressTextValue">%.0fg</string>
-    <string name="progressCaloriesValue">%.0f</string>
     <string name="find_products">Find Products</string>
     <string name="add_all_to_cart">Add all to cart</string>
     <string name="savedToCart">Products have been added to the card successfully.</string>
@@ -183,7 +156,43 @@
     <string name="accountUpdatedSuccessfully">Account Updated Successfully</string>
     <string name="drag_info">Long press any marker and drag to a position for accurate position</string>
 
-    <string name="selected_item">Selected item:</string>
+    <string name="english" translatable="false">English</string>
+    <string name="turkish" translatable="false">Türkçe</string>
+    <string name="hindi" translatable="false">हिंदी</string>
+    <string name="german" translatable="false">Deuthsch</string>
+    <string name="arabic" translatable="false">عربى</string>
+
+    <string name="testing_text">Select Language</string>
+
+    <string name="selected_item" translatable="false">Selected item:</string>
+    <string name="wishlist">Wishlist</string>
+    <string name="language">Language</string>
+    <string name="Sign_in_Phone">Sign in with phone</string>
+    <string name="Sign_in_Google">Sign in with Google</string>
+    <string name="add_basket">Add to Basket</string>
+    <string name="buy_now">Buy Now</string>
+    <string name="send_review">Send Revıew</string>
+    <string name="add_review">Add Revıew</string>
+    <string name="reviewDesc">You can rate the product below and write a comment</string>
+    <string name="search_product">Search</string>
+    <string name="filter">Filter</string>
+    <string name="sort">Sort</string>
+    <string name="email_address">Email Address</string>
+    <string name="mobile">Mobile Number</string>
+    <string name="payment_options">Choose an Payment Option</string>
+    <string name="debid">Debid Cart</string>
+    <string name="payment_nfc">Contactless Payment (NFC)</string>
+    <string name="code_cash">Cash on Delivery (COD)</string>
+    <string name="add_comment">Add Comment</string>
+    <string name="add_new_address">Add new Address</string>
+    <string name="your_address">Your Address</string>
+    <string name="search_location">Search Location</string>
+    <string name="flat_house">Flat,House no.,Building,company,Apartment</string>
+    <string name="area">Area, Colony, Street, Sector, Village</string>
+    <string name="town">Town/City</string>
+    <string name="edit_address">Edit Address</string>
+    <string name="sub_total">"Subtotal - "</string>
+    <string name="proceed">Proceed to Buy</string>
 
     <string-array name="sorting">
         <item>Recommended</item>

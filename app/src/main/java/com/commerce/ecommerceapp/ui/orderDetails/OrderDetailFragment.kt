@@ -10,18 +10,18 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.commerce.ecommerceapp.FCMNotificationBuilder
 import com.commerce.ecommerceapp.MainActivity
 import com.commerce.ecommerceapp.R
+import com.commerce.ecommerceapp.Utils
 import com.commerce.ecommerceapp.adapters.ClickListener
 import com.commerce.ecommerceapp.adapters.OrderItemAdapter
 import com.commerce.ecommerceapp.adapters.SummaryProductAdapter
 import com.commerce.ecommerceapp.daos.OrderDao
 import com.commerce.ecommerceapp.daos.ProductDao
+import com.commerce.ecommerceapp.daos.UserDao
 import com.commerce.ecommerceapp.databinding.OrderDetailFragmentBinding
-import com.commerce.ecommerceapp.models.CartItemOffline
-import com.commerce.ecommerceapp.models.Order
-import com.commerce.ecommerceapp.models.OrderStatus
-import com.commerce.ecommerceapp.models.Product
+import com.commerce.ecommerceapp.models.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -33,11 +33,11 @@ class OrderDetailFragment(
 
     private lateinit var viewModel: OrderDetailViewModel
     private lateinit var binding: OrderDetailFragmentBinding
-    private lateinit var adapter: SummaryProductAdapter
-    private var productDao = ProductDao()
     lateinit var cartItemsOffline: ArrayList<CartItemOffline>
     lateinit var order:Order
     private lateinit var orderDao: OrderDao
+    private var  userDao = UserDao()
+    private lateinit var fcmNotificationBuilder: FCMNotificationBuilder
 
     @SuppressLint("ResourceAsColor")
     override fun onCreateView(
@@ -51,6 +51,8 @@ class OrderDetailFragment(
             cartItemsOffline = it.getParcelableArrayList<CartItemOffline>("itemAddress") as ArrayList<CartItemOffline>
             order = it.getParcelable<Order>("order") as Order
         }
+
+        fcmNotificationBuilder = FCMNotificationBuilder(requireContext())
 
         setupRecyclerView()
 
@@ -82,18 +84,6 @@ class OrderDetailFragment(
         binding.totalAmountOrder.text = "₹" + cart.price
     }
 
-    private  fun navigateToReview() {
-        GlobalScope.launch {
-            val items = order.cart.items
-            for (i in 0..(cartItemsOffline.size - 1)) {
-                val item = items[i]
-                val product = productDao.getProductById(item.productId).await()
-                    .toObject(Product::class.java)!!
-
-
-            }
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -120,6 +110,11 @@ class OrderDetailFragment(
             order.orderStatus = OrderStatus.CANCEL_REQUESTED
             orderDao.updateStatus(order)
             binding.orderStatusOrder.text = "Order status - " + order.orderStatus.toString()
+
+            fcmNotificationBuilder.buildNotification("Cancel","Cancel your order ${order.orderId}")
+            var notify = NotificationData(Utils.currentUserId,"Cancel","Cancel your order ${order.orderId}")
+            userDao.addNotify(notify)
+
         })
 
         builder.setNegativeButton("No",DialogInterface.OnClickListener{ dialog, which ->
@@ -127,6 +122,8 @@ class OrderDetailFragment(
         })
 
         builder.show()
+
+
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {

@@ -47,7 +47,7 @@ class ReviewFragment : Fragment() {
 
         viewModel.listIsEmpty.observe(viewLifecycleOwner, {
             if (it) {
-                binding.emptyReview.visibility=View.VISIBLE
+                binding.emptyReview.visibility = View.VISIBLE
             }
         })
         return binding.root

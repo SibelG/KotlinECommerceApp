@@ -61,7 +61,7 @@
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/favoriteRV"
-                            android:layout_width="411dp"
+                            android:layout_width="0dp"
                             android:layout_height="478dp"
                             android:adapter="@{adapter}"
                             android:orientation="vertical"

@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import com.commerce.ecommerceapp.R
 import com.commerce.ecommerceapp.Resource
+import com.commerce.ecommerceapp.models.NotificationData
 import com.commerce.ecommerceapp.models.Product
 import com.commerce.ecommerceapp.models.Review
 import com.google.android.gms.tasks.Task
@@ -53,6 +54,7 @@ class ProductDao @Inject constructor() {
 
         }
     }
+
     fun updateReview(productId: String,review:Review){
         GlobalScope.launch {
             val result = productsCollection.whereEqualTo("productId", productId).get().await()

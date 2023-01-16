@@ -43,15 +43,18 @@ class DetailFragment() : Fragment() {
         binding = DetailFragmentBinding.inflate(inflater)
         viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
 
+        showProductDetails(productModel.productId)
+
         return binding.run {
             fragment = this@DetailFragment
             binding.root
         }
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        showProductDetails(productModel.productId)
+       // showProductDetails(productModel.productId)
         observeListener()
         binding.addToCartButton.setOnClickListener {
             addProductToCart(productModel.productId)
@@ -118,6 +121,7 @@ class DetailFragment() : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+
         (activity as MainActivity).supportActionBar?.title = "Product Details"
         (activity as MainActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
 

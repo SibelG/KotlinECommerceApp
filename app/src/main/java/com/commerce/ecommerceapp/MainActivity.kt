@@ -83,12 +83,12 @@ class MainActivity : AppCompatActivity(), DrawerLocker {
         setupActionBarWithNavController(navController, appBarConfiguration)
 
 
-        /*shopViewModel = ViewModelProvider(this).get(CartViewModel::class.java)
+        shopViewModel = ViewModelProvider(this).get(CartViewModel::class.java)
         shopViewModel.subQuantity.observe(this, Observer<String> {
             quantity = it
             invalidateOptionsMenu()
 
-        })*/
+        })
 
         observeNetworkConnection()
     }

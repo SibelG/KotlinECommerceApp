@@ -79,6 +79,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@color/dark_green"
                         app:srcCompat="@drawable/icon_edit_profile" />
 
                     <TextView
@@ -110,6 +111,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@color/dark_green"
                         app:srcCompat="@drawable/icon_wishlist" />
 
                     <TextView
@@ -119,7 +121,7 @@
                         android:layout_marginStart="@dimen/dp_16"
                         android:layout_marginEnd="@dimen/dp_16"
                         android:layout_weight="1"
-                        android:text="Whishlist" />
+                        android:text="@string/wishlist" />
 
                     <ImageView
                         android:layout_width="match_parent"
@@ -140,6 +142,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@color/dark_green"
                         app:srcCompat="@drawable/icon_history" />
 
                     <TextView
@@ -170,6 +173,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@color/dark_green"
                         app:srcCompat="@drawable/icon_track_order" />
 
                     <TextView
@@ -192,15 +196,16 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/cardSection"
+                    android:id="@+id/languageSection"
                     style="@style/AccountItemStyle"
                     android:layout_width="match_parent"
                     android:layout_height="60dp">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/icon_payment" />
+                        android:layout_width="40dp"
+                        android:layout_height="34dp"
+                        android:background="@color/dark_green"
+                        app:srcCompat="@drawable/ic_globe_world_global_svgrepo_com" />
 
                     <TextView
                         style="@style/TextViewRegular"
@@ -209,7 +214,7 @@
                         android:layout_marginStart="@dimen/dp_16"
                         android:layout_marginEnd="@dimen/dp_16"
                         android:layout_weight="1"
-                        android:text="@string/cards" />
+                        android:text="@string/language" />
 
                     <ImageView
                         android:layout_width="match_parent"
@@ -230,6 +235,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@color/dark_green"
                         app:srcCompat="@drawable/icon_notifications" />
 
                     <TextView
@@ -260,6 +266,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@color/dark_green"
                         app:srcCompat="@drawable/icon_exit" />
 
                     <TextView

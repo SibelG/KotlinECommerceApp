@@ -17,7 +17,7 @@
             app:layout_constraintStart_toStartOf="parent"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:text="Choose an Payment Option -"
+            android:text="@string/payment_options"
             android:layout_marginTop="16dp"
             android:layout_marginStart="16dp"/>
 
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/title_payment_fragment"
             android:layout_marginTop="32dp"
-            android:text="Debit Cart"
+            android:text="@string/debid"
             android:textSize="18sp"/>
 
         <RadioButton
@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Contactless Payment (NFC)"
+            android:text="@string/payment_nfc"
             android:textSize="18sp"
             app:layout_constraintTop_toBottomOf="@id/debit_radio_button" />
 
@@ -44,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Cash on Delivery (COD)"
+            android:text="@string/code_cash"
             android:textSize="18sp"
             app:layout_constraintTop_toBottomOf="@id/nfc_radio_button" />
 
@@ -53,7 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginBottom="80dp"
-            android:text="Place Order"
+            android:text="@string/place_order"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent" />
 

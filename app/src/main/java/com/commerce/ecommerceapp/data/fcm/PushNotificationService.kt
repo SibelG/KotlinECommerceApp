@@ -1,4 +1,4 @@
-package com.commerce.ecommerceapp.data.database.fcm
+package com.commerce.ecommerceapp.data.fcm
 
 import android.util.Log
 import com.commerce.ecommerceapp.FCMNotificationBuilder

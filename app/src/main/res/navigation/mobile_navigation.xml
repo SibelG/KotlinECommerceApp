@@ -93,6 +93,12 @@
         <action
             android:id="@+id/action_nav_account_to_trackingFragment"
             app:destination="@id/trackingFragment" />
+        <action
+            android:id="@+id/action_nav_account_to_notificationFragment"
+            app:destination="@id/notificationFragment" />
+        <action
+            android:id="@+id/action_nav_account_to_chooseCountryActivity"
+            app:destination="@id/chooseCountryActivity" />
 
 
     </fragment>
@@ -249,7 +255,14 @@
             android:name="editAddress"
             app:argType="com.commerce.ecommerceapp.models.Address" />
     </fragment>
-
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="com.commerce.ecommerceapp.ui.notification.NotificationFragment"
+        android:label="NotificationFragment" />
+    <activity
+        android:id="@+id/chooseCountryActivity"
+        android:name="com.commerce.ecommerceapp.ui.choose_country.ChooseCountryActivity"
+        android:label="ChooseCountryActivity" />
 
 
 </navigation>

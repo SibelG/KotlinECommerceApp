@@ -2,16 +2,18 @@ package com.commerce.ecommerceapp.ui.tracking
 
 import android.Manifest
 import android.app.Dialog
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.*
-import androidx.fragment.app.Fragment
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.commerce.ecommerceapp.*
 import com.commerce.ecommerceapp.R
 import com.commerce.ecommerceapp.daos.UserDao
@@ -19,13 +21,18 @@ import com.commerce.ecommerceapp.databinding.FragmentLocateUserLocationBinding
 import com.commerce.ecommerceapp.models.User
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.gms.common.internal.service.Common
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import java.io.IOException
 
 @AndroidEntryPoint
@@ -169,23 +176,32 @@ class LocateUserLocationFragment() : Fragment(),
             val latLng = LatLng(address.latitude, address.longitude)
             mMap!!.addMarker(MarkerOptions().position(latLng).title(location))
             mMap!!.animateCamera(CameraUpdateFactory.newLatLng(latLng))
-            val selectedAddress = com.commerce.ecommerceapp.models.Address(
-                userName = location,
-                mobileNumber = address.phone,
-                houseNumber= address.subThoroughfare,
-                city = address.locality,
-                streetName = address.thoroughfare
 
-            )
-            GlobalScope.launch {
-                val currentUser =
-                    userDao.getUserById(Utils.currentUserId).await().toObject(User::class.java)!!
-                currentUser.addresses.add(selectedAddress)
-                userDao.updateProfile(currentUser)
-            }
             Toast.makeText(requireContext(), address.latitude.toString() + " " + address.longitude, Toast.LENGTH_LONG).show()
-            println("strre"+address.locality+address.subThoroughfare)
+            Log.d("strre",address.locality+address.subThoroughfare)
+
+            mMap!!.setOnMarkerClickListener { marker ->
+                GlobalScope.launch {
+                    val currentUser =
+                        userDao.getUserById(Utils.currentUserId).await().toObject(User::class.java)!!
+                    val selectedAddress = com.commerce.ecommerceapp.models.Address(
+                        userName = location,
+                        mobileNumber = currentUser.mobileNumber?:"",
+                        houseNumber = address.subThoroughfare?:"",
+                        city = address.locality?:"",
+                        streetName = address.thoroughfare?:""
+
+                    )
+                    currentUser.addresses.add(selectedAddress)
+                    userDao.updateProfile(currentUser)
+
+                    withContext(Dispatchers.Main) {
+                        closeFragment()
+                    }
+                }
+                true
+            }
         }
     }
-
 }
+

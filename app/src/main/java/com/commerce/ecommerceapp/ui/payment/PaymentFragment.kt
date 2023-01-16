@@ -7,9 +7,11 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.commerce.ecommerceapp.FCMNotificationBuilder
 import com.commerce.ecommerceapp.MainActivity
 import com.commerce.ecommerceapp.R
 import com.commerce.ecommerceapp.Utils
+import com.commerce.ecommerceapp.Utils.currentUserId
 import com.commerce.ecommerceapp.daos.OrderDao
 import com.commerce.ecommerceapp.daos.UserDao
 import com.commerce.ecommerceapp.databinding.PaymentFragmentBinding
@@ -31,12 +33,13 @@ class PaymentFragment(
 
     private lateinit var viewModel: PaymentViewModel
     private lateinit var binding: PaymentFragmentBinding
-    private var orderDao = OrderDao()
+    private lateinit var orderDao : OrderDao
     private var userDao = UserDao()
     private lateinit var cartItemsOffline:ArrayList<CartItemOffline>
     private lateinit var cart:Cart
     private lateinit var address:Address
     private lateinit var currentUser:User
+    private lateinit var fcmNotificationBuilder:FCMNotificationBuilder
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,7 +47,8 @@ class PaymentFragment(
     ): View? {
         binding = PaymentFragmentBinding.inflate(inflater)
         viewModel = ViewModelProvider(this).get(PaymentViewModel::class.java)
-
+        orderDao = OrderDao()
+        fcmNotificationBuilder= FCMNotificationBuilder(requireContext())
         initializeCurrentUser()
 
         binding.placeOrderButton.setOnClickListener {
@@ -91,6 +95,7 @@ class PaymentFragment(
         )
         currentUser.cart = Cart()
         userDao.updateProfile(currentUser)
+        
         GlobalScope.launch {
             val orderId = orderDao.placeOrder(order)
             withContext(Dispatchers.Main){
@@ -106,6 +111,9 @@ class PaymentFragment(
 
             }
         }
+        fcmNotificationBuilder.buildNotification("Payment","Payment Success")
+        var notify = NotificationData(currentUserId,"Payment","Payment Success orderId: ${order.orderId}")
+        userDao.addNotify(notify)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

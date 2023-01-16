@@ -2,6 +2,7 @@ package com.commerce.ecommerceapp
 
 import android.text.format.DateUtils
 import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.hbb20.CountryCodePicker
@@ -12,7 +13,7 @@ import kotlin.math.roundToInt
 
 object Utils {
 
-    val currentUserId = Firebase.auth.currentUser!!.uid
+    var currentUserId = Firebase.auth.currentUser!!.uid
     const val BASE_LATITUDE = 26.0
     const val BASE_LONGITUDE = 32.0
     const val LOCATION_ZOOM = 20f

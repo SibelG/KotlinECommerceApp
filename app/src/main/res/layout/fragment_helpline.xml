@@ -19,7 +19,7 @@
             android:layout_marginTop="50dp"
             android:textSize="22sp"
             android:textStyle="bold"
-            android:text="Email Address"/>
+            android:text="@string/email_address"/>
 
         <TextView
             android:id="@+id/helpline_email"
@@ -42,7 +42,7 @@
             android:layout_marginTop="50dp"
             android:textSize="22sp"
             android:textStyle="bold"
-            android:text="Mobile Number"/>
+            android:text="@string/mobile"/>
 
         <TextView
             android:id="@+id/helpline_mobile"

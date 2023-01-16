@@ -1,5 +1,6 @@
 package com.commerce.ecommerceapp.ui.favorites
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,9 +8,12 @@ import androidx.lifecycle.viewModelScope
 import com.commerce.ecommerceapp.Resource
 import com.commerce.ecommerceapp.daos.DBRepository
 import com.commerce.ecommerceapp.models.Product
+import com.commerce.ecommerceapp.ui.home.ProductStatus
+import com.google.firebase.firestore.Query
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
@@ -42,5 +46,4 @@ private val dbRepository: DBRepository
             )
         }
     }
-
 }

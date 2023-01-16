@@ -61,7 +61,7 @@
                         android:id="@+id/shopSearchEditText"
                         android:layout_width="397dp"
                         android:layout_height="match_parent"
-                        android:hint="Search Product"
+                        android:hint="@string/search_product"
                         android:imeOptions="actionSearch"
                         android:inputType="text"
                         android:paddingTop="12dp"
@@ -117,7 +117,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginBottom="5dp"
                 android:gravity="center"
-                android:text="Sort"
+                android:text="@string/sort"
                 android:onClick="@{()-> fragment.showBottomSheet()}"
                 android:textSize="20sp" />
 
@@ -139,7 +139,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginBottom="5dp"
                 android:gravity="center"
-                android:text="Filter"
+                android:text="@string/filter"
                 android:textSize="20sp" />
 
         </LinearLayout>
